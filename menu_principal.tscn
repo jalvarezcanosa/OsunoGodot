@@ -1,0 +1,99 @@
+[gd_scene load_steps=6 format=3 uid="uid://banwksi38r4n"]
+
+[ext_resource type="Script" uid="uid://c15wdekq66tv5" path="res://menu_principal.gd" id="1_bj1uy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d8lex"]
+bg_color = Color(1, 1, 1, 0.78431374)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yo4kt"]
+bg_color = Color(1, 1, 1, 0.78431374)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_15krf"]
+bg_color = Color(1, 1, 1, 0.78431374)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2d8q"]
+bg_color = Color(1, 1, 1, 0.78431374)
+
+[node name="MenuPrincipal" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_bj1uy")
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Ajustes" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -288.5
+offset_top = 137.0
+offset_right = 249.5
+offset_bottom = 231.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Ajustes" type="Label" parent="Control/Ajustes"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_d8lex")
+text = "Ajustes"
+horizontal_alignment = 1
+
+[node name="Volumen" type="HBoxContainer" parent="Control/Ajustes"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+
+[node name="Música" type="Label" parent="Control/Ajustes/Volumen"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_yo4kt")
+text = "Música"
+
+[node name="MusicaSlider" type="HSlider" parent="Control/Ajustes/Volumen"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+max_value = 1.0
+step = 0.2
+tick_count = 5
+ticks_on_borders = true
+
+[node name="Volumen Efectos" type="Label" parent="Control/Ajustes/Volumen"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_15krf")
+text = "Efectos"
+
+[node name="EfectosSlider" type="HSlider" parent="Control/Ajustes/Volumen"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+max_value = 1.0
+step = 0.2
+tick_count = 5
+ticks_on_borders = true
+
+[node name="Volver" type="Button" parent="Control/Ajustes"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.011764706, 0.011764706, 0.011764706, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_j2d8q")
+text = "Volver"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="LouisTherouxsWeirdWeekend" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+autoplay = true
+bus = &"Música"
+
+[connection signal="value_changed" from="Control/Ajustes/Volumen/MusicaSlider" to="." method="_on_musica_slider_value_changed"]
+[connection signal="value_changed" from="Control/Ajustes/Volumen/EfectosSlider" to="." method="_on_efectos_slider_value_changed"]
+[connection signal="pressed" from="Control/Ajustes/Volver" to="." method="_on_volver_pressed"]
