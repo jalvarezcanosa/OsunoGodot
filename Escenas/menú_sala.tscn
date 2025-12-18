@@ -1,0 +1,163 @@
+[gd_scene load_steps=17 format=3 uid="uid://b3api0ov3kpkh"]
+
+[ext_resource type="Script" uid="uid://468my3mghfji" path="res://Scripts/MenuSala.gd" id="1_nse57"]
+[ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_dqwj3"]
+[ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_rp7na"]
+[ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_rp7na"]
+[ext_resource type="Texture2D" uid="uid://dkhu1qa0qiso4" path="res://Texturas/carta uno placeholder.jpg" id="4_jextb"]
+[ext_resource type="AnimationLibrary" uid="uid://e2a4wyfkaks2" path="res://Scripts/AnimaciónBote.res" id="5_mm4tk"]
+[ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="6_dqwj3"]
+[ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="8_mm4tk"]
+[ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="9_mm4tk"]
+
+[sub_resource type="Gradient" id="Gradient_5ld8w"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.27450982)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2to65"]
+gradient = SubResource("Gradient_5ld8w")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_hc5go"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.27450982)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lwrlj"]
+gradient = SubResource("Gradient_hc5go")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_5fpco"]
+colors = PackedColorArray(1, 0, 0, 1, 0.51373816, 0, 0.0004808262, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c0whx"]
+gradient = SubResource("Gradient_5fpco")
+fill = 1
+fill_from = Vector2(0.51282054, 0.47578347)
+
+[sub_resource type="Environment" id="Environment_y0up3"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.2
+
+[node name="MenúSala" type="Node2D"]
+use_parent_material = true
+script = ExtResource("1_nse57")
+
+[node name="Botonera" type="CanvasLayer" parent="."]
+
+[node name="BotonesMenú" type="VBoxContainer" parent="Botonera"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.0
+offset_top = -65.5
+offset_right = 117.0
+offset_bottom = 65.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_rp7na")
+
+[node name="Crear Sala" type="Button" parent="Botonera/BotonesMenú"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("2_dqwj3")
+theme_override_styles/hover = ExtResource("3_rp7na")
+text = "Crear sala"
+metadata/_edit_use_anchors_ = true
+
+[node name="Código Sala Unir" type="LineEdit" parent="Botonera/BotonesMenú/Crear Sala"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -54.5
+offset_right = 261.0
+offset_bottom = -12.5
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("2_dqwj3")
+theme_override_styles/focus = ExtResource("3_rp7na")
+placeholder_text = "Código de sala"
+max_length = 3
+
+[node name="Unirse Sala" type="Button" parent="Botonera/BotonesMenú"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("2_dqwj3")
+theme_override_styles/hover = ExtResource("3_rp7na")
+text = "Unirse a sala"
+metadata/_edit_use_anchors_ = true
+
+[node name="Código Sala Crear" type="Label" parent="Botonera/BotonesMenú/Unirse Sala"]
+layout_mode = 0
+offset_top = -109.5
+offset_right = 276.0
+offset_bottom = -68.5
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("2_dqwj3")
+theme_override_styles/focus = ExtResource("3_rp7na")
+text = "Código de sala: XYZ"
+
+[node name="Volver" type="Button" parent="Botonera/BotonesMenú"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("2_dqwj3")
+theme_override_styles/hover = ExtResource("3_rp7na")
+text = "Volver
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="Cartaplaceholder1" type="Sprite2D" parent="."]
+position = Vector2(411.5, 255.5)
+rotation = -0.09424778
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("4_jextb")
+centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Cartaplaceholder1"]
+libraries = {
+&"": ExtResource("5_mm4tk")
+}
+autoplay = "Bote Sala"
+
+[node name="Viñetado" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(30, 16.875)
+texture = SubResource("GradientTexture2D_2to65")
+centered = false
+
+[node name="Viñetado2" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(30, 16.875)
+texture = SubResource("GradientTexture2D_lwrlj")
+centered = false
+
+[node name="Fondo" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(30, 16.875)
+texture = SubResource("GradientTexture2D_c0whx")
+centered = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_y0up3")
+
+[node name="Card" parent="." instance=ExtResource("6_dqwj3")]
+offset_left = 1387.0
+offset_top = 603.0
+offset_right = 1539.0
+offset_bottom = 810.0
+
+[node name="CámaraCompartida" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Click1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_mm4tk")
+volume_db = -10.0
+
+[node name="Click2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_mm4tk")
+volume_db = -10.0
+
+[connection signal="pressed" from="Botonera/BotonesMenú/Crear Sala" to="." method="_on_crear_sala_pressed"]
+[connection signal="pressed" from="Botonera/BotonesMenú/Unirse Sala" to="." method="_on_unirse_sala_pressed"]
+[connection signal="pressed" from="Botonera/BotonesMenú/Volver" to="." method="_on_volver_pressed"]

@@ -1,12 +1,16 @@
 [gd_resource type="StyleBoxTexture" load_steps=3 format=3 uid="uid://bfhmniw5y86v8"]
 
-[ext_resource type="Gradient" uid="uid://43c5iyp8f5lf" path="res://Texturas/CajaMenúGradiente.tres" id="1_pd311"]
+[ext_resource type="Gradient" uid="uid://43c5iyp8f5lf" path="res://Texturas/CajaMenúGradiente.tres" id="1_37nn3"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pd311"]
-gradient = ExtResource("1_pd311")
+gradient = ExtResource("1_37nn3")
 fill_from = Vector2(1, 0)
 fill_to = Vector2(1, 1)
 metadata/_snap_count = 2
 
 [resource]
+content_margin_left = 0.0
+content_margin_top = 5.0
+content_margin_right = 0.0
+content_margin_bottom = 5.0
 texture = SubResource("GradientTexture2D_pd311")

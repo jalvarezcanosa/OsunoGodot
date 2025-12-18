@@ -1,0 +1,293 @@
+[gd_scene load_steps=21 format=3 uid="uid://bsxmfi5pwcce3"]
+
+[ext_resource type="Script" uid="uid://cnvlyanxcvdyn" path="res://Scripts/menuPrincipal.gd" id="1_x84wf"]
+[ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_ntk23"]
+[ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_ujxjh"]
+[ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_ntk23"]
+[ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="4_0j0h0"]
+[ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="5_prdkb"]
+[ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="7_0j0h0"]
+[ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="8_0j0h0"]
+
+[sub_resource type="Gradient" id="Gradient_vhwa5"]
+offsets = PackedFloat32Array(0.6814815, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.54901963)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mc5bs"]
+gradient = SubResource("Gradient_vhwa5")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Shader" id="Shader_vhwa5"]
+code = "shader_type canvas_item;
+
+uniform sampler2D dissolve_texture : source_color;
+uniform float dissolve_value : hint_range(0,1);
+uniform float burn_size: hint_range(0.0, 1.0, 0.01);
+uniform vec4 burn_color: source_color;
+
+void fragment(){
+    vec4 main_texture = texture(TEXTURE, UV);
+    vec4 noise_texture = texture(dissolve_texture, UV);
+	
+	// This is needed to avoid keeping a small burn_color dot with dissolve being 0 or 1
+	// is there another way to do it?
+	float burn_size_step = burn_size * step(0.001, dissolve_value) * step(dissolve_value, 0.999);
+	float threshold = smoothstep(noise_texture.x-burn_size_step, noise_texture.x, dissolve_value);
+	float border = smoothstep(noise_texture.x, noise_texture.x + burn_size_step, dissolve_value);
+	
+	COLOR.a *= threshold;
+	COLOR.rgb = mix(burn_color.rgb, main_texture.rgb, border);
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kntej"]
+seed = -15
+frequency = 0.0021
+fractal_octaves = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ypc88"]
+noise = SubResource("FastNoiseLite_kntej")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0j0h0"]
+resource_local_to_scene = true
+shader = SubResource("Shader_vhwa5")
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_ypc88")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.03
+shader_parameter/burn_color = Color(1.5, 0.924, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_ujxjh"]
+offsets = PackedFloat32Array(0.3018018, 0.545045, 1)
+colors = PackedColorArray(18.892157, 18.892157, 18.892157, 1, 1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ntk23"]
+gradient = SubResource("Gradient_ujxjh")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_x84wf"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.26456308, 1), 0.0, 0.0, 0, 0, Vector2(0.48786408, 1), 0.0, 0.0, 0, 0, Vector2(0.50728154, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_ujxjh"]
+curve = SubResource("Curve_x84wf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x84wf"]
+lifetime_randomness = 0.5
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(68.125, 93.205, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 111.36
+initial_velocity_max = 187.03
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.19999999
+scale_curve = SubResource("CurveTexture_ujxjh")
+
+[sub_resource type="Environment" id="Environment_ypc88"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.2
+
+[node name="Menu Inicio" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x84wf")
+
+[node name="Menú Principal" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 250.0
+offset_top = -105.5
+offset_right = 663.0
+offset_bottom = 123.5
+grow_vertical = 2
+
+[node name="Nueva Partida" type="Button" parent="Menú Principal"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("2_ujxjh")
+theme_override_styles/hover = ExtResource("3_ntk23")
+toggle_mode = true
+text = "Nueva partida"
+metadata/_edit_use_anchors_ = true
+
+[node name="Ajustes" type="Button" parent="Menú Principal"]
+layout_mode = 2
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("2_ujxjh")
+theme_override_styles/hover = ExtResource("3_ntk23")
+toggle_mode = true
+text = "Ajustes"
+metadata/_edit_use_anchors_ = true
+
+[node name="Salir" type="Button" parent="Menú Principal"]
+layout_mode = 2
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("2_ujxjh")
+theme_override_styles/hover = ExtResource("3_ntk23")
+text = "Salir"
+metadata/_edit_use_anchors_ = true
+
+[node name="Volúmen" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 700.0
+offset_right = 650.0
+offset_bottom = 814.0
+
+[node name="Musica" type="Label" parent="Volúmen"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = ExtResource("2_ujxjh")
+theme_override_styles/focus = ExtResource("3_ntk23")
+text = "Música"
+
+[node name="Slider Música" type="HSlider" parent="Volúmen/Musica"]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 7.0000076
+offset_right = 438.04004
+offset_bottom = 23.000008
+max_value = 1.0
+step = 0.2
+ticks_on_borders = true
+
+[node name="Efectos" type="Label" parent="Volúmen"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = ExtResource("2_ujxjh")
+theme_override_styles/focus = ExtResource("3_ntk23")
+text = "Efectos"
+
+[node name="Slider Efectos" type="HSlider" parent="Volúmen/Efectos"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 10.999996
+offset_right = 443.0
+offset_bottom = 26.999996
+max_value = 1.0
+step = 0.2
+ticks_on_borders = true
+
+[node name="Inicio de sesión" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 800.0
+offset_top = -105.5
+offset_right = 1125.0
+offset_bottom = 105.5
+grow_vertical = 2
+
+[node name="UsuarioTXT" type="Label" parent="Inicio de sesión"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 24
+text = "Usuario:"
+
+[node name="ContraseñaTXT" type="Label" parent="Inicio de sesión"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 24
+text = "Contraseña"
+
+[node name="Usuario" type="LineEdit" parent="Inicio de sesión"]
+layout_mode = 2
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("2_ujxjh")
+theme_override_styles/focus = ExtResource("3_ntk23")
+placeholder_text = "Usuario:"
+
+[node name="Contraseña" type="LineEdit" parent="Inicio de sesión"]
+layout_mode = 2
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("2_ujxjh")
+theme_override_styles/focus = ExtResource("3_ntk23")
+placeholder_text = "Contraseña:"
+
+[node name="Iniciar Sesión" type="Button" parent="Inicio de sesión"]
+layout_mode = 2
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 40
+text = "Iniciar sesión
+"
+
+[node name="FondoVerde" type="Sprite2D" parent="."]
+z_index = -1
+rotation = -1.5707964
+scale = Vector2(-0.417, 0.417)
+texture = ExtResource("4_0j0h0")
+centered = false
+
+[node name="Viñetado" type="Sprite2D" parent="."]
+visible = false
+z_index = 1
+scale = Vector2(30, 16.875)
+texture = SubResource("GradientTexture2D_mc5bs")
+centered = false
+
+[node name="Card" parent="." instance=ExtResource("5_prdkb")]
+material = SubResource("ShaderMaterial_0j0h0")
+layout_mode = 0
+offset_left = 1444.0
+offset_top = 551.0
+offset_right = 1596.0
+offset_bottom = 758.0
+scale = Vector2(1, 1)
+
+[node name="Partículas" type="GPUParticles2D" parent="Card"]
+z_index = -1
+position = Vector2(78, 107)
+amount = 100
+texture = SubResource("GradientTexture2D_ntk23")
+visibility_rect = Rect2(-100, -100, 2000, 2000)
+process_material = SubResource("ParticleProcessMaterial_x84wf")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ypc88")
+
+[node name="MúsicaInicio" type="AudioStreamPlayer" parent="."]
+
+[node name="Click1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_0j0h0")
+volume_db = -10.0
+
+[node name="Click2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_0j0h0")
+volume_db = -10.0
+
+[connection signal="toggled" from="Menú Principal/Nueva Partida" to="." method="_on_nueva_partida_toggled"]
+[connection signal="pressed" from="Menú Principal/Ajustes" to="." method="_on_ajustes_pressed"]
+[connection signal="toggled" from="Menú Principal/Ajustes" to="." method="_on_ajustes_toggled"]
+[connection signal="pressed" from="Menú Principal/Salir" to="." method="_on_salir_pressed"]
+[connection signal="value_changed" from="Volúmen/Musica/Slider Música" to="." method="_on_slider_música_value_changed"]
+[connection signal="value_changed" from="Volúmen/Efectos/Slider Efectos" to="." method="_on_slider_efectos_value_changed"]
+[connection signal="pressed" from="Inicio de sesión/Iniciar Sesión" to="." method="_on_iniciar_sesión_pressed"]

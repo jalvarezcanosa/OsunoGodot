@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dd53sd3po5p7t"]
+
+[ext_resource type="FontFile" uid="uid://cxbmednn2x2lg" path="res://Texturas/Helvetica.ttf" id="1_a2rp2"]
+
+[resource]
+default_font = ExtResource("1_a2rp2")
+Button/colors/font_color = Color(1, 1, 1, 1)

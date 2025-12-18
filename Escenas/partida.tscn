@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://bklhhrleexjsu"]
+
+[ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
+[ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="2_mo80f"]
+
+[sub_resource type="Gradient" id="Gradient_ix4hy"]
+offsets = PackedFloat32Array(0.6814815, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.54901963)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lb6cf"]
+gradient = SubResource("Gradient_ix4hy")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Environment" id="Environment_51247"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.2
+
+[node name="Partida" type="Node2D"]
+
+[node name="CámaraCompartida" type="Camera2D" parent="."]
+visible = false
+position = Vector2(0, -1)
+anchor_mode = 0
+
+[node name="FondoVerde" type="Sprite2D" parent="."]
+z_index = -1
+rotation = -1.5707964
+scale = Vector2(-0.417, 0.417)
+texture = ExtResource("1_0t4ck")
+centered = false
+
+[node name="Viñetado" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(30, 16.875)
+texture = SubResource("GradientTexture2D_lb6cf")
+centered = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_51247")
+
+[node name="Card" parent="." instance=ExtResource("2_mo80f")]
+offset_left = 1260.7999
+offset_top = 820.3
+offset_right = 1412.7999
+offset_bottom = 1027.3
+
+[node name="Card2" parent="." instance=ExtResource("2_mo80f")]
+offset_left = 1009.8
+offset_top = 794.30005
+offset_right = 1161.8
+offset_bottom = 1001.30005
+
+[node name="Card3" parent="." instance=ExtResource("2_mo80f")]
+offset_left = 774.8
+offset_top = 752.3
+offset_right = 926.8
+offset_bottom = 959.3
+
+[node name="Card4" parent="." instance=ExtResource("2_mo80f")]
+offset_left = 595.8
+offset_top = 778.3
+offset_right = 747.8
+offset_bottom = 985.3
+
+[node name="Cartas Tuyas" type="Node2D" parent="."]
+
+[node name="Cartas Suyas" type="Node2D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

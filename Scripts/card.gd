@@ -1,4 +1,7 @@
 extends Button
+@onready var sonido_click: AudioStreamPlayer = $"Sonido Click"
+@onready var sonido_arrastre: AudioStreamPlayer = $"Sonido Arrastre"
+
 
 @export var angle_x_max: float = 15.0
 @export var angle_y_max: float = 15.0
@@ -81,6 +84,8 @@ func handle_mouse_click(event: InputEvent) -> void:
 	
 	if event.is_pressed():
 		following_mouse = true
+		sonido_click.play()
+		sonido_arrastre.play()
 	else:
 		# drop card
 		following_mouse = false
