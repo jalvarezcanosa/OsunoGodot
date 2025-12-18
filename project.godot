@@ -13,9 +13,24 @@ config_version=5
 config/name="OSUNO"
 run/main_scene="uid://bsxmfi5pwcce3"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://Texturas/icon.svg"
+
+[audio]
+
+buses/default_bus_layout="res://Scripts/default_bus_layout.tres"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="viewport"
+
+[internationalization]
+
+rendering/stretch/mode="disabled"
+rendering/size/viewport_height=648
+rendering/size/viewport_width=1152
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+viewport/hdr_2d=true
