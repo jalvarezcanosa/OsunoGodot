@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://d3565ldw75886"]
+
+[node name="Card" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Shadow" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CardTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DestroyArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DestroyArea2D"]
