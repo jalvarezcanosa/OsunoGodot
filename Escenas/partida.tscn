@@ -1,7 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bklhhrleexjsu"]
+[gd_scene load_steps=8 format=3 uid="uid://bklhhrleexjsu"]
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
+[ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Escenas/fondo.gdshader" id="1_mo80f"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="2_mo80f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dkiol"]
+shader = ExtResource("1_mo80f")
 
 [sub_resource type="Gradient" id="Gradient_ix4hy"]
 offsets = PackedFloat32Array(0.6814815, 1)
@@ -27,6 +31,7 @@ anchor_mode = 0
 
 [node name="FondoVerde" type="Sprite2D" parent="."]
 z_index = -1
+material = SubResource("ShaderMaterial_dkiol")
 rotation = -1.5707964
 scale = Vector2(-0.417, 0.417)
 texture = ExtResource("1_0t4ck")
@@ -70,3 +75,15 @@ offset_bottom = 985.3
 [node name="Cartas Suyas" type="Node2D" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Deck" type="Node2D" parent="."]
+position = Vector2(611, 799)
+scale = Vector2(0.8, 0.8)
+
+[node name="GameManager" type="Node" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Discard" type="Node2D" parent="."]
+
+[node name="DropZone" type="Area2D" parent="."]

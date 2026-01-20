@@ -1,13 +1,21 @@
-[gd_scene load_steps=21 format=3 uid="uid://bsxmfi5pwcce3"]
+[gd_scene load_steps=24 format=3 uid="uid://bsxmfi5pwcce3"]
 
 [ext_resource type="Script" uid="uid://cnvlyanxcvdyn" path="res://Scripts/menuPrincipal.gd" id="1_x84wf"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_ntk23"]
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_ujxjh"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_ntk23"]
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="4_0j0h0"]
+[ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Escenas/fondo.gdshader" id="5_71mgp"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="5_prdkb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="7_0j0h0"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="8_0j0h0"]
+[ext_resource type="Texture2D" uid="uid://d376gk7bdccar" path="res://Texturas/UNO_Logo.svg.png" id="9_prdkb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0qp8k"]
+shader = ExtResource("5_71mgp")
+shader_parameter/light_pos = Vector2(0.5, 0.5)
+shader_parameter/light_color = Vector3(1, 0.95, 0.8)
+shader_parameter/bump_strength = 0.4
 
 [sub_resource type="Gradient" id="Gradient_vhwa5"]
 offsets = PackedFloat32Array(0.6814815, 1)
@@ -238,18 +246,25 @@ text = "Iniciar sesión
 "
 
 [node name="FondoVerde" type="Sprite2D" parent="."]
-z_index = -1
+z_index = -2
+material = SubResource("ShaderMaterial_0qp8k")
 rotation = -1.5707964
 scale = Vector2(-0.417, 0.417)
 texture = ExtResource("4_0j0h0")
 centered = false
 
 [node name="Viñetado" type="Sprite2D" parent="."]
-visible = false
 z_index = 1
 scale = Vector2(30, 16.875)
 texture = SubResource("GradientTexture2D_mc5bs")
 centered = false
+
+[node name="Logo" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(1492, 520)
+rotation = 0.5934119
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_prdkb")
 
 [node name="Card" parent="." instance=ExtResource("5_prdkb")]
 material = SubResource("ShaderMaterial_0j0h0")
