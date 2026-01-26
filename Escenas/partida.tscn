@@ -1,8 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bklhhrleexjsu"]
+[gd_scene load_steps=12 format=3 uid="uid://1437dumm2ogl"]
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
 [ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Escenas/fondo.gdshader" id="1_mo80f"]
+[ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_qpmav"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="2_mo80f"]
+[ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="3_pfv7k"]
+[ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="4_qpmav"]
+[ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="5_p51p1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dkiol"]
 shader = ExtResource("1_mo80f")
@@ -23,9 +27,9 @@ glow_intensity = 1.0
 glow_bloom = 0.2
 
 [node name="Partida" type="Node2D"]
+script = ExtResource("1_qpmav")
 
 [node name="CámaraCompartida" type="Camera2D" parent="."]
-visible = false
 position = Vector2(0, -1)
 anchor_mode = 0
 
@@ -46,37 +50,13 @@ centered = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_51247")
 
-[node name="Card" parent="." instance=ExtResource("2_mo80f")]
-offset_left = 1260.7999
-offset_top = 820.3
-offset_right = 1412.7999
-offset_bottom = 1027.3
+[node name="Cartas Usuario" type="Node2D" parent="."]
 
-[node name="Card2" parent="." instance=ExtResource("2_mo80f")]
-offset_left = 1009.8
-offset_top = 794.30005
-offset_right = 1161.8
-offset_bottom = 1001.30005
-
-[node name="Card3" parent="." instance=ExtResource("2_mo80f")]
-offset_left = 774.8
-offset_top = 752.3
-offset_right = 926.8
-offset_bottom = 959.3
-
-[node name="Card4" parent="." instance=ExtResource("2_mo80f")]
-offset_left = 595.8
-offset_top = 778.3
-offset_right = 747.8
-offset_bottom = 985.3
-
-[node name="Cartas Tuyas" type="Node2D" parent="."]
-
-[node name="Cartas Suyas" type="Node2D" parent="."]
+[node name="Cartas Rival" type="Node2D" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
-[node name="Deck" type="Node2D" parent="."]
+[node name="DeckContainer" type="Node2D" parent="."]
 position = Vector2(611, 799)
 scale = Vector2(0.8, 0.8)
 
@@ -84,6 +64,215 @@ scale = Vector2(0.8, 0.8)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Discard" type="Node2D" parent="."]
+[node name="UI usuario" type="VBoxContainer" parent="UI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 1531.0
+offset_top = -17.0
+offset_right = 1944.0
+offset_bottom = 212.0
+grow_vertical = 2
+
+[node name="Cartas usuario" type="Button" parent="UI/UI usuario"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("3_pfv7k")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("4_qpmav")
+theme_override_styles/hover = ExtResource("5_p51p1")
+toggle_mode = true
+text = "nº cartas (tú)"
+metadata/_edit_use_anchors_ = true
+
+[node name="Cartas (Mazo)" type="Button" parent="UI/UI usuario"]
+layout_mode = 2
+theme = ExtResource("3_pfv7k")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("4_qpmav")
+theme_override_styles/hover = ExtResource("5_p51p1")
+text = "Cartas (Mazo)"
+metadata/_edit_use_anchors_ = true
+
+[node name="UI usuario2" type="VBoxContainer" parent="UI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = -208.0
+offset_right = 415.0
+offset_bottom = 21.0
+grow_vertical = 2
+
+[node name="Cartas rival" type="Button" parent="UI/UI usuario2"]
+layout_mode = 2
+theme = ExtResource("3_pfv7k")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("4_qpmav")
+theme_override_styles/hover = ExtResource("5_p51p1")
+toggle_mode = true
+text = "nº cartas(rival)"
+metadata/_edit_use_anchors_ = true
+
+[node name="DiscardContainer" type="Node2D" parent="."]
+position = Vector2(585, 326)
 
 [node name="DropZone" type="Area2D" parent="."]
+
+[node name="Cartas usuario" type="GridContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = 761.0
+offset_right = 2024.0
+offset_bottom = 1311.001
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(1065, 0)
+localize_numeral_system = false
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 30
+columns = 10
+
+[node name="Card" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card2" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card3" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card4" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card5" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card6" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card7" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card8" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card9" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card10" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card11" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card12" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card13" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card14" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card15" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card16" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card17" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card18" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card19" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card20" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Cartas rival" type="GridContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = 23.0
+offset_right = 2035.0
+offset_bottom = 573.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(1065, 0)
+localize_numeral_system = false
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 30
+columns = 10
+
+[node name="Card" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card2" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card3" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card4" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card5" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card6" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card7" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card8" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card9" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card10" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card11" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card12" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card13" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card14" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card15" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card16" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card17" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card18" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card19" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2
+
+[node name="Card20" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+layout_mode = 2

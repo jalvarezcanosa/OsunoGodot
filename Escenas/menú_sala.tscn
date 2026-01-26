@@ -89,6 +89,7 @@ text = "Unirse a sala"
 metadata/_edit_use_anchors_ = true
 
 [node name="Código Sala Crear" type="Label" parent="Botonera/BotonesMenú/Unirse Sala"]
+visible = false
 layout_mode = 0
 offset_top = -109.5
 offset_right = 276.0

@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform sampler2D albedo_tex : hint_albedo;   // textura base (terreno)
+uniform sampler2D albedo_tex : hint_albedo;  // textura base (terreno)
 uniform sampler2D normal_map : hint_normal;   // mapa de normales
 uniform vec2 light_pos = vec2(0.5, 0.3);      // posición de la luz (0-1)
 uniform vec3 light_color = vec3(1.0, 0.95, 0.8);

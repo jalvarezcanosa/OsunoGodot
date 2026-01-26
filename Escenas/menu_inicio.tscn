@@ -13,9 +13,6 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0qp8k"]
 shader = ExtResource("5_71mgp")
-shader_parameter/light_pos = Vector2(0.5, 0.5)
-shader_parameter/light_color = Vector3(1, 0.95, 0.8)
-shader_parameter/bump_strength = 0.4
 
 [sub_resource type="Gradient" id="Gradient_vhwa5"]
 offsets = PackedFloat32Array(0.6814815, 1)
@@ -56,7 +53,7 @@ fractal_octaves = 4
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ypc88"]
 noise = SubResource("FastNoiseLite_kntej")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0j0h0"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_71mgp"]
 resource_local_to_scene = true
 shader = SubResource("Shader_vhwa5")
 shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_ypc88")
@@ -208,20 +205,6 @@ offset_right = 1125.0
 offset_bottom = 105.5
 grow_vertical = 2
 
-[node name="UsuarioTXT" type="Label" parent="Inicio de sesión"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 24
-text = "Usuario:"
-
-[node name="ContraseñaTXT" type="Label" parent="Inicio de sesión"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 24
-text = "Contraseña"
-
 [node name="Usuario" type="LineEdit" parent="Inicio de sesión"]
 layout_mode = 2
 theme = ExtResource("2_ntk23")
@@ -245,6 +228,15 @@ theme_override_font_sizes/font_size = 40
 text = "Iniciar sesión
 "
 
+[node name="Errores login" type="Label" parent="Inicio de sesión"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = ExtResource("2_ujxjh")
+theme_override_styles/focus = ExtResource("3_ntk23")
+text = "Estado"
+
 [node name="FondoVerde" type="Sprite2D" parent="."]
 z_index = -2
 material = SubResource("ShaderMaterial_0qp8k")
@@ -267,13 +259,12 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_prdkb")
 
 [node name="Card" parent="." instance=ExtResource("5_prdkb")]
-material = SubResource("ShaderMaterial_0j0h0")
+material = SubResource("ShaderMaterial_71mgp")
 layout_mode = 0
 offset_left = 1444.0
 offset_top = 551.0
 offset_right = 1596.0
 offset_bottom = 758.0
-scale = Vector2(1, 1)
 
 [node name="Partículas" type="GPUParticles2D" parent="Card"]
 z_index = -1
