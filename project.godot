@@ -19,6 +19,10 @@ config/icon="res://Texturas/icon.svg"
 
 buses/default_bus_layout="res://Scripts/default_bus_layout.tres"
 
+[autoload]
+
+Session="*res://Scripts/Session.gd"
+
 [display]
 
 window/size/viewport_width=1920

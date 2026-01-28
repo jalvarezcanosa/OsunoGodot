@@ -290,6 +290,8 @@ volume_db = -10.0
 stream = ExtResource("8_0j0h0")
 volume_db = -10.0
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="toggled" from="Menú Principal/Nueva Partida" to="." method="_on_nueva_partida_toggled"]
 [connection signal="pressed" from="Menú Principal/Ajustes" to="." method="_on_ajustes_pressed"]
 [connection signal="toggled" from="Menú Principal/Ajustes" to="." method="_on_ajustes_toggled"]
@@ -297,3 +299,4 @@ volume_db = -10.0
 [connection signal="value_changed" from="Volúmen/Musica/Slider Música" to="." method="_on_slider_música_value_changed"]
 [connection signal="value_changed" from="Volúmen/Efectos/Slider Efectos" to="." method="_on_slider_efectos_value_changed"]
 [connection signal="pressed" from="Inicio de sesión/Iniciar Sesión" to="." method="_on_iniciar_sesión_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
