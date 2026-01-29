@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bsxmfi5pwcce3"]
+[gd_scene load_steps=28 format=3 uid="uid://bsxmfi5pwcce3"]
 
 [ext_resource type="Script" uid="uid://cnvlyanxcvdyn" path="res://Scripts/menuPrincipal.gd" id="1_x84wf"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_ntk23"]
@@ -26,71 +26,16 @@ gradient = SubResource("Gradient_vhwa5")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6l3e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yuwwx"]
 shader = ExtResource("7_o32np")
-shader_parameter/amplitude = 139.158006610005
-shader_parameter/frequency = 1.0000000475
-shader_parameter/speed = 4.81600022876
+shader_parameter/amplitude = 50.000002375
+shader_parameter/frequency = 1.3160000625100001
+shader_parameter/speed = 8.81600041876
 shader_parameter/tightness = 0.0
 shader_parameter/normal_strength = 1.0
 shader_parameter/mouse_pos = Vector2(0, 0)
 shader_parameter/pull_radius = 150.0
 shader_parameter/pull_strength = 20.0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_7t5sj"]
-size = Vector2(960, 773)
-subdivide_width = 1
-subdivide_depth = 7
-orientation = 2
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yuwwx"]
-shader = ExtResource("7_o32np")
-shader_parameter/amplitude = 240.0970114046075
-shader_parameter/frequency = 4.694000222965
-shader_parameter/speed = 4.7090002236775
-shader_parameter/tightness = 0.0
-shader_parameter/normal_strength = 1.0
-shader_parameter/mouse_pos = Vector2(0, 0)
-shader_parameter/pull_radius = 150.0
-shader_parameter/pull_strength = 1000.0
-
-[sub_resource type="Animation" id="Animation_tw0lc"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.5, 0.5)]
-}
-
-[sub_resource type="Animation" id="Animation_wuswk"]
-resource_name = "bandera "
-length = 0.7
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0.5, 0.5), Vector2(-0.5, 0.5)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_yqdmp"]
-_data = {
-&"RESET": SubResource("Animation_tw0lc"),
-&"bandera ": SubResource("Animation_wuswk")
-}
 
 [sub_resource type="Shader" id="Shader_vhwa5"]
 code = "shader_type canvas_item;
@@ -122,7 +67,7 @@ fractal_octaves = 4
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ypc88"]
 noise = SubResource("FastNoiseLite_kntej")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7t5sj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o32np"]
 resource_local_to_scene = true
 shader = SubResource("Shader_vhwa5")
 shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_ypc88")
@@ -320,29 +265,17 @@ scale = Vector2(30, 16.875)
 texture = SubResource("GradientTexture2D_mc5bs")
 centered = false
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-material = SubResource("ShaderMaterial_h6l3e")
-position = Vector2(1261, 533)
+[node name="Logo" type="Sprite2D" parent="."]
+z_index = -2
+material = SubResource("ShaderMaterial_yuwwx")
+position = Vector2(1473.0001, 262.00003)
+rotation = 0.5934119
 scale = Vector2(0.5, 0.5)
-mesh = SubResource("PlaneMesh_7t5sj")
 texture = ExtResource("9_prdkb")
 script = ExtResource("9_yuwwx")
 
-[node name="Logo" type="Sprite2D" parent="."]
-visible = false
-z_index = -2
-material = SubResource("ShaderMaterial_yuwwx")
-position = Vector2(1261, 533)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("9_prdkb")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Logo"]
-libraries = {
-&"": SubResource("AnimationLibrary_yqdmp")
-}
-
 [node name="Card" parent="." instance=ExtResource("5_prdkb")]
-material = SubResource("ShaderMaterial_7t5sj")
+material = SubResource("ShaderMaterial_o32np")
 layout_mode = 0
 offset_left = 1444.0
 offset_top = 551.0

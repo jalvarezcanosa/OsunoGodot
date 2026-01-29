@@ -33,7 +33,7 @@ func _on_efectos_slider_value_changed(value: float) -> void:
 	var bus: int = AudioServer.get_bus_index("Efectos")
 	AudioServer.set_bus_volume_db(bus, linear_to_db(value))
 
-# --- Marcador ---
+# --- Marcador
 func mostrar_marcador() -> void:
 	if FileAccess.file_exists("user://runs.json"):
 		var file: FileAccess = FileAccess.open("user://runs.json", FileAccess.READ)

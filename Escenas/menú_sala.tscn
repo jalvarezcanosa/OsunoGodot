@@ -1,11 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://b3api0ov3kpkh"]
+[gd_scene load_steps=21 format=3 uid="uid://b3api0ov3kpkh"]
 
 [ext_resource type="Script" uid="uid://468my3mghfji" path="res://Scripts/MenuSala.gd" id="1_nse57"]
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_dqwj3"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_rp7na"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_rp7na"]
-[ext_resource type="Texture2D" uid="uid://dkhu1qa0qiso4" path="res://Texturas/carta uno placeholder.jpg" id="4_jextb"]
-[ext_resource type="AnimationLibrary" uid="uid://e2a4wyfkaks2" path="res://Scripts/AnimaciónBote.res" id="5_mm4tk"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="6_dqwj3"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="8_mm4tk"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="9_mm4tk"]
@@ -18,11 +16,11 @@ gradient = SubResource("Gradient_5ld8w")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="Gradient" id="Gradient_hc5go"]
+[sub_resource type="Gradient" id="Gradient_rp7na"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.27450982)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lwrlj"]
-gradient = SubResource("Gradient_hc5go")
+gradient = SubResource("Gradient_rp7na")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -40,11 +38,90 @@ glow_enabled = true
 glow_intensity = 1.0
 glow_bloom = 0.2
 
+[sub_resource type="Gradient" id="Gradient_jextb"]
+offsets = PackedFloat32Array(0, 0.5925926)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jextb"]
+gradient = SubResource("Gradient_jextb")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_mm4tk"]
+resource_name = "SpotLightAnimation"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(226, 195), Vector2(938, 813), Vector2(1650, 320)]
+}
+
+[sub_resource type="Animation" id="Animation_qpft7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(226, 195)]
+}
+
+[sub_resource type="Animation" id="Animation_rp7na"]
+resource_name = "SpotLightAnimation_2"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1572, 879), Vector2(1519, 276), Vector2(382, 744)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xqp3y"]
+_data = {
+&"RESET": SubResource("Animation_qpft7"),
+&"SpotLightAnimation": SubResource("Animation_mm4tk"),
+&"SpotLightAnimation_2": SubResource("Animation_rp7na")
+}
+
 [node name="MenúSala" type="Node2D"]
 use_parent_material = true
 script = ExtResource("1_nse57")
 
 [node name="Botonera" type="CanvasLayer" parent="."]
+
+[node name="Código Sala Crear" type="Label" parent="Botonera"]
+offset_left = 811.0
+offset_top = 350.5
+offset_right = 1109.0
+offset_bottom = 402.5
+pivot_offset = Vector2(141.165, 0)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("2_dqwj3")
+theme_override_styles/focus = ExtResource("3_rp7na")
+text = "Código de sala: XYZ"
+horizontal_alignment = 1
 
 [node name="BotonesMenú" type="VBoxContainer" parent="Botonera"]
 anchors_preset = 8
@@ -52,13 +129,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -117.0
-offset_top = -65.5
-offset_right = 117.0
-offset_bottom = 65.5
+offset_left = -149.0
+offset_top = -103.0
+offset_right = 149.0
+offset_bottom = 103.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_rp7na")
+theme_override_constants/separation = 20
 
 [node name="Crear Sala" type="Button" parent="Botonera/BotonesMenú"]
 layout_mode = 2
@@ -68,18 +146,6 @@ theme_override_styles/hover = ExtResource("3_rp7na")
 text = "Crear sala"
 metadata/_edit_use_anchors_ = true
 
-[node name="Código Sala Unir" type="LineEdit" parent="Botonera/BotonesMenú/Crear Sala"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = -54.5
-offset_right = 261.0
-offset_bottom = -12.5
-theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = ExtResource("2_dqwj3")
-theme_override_styles/focus = ExtResource("3_rp7na")
-placeholder_text = "Código de sala"
-max_length = 3
-
 [node name="Unirse Sala" type="Button" parent="Botonera/BotonesMenú"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
@@ -88,16 +154,13 @@ theme_override_styles/hover = ExtResource("3_rp7na")
 text = "Unirse a sala"
 metadata/_edit_use_anchors_ = true
 
-[node name="Código Sala Crear" type="Label" parent="Botonera/BotonesMenú/Unirse Sala"]
-visible = false
-layout_mode = 0
-offset_top = -109.5
-offset_right = 276.0
-offset_bottom = -68.5
+[node name="Código Sala Unir" type="LineEdit" parent="Botonera/BotonesMenú"]
+layout_mode = 2
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = ExtResource("2_dqwj3")
 theme_override_styles/focus = ExtResource("3_rp7na")
-text = "Código de sala: XYZ"
+placeholder_text = "Código de sala"
+alignment = 1
 
 [node name="Volver" type="Button" parent="Botonera/BotonesMenú"]
 layout_mode = 2
@@ -107,19 +170,6 @@ theme_override_styles/hover = ExtResource("3_rp7na")
 text = "Volver
 "
 metadata/_edit_use_anchors_ = true
-
-[node name="Cartaplaceholder1" type="Sprite2D" parent="."]
-position = Vector2(411.5, 255.5)
-rotation = -0.09424778
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("4_jextb")
-centered = false
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Cartaplaceholder1"]
-libraries = {
-&"": ExtResource("5_mm4tk")
-}
-autoplay = "Bote Sala"
 
 [node name="Viñetado" type="Sprite2D" parent="."]
 z_index = 1
@@ -159,8 +209,34 @@ volume_db = -10.0
 stream = ExtResource("9_mm4tk")
 volume_db = -10.0
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="PostCrearSala" type="HTTPRequest" parent="."]
+
+[node name="PostUnirSala" type="HTTPRequest" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(226, 195)
+scale = Vector2(3.9062502, 3.9062502)
+texture = SubResource("GradientTexture2D_jextb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointLight2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_xqp3y")
+}
+autoplay = "SpotLightAnimation"
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+position = Vector2(226, 195)
+scale = Vector2(3.9062502, 3.9062502)
+texture = SubResource("GradientTexture2D_jextb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointLight2D2"]
+libraries = {
+&"": SubResource("AnimationLibrary_xqp3y")
+}
+autoplay = "SpotLightAnimation_2"
 
 [connection signal="pressed" from="Botonera/BotonesMenú/Crear Sala" to="." method="_on_crear_sala_pressed"]
 [connection signal="pressed" from="Botonera/BotonesMenú/Unirse Sala" to="." method="_on_unirse_sala_pressed"]
 [connection signal="pressed" from="Botonera/BotonesMenú/Volver" to="." method="_on_volver_pressed"]
+[connection signal="request_completed" from="PostCrearSala" to="." method="_on_post_crear_sala_request_completed"]
+[connection signal="request_completed" from="PostUnirSala" to="." method="_on_post_unir_sala_request_completed"]

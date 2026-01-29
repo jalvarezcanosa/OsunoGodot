@@ -30,6 +30,7 @@ var velocity: Vector2
 @onready var collision_shape = $DestroyArea/CollisionShape2D
 
 func _ready() -> void:
+	shadow.self_modulate.a = 0.4
 	# radianes
 	angle_x_max = deg_to_rad(angle_x_max)
 	angle_y_max = deg_to_rad(angle_y_max)
@@ -76,6 +77,7 @@ func follow_mouse(delta: float) -> void:
 	global_position = mouse_pos - (size/2.0)
 
 func handle_mouse_click(event: InputEvent) -> void:
+	shadow.self_modulate.a = 0.8
 	if not event is InputEventMouseButton: return
 	if event.button_index != MOUSE_BUTTON_LEFT: return
 	
@@ -115,12 +117,15 @@ func _on_gui_input(event: InputEvent) -> void:
 	card_texture.material.set_shader_parameter("y_rot", rot_x)
 
 func _on_mouse_entered() -> void:
+	if not sonido_arrastre.playing:
+		sonido_arrastre.play()
 	if tween_hover and tween_hover.is_running():
 		tween_hover.kill()
 	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween_hover.tween_property(self, "scale", Vector2(1.2, 1.2), 0.5)
 
 func _on_mouse_exited() -> void:
+	shadow.self_modulate.a = 0.4
 	# Reinicio rotación
 	if tween_rot and tween_rot.is_running():
 		tween_rot.kill()

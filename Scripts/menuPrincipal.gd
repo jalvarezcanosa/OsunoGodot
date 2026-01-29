@@ -6,8 +6,10 @@ extends Control
 @onready var http_request: HTTPRequest = $HTTPRequest
 @onready var iniciar_sesión: Button = $"Inicio de sesión/Iniciar Sesión"
 @onready var errores_login: Label = $"Inicio de sesión/Errores login"
-var url : String = "http://localhost:8000/sessions"
-# String ip.resolve_hostname (http://localhost:8000/sessions: Type = 3)
+@onready var usuario: LineEdit = $"Inicio de sesión/Usuario"
+@onready var contraseña: LineEdit = $"Inicio de sesión/Contraseña"
+var url : String = "http://127.0.0.1:8000/sessions"
+
 func _ready() -> void:
 	http_request.request_completed.connect(_on_http_request_request_completed)
 	volúmen.hide()
@@ -57,8 +59,8 @@ func _on_iniciar_sesión_pressed() -> void:
 
 # Body del login
 	var body_dict = {
-		"username": "user_1769592142695",
-		"password": "tu_password"
+		"username": usuario.text.strip_edges(),
+		"password": contraseña.text
 	}
 	var body_json = JSON.stringify(body_dict)
 
@@ -81,7 +83,7 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 	if response_code != 200 and response_code != 201:
 		errores_login.text = "Usuario o contraseña incorrectos"
 		return
-
+	
 	var data = JSON.parse_string(body_str)
 	if typeof(data) != TYPE_DICTIONARY or not data.has("sessionToken"):
 		errores_login.text = "Respuesta inválida del servidor"
