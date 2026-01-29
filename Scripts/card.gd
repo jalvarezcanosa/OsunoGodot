@@ -9,7 +9,7 @@ extends Button
 @export_category("Oscillator")
 @export var spring: float = 150.0
 @export var damp: float = 10.0
-@export var velocity_multiplier: float = 2.0
+@export var velocity_multiplier: float = 1.5
 
 var displacement: float = 0.0 
 var oscillator_velocity: float = 0.0
