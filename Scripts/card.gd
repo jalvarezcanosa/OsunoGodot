@@ -1,6 +1,7 @@
 extends Button
 @onready var sonido_click: AudioStreamPlayer = $"Sonido Click"
-@onready var sonido_arrastre: AudioStreamPlayer = $"Sonido Arrastre"
+@onready var sonido_pick: AudioStreamPlayer = $"Sonido Pick"
+@onready var sonido_release: AudioStreamPlayer = $"Sonido Release"
 
 @export var angle_x_max: float = 15.0
 @export var angle_y_max: float = 15.0
@@ -25,13 +26,16 @@ var following_mouse: bool = false
 var last_pos: Vector2
 var velocity: Vector2
 
+var arrastrando: bool = false
+var dentro: bool = false
+var puede_pickear: bool = true
+
 @onready var card_texture: TextureRect = $CardTexture
 @onready var shadow = $Shadow
 @onready var collision_shape = $DestroyArea/CollisionShape2D
 
 func _ready() -> void:
 	shadow.self_modulate.a = 0.4
-	# radianes
 	angle_x_max = deg_to_rad(angle_x_max)
 	angle_y_max = deg_to_rad(angle_y_max)
 	collision_shape.set_deferred("disabled", true)
@@ -52,13 +56,11 @@ func destroy() -> void:
 func rotate_velocity(delta: float) -> void:
 	if not following_mouse: return
 	var center_pos: Vector2 = global_position - (size/2.0)
-	# Velocidad
 	velocity = (position - last_pos) / delta
 	last_pos = position
 	
 	oscillator_velocity += velocity.normalized().x * velocity_multiplier
 	
-	# Oscilador
 	var force = -spring * displacement - damp * oscillator_velocity
 	oscillator_velocity += force * delta
 	displacement += oscillator_velocity * delta
@@ -82,29 +84,42 @@ func handle_mouse_click(event: InputEvent) -> void:
 	if event.button_index != MOUSE_BUTTON_LEFT: return
 	
 	if event.is_pressed():
+		arrastrando = true
+		puede_pickear = false
 		following_mouse = true
 		sonido_click.play()
-		sonido_arrastre.play()
 	else:
-		# drop carta
+		arrastrando = false
 		following_mouse = false
 		collision_shape.set_deferred("disabled", false)
+
+		if dentro:
+			sonido_release.play()
+
+		if tween_rot and tween_rot.is_running():
+			tween_rot.kill()
+		tween_rot = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_parallel(true)
+		tween_rot.tween_property(card_texture.material, "shader_parameter/x_rot", 0.0, 0.5)
+		tween_rot.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.5)
+
+		if tween_hover and tween_hover.is_running():
+			tween_hover.kill()
+		tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+		tween_hover.tween_property(self, "scale", Vector2.ONE, 0.55)
+
+		shadow.self_modulate.a = 0.4
+
 		if tween_handle and tween_handle.is_running():
 			tween_handle.kill()
 		tween_handle = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween_handle.tween_property(self, "rotation", 0.0, 0.3)
 
 func _on_gui_input(event: InputEvent) -> void:
-	
 	handle_mouse_click(event)
-	
-	# Sin rotación cuando en movimiento
 	if following_mouse: return
 	if not event is InputEventMouseMotion: return
 	
-	# Get local mouse pos
 	var mouse_pos: Vector2 = get_local_mouse_position()
-
 	var diff: Vector2 = (position + size) - mouse_pos
 
 	var lerp_val_x: float = remap(mouse_pos.x, 0.0, size.x, 0, 1)
@@ -117,23 +132,28 @@ func _on_gui_input(event: InputEvent) -> void:
 	card_texture.material.set_shader_parameter("y_rot", rot_x)
 
 func _on_mouse_entered() -> void:
-	if not sonido_arrastre.playing:
-		sonido_arrastre.play()
+	dentro = true
+	if arrastrando:
+		return
+	if not puede_pickear:
+		return
+	sonido_pick.play()
 	if tween_hover and tween_hover.is_running():
 		tween_hover.kill()
 	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween_hover.tween_property(self, "scale", Vector2(1.2, 1.2), 0.5)
 
 func _on_mouse_exited() -> void:
+	dentro = false
+	puede_pickear = true
+	if arrastrando:
+		return
 	shadow.self_modulate.a = 0.4
-	# Reinicio rotación
 	if tween_rot and tween_rot.is_running():
 		tween_rot.kill()
 	tween_rot = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_parallel(true)
 	tween_rot.tween_property(card_texture.material, "shader_parameter/x_rot", 0.0, 0.5)
 	tween_rot.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.5)
-	
-	# Reinicio scala
 	if tween_hover and tween_hover.is_running():
 		tween_hover.kill()
 	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
