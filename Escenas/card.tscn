@@ -44,7 +44,6 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_7aqjh")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_7aqjh")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7aqjh")
 script = ExtResource("1_borcn")
-spring = 300.0
 
 [node name="CardTexture" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_cho03")

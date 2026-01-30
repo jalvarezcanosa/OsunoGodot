@@ -8,19 +8,24 @@ extends Control
 @onready var errores_login: Label = $"Inicio de sesión/Errores login"
 @onready var usuario: LineEdit = $"Inicio de sesión/Usuario"
 @onready var contraseña: LineEdit = $"Inicio de sesión/Contraseña"
-var url : String = "http://127.0.0.1:8000/sessions"
+var url_login : String = "http://127.0.0.1:8000/sessions"
+var url_registro : String = "http://127.0.0.1:8000/users"
+var url_stats : String = "http://127.0.0.1:8000/users/me"
 
 func _ready() -> void:
 	http_request.request_completed.connect(_on_http_request_request_completed)
 	volúmen.hide()
 	inicio.hide()
+
 func _on_salir_pressed() -> void:
 	click_2.play()
 	await get_tree().create_timer(0.2).timeout
 	get_tree().quit()
+
 func _on_volver_pressed() -> void:
 	volúmen.hide()
 	click_2.play()
+
 func _on_slider_música_value_changed(value: float) -> void:
 	var bus: int = AudioServer.get_bus_index("Música")
 	AudioServer.set_bus_volume_db(bus, linear_to_db(value))
@@ -66,7 +71,7 @@ func _on_iniciar_sesión_pressed() -> void:
 
 	# Enviar request POST
 	var err = http_request.request(
-		url,
+		url_login,
 		headers,
 		HTTPClient.METHOD_POST,
 		body_json

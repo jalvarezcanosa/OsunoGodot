@@ -1,6 +1,6 @@
 [gd_scene load_steps=33 format=3 uid="uid://bsxmfi5pwcce3"]
 
-[ext_resource type="Script" uid="uid://cnvlyanxcvdyn" path="res://Scripts/menuPrincipal.gd" id="1_x84wf"]
+[ext_resource type="Script" uid="uid://cnvlyanxcvdyn" path="res://Scripts/menuInicio.gd" id="1_x84wf"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_ntk23"]
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_ujxjh"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_ntk23"]
@@ -8,11 +8,11 @@
 [ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Escenas/fondo.gdshader" id="5_71mgp"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="5_prdkb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="7_0j0h0"]
-[ext_resource type="Shader" path="res://Escenas/logoUno.gdshader" id="7_o32np"]
+[ext_resource type="Shader" uid="uid://dmua4dy3tdqmu" path="res://Escenas/logoUno.gdshader" id="7_o32np"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="8_0j0h0"]
 [ext_resource type="AudioStream" uid="uid://bhonw60fck3kg" path="res://Audio/Música/Moonglow  Love Theme.mp3" id="9_0qp8k"]
 [ext_resource type="Texture2D" uid="uid://d376gk7bdccar" path="res://Texturas/UNO_Logo.svg.png" id="9_prdkb"]
-[ext_resource type="Script" path="res://Escenas/logo.gd" id="9_yuwwx"]
+[ext_resource type="Script" uid="uid://p6kycuxl3u0c" path="res://Escenas/logo.gd" id="9_yuwwx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0qp8k"]
 shader = ExtResource("5_71mgp")

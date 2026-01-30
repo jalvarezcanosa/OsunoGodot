@@ -7,8 +7,12 @@ extends Node2D
 @onready var post_crear_sala: HTTPRequest = $PostCrearSala
 @onready var post_unir_sala: HTTPRequest = $PostUnirSala
 
+var url_stats : String = "http://127.0.0.1:8000/users/me"
 
-var url := "http://127.0.0.1:8000/room"
+var url_crear_room : String = "http://127.0.0.1:8000/room"
+# CON GET var url_roomstatus := url + room_code
+
+
 
 func _ready() -> void:
 	codigo_sala_crear.hide()
@@ -27,7 +31,7 @@ func _on_crear_sala_pressed() -> void:
 	}
 	var body_json = JSON.stringify(body_dict)
 	var err = post_crear_sala.request(
-		url,
+		url_crear_room,
 		headers,
 		HTTPClient.METHOD_POST,
 		body_json
@@ -41,7 +45,7 @@ func _on_unirse_sala_pressed() -> void:
 	click_1.play()
 	
 	var room_code := codigo_sala_unir.text.strip_edges()
-	var url_unir := url + room_code
+	var url_unir := url_crear_room + "/" + room_code
 	
 	var headers = [
 		"Content-Type: application/json",
@@ -88,7 +92,6 @@ func _on_post_unir_sala_request_completed(result: int, response_code: int, heade
 	if response_code == 200:
 		codigo_sala_unir.text = "Sesión iniciada"
 		await get_tree().create_timer(0.5).timeout
-		get_tree().change_scene_to_file("res://Escenas/partida.tscn")
 		get_tree().change_scene_to_file("res://Escenas/partida.tscn")
 	if response_code == 404:
 		codigo_sala_unir.text = "Sala no encontrada"
