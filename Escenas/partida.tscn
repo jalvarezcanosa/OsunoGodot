@@ -77,6 +77,9 @@ theme_override_styles/normal = ExtResource("4_qpmav")
 theme_override_styles/focus = ExtResource("5_p51p1")
 text = "nº cartas (tú)"
 
+[node name="Estado juego" type="Label" parent="UI/UI usuario"]
+layout_mode = 2
+
 [node name="UI rival" type="VBoxContainer" parent="UI"]
 anchors_preset = 4
 anchor_top = 0.5
@@ -163,45 +166,6 @@ layout_mode = 2
 [node name="Card7" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
 layout_mode = 2
 
-[node name="Card8" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card9" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card10" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card11" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card12" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card13" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card14" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card15" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card16" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card17" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card18" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card19" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card20" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
 [node name="Cartas rival" type="GridContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -209,13 +173,14 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -95.0
-offset_top = 23.0
+offset_top = -99.0
 offset_right = 2035.0
-offset_bottom = 573.0
+offset_bottom = 451.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 3.1415927
 scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(1065, 0)
+pivot_offset = Vector2(1065, 275)
 localize_numeral_system = false
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 30
@@ -240,45 +205,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Card7" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card8" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card9" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card10" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card11" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card12" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card13" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card14" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card15" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card16" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card17" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card18" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card19" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card20" parent="Cartas rival" instance=ExtResource("2_mo80f")]
 layout_mode = 2
 
 [node name="Viñetado" type="Sprite2D" parent="."]
@@ -306,3 +232,7 @@ centered = false
 [node name="Robar Carta" type="HTTPRequest" parent="."]
 
 [node name="Game State" type="HTTPRequest" parent="."]
+
+[connection signal="request_completed" from="Jugar Carta" to="." method="_on_jugar_carta_request_completed"]
+[connection signal="request_completed" from="Robar Carta" to="." method="_on_robar_carta_request_completed"]
+[connection signal="request_completed" from="Game State" to="." method="_on_game_state_request_completed"]

@@ -366,7 +366,6 @@ environment = SubResource("Environment_ypc88")
 [node name="MúsicaInicio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_0qp8k")
 volume_db = -10.637
-autoplay = true
 parameters/looping = true
 
 [node name="Click1" type="AudioStreamPlayer" parent="."]
