@@ -1,18 +1,66 @@
-[gd_scene format=3 uid="uid://c1tcmu7tg42me"]
+[gd_scene load_steps=3 format=3 uid="uid://c1tcmu7tg42me"]
 
-[node name="victory_screen" type="Control"]
-layout_mode = 3
+[ext_resource type="Script" uid="uid://cspb0h7amkcjq" path="res://scripts/victory_screen.gd" id="1_i5jdm"]
+
+[sub_resource type="Gradient" id="Gradient_o5orl"]
+offsets = PackedFloat32Array(0, 0.22222222, 0.974359, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.9999997, 0.040033713, 0.025652535, 1, 0.051282052, 0.051282052, 0.051282052, 1, 1, 1, 1, 1)
+
+[node name="victory_screen" type="CanvasLayer"]
+script = ExtResource("1_i5jdm")
+
+[node name="Backgorund" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.6431373, 0.16862746, 0.5019608)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.47, 0, 0, 1)
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="YouWon" type="Label" parent="CenterContainer/VBoxContainer"]
+z_index = 5
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "YOU WON!"
+
+[node name="MainMenu" type="Button" parent="CenterContainer/VBoxContainer"]
+z_index = 5
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 37
+text = "MAIN MENU"
+
+[node name="Quit" type="Button" parent="CenterContainer/VBoxContainer"]
+z_index = 5
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 37
+text = "QUIT"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+scale = Vector2(57453.645, 387.65292)
+amount = 50
+emission_shape = 3
+emission_rect_extents = Vector2(1, 1)
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+scale_amount_min = 5.0
+scale_amount_max = 10.0
+color = Color(0.35860622, 0.5902477, 1, 1)
+color_ramp = SubResource("Gradient_o5orl")
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
