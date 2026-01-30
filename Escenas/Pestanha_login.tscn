@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://0jut6y543nen"]
+
+[ext_resource type="Script" uid="uid://cotpnuei3yhkh" path="res://Escenas/pestanha_login.gd" id="1_jt3ln"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -3.0
+offset_right = -10.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jt3ln")
+
+[node name="Etrada_usuario" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 531.0
+offset_top = 107.0
+offset_right = 641.0
+offset_bottom = 138.0
+placeholder_text = "Usuario"
+
+[node name="Entrada_contrasenha" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 529.0
+offset_top = 153.0
+offset_right = 643.0
+offset_bottom = 184.0
+placeholder_text = "Contraseña"
+
+[node name="Enviar" type="Button" parent="."]
+layout_mode = 0
+offset_left = 478.0
+offset_top = 207.0
+offset_right = 695.0
+offset_bottom = 269.0
+text = "Enviar datos"
+
+[node name="Registrarse" type="Button" parent="."]
+layout_mode = 0
+offset_left = 477.0
+offset_top = 273.0
+offset_right = 698.0
+offset_bottom = 338.0
+text = "No te has registrado?"

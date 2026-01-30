@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct0mwghh5h84n"]
+
+[ext_resource type="Script" uid="uid://cdxlw35yhsfav" path="res://Escenas/pestanha_register.gd" id="1_jsup0"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -1.0
+offset_right = -15.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jsup0")
+
+[node name="line_edit_contrasenha" type="LineEdit" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 411.0
+offset_top = 84.0
+offset_right = 595.0
+offset_bottom = 115.0
+placeholder_text = "contraseña"
+alignment = 1
+
+[node name="line_edit_usuario" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 413.0
+offset_top = 32.0
+offset_right = 603.0
+offset_bottom = 63.0
+placeholder_text = "Usuario"
+alignment = 1
+
+[node name="line_edit_confirmar_usuario" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 412.0
+offset_top = 133.0
+offset_right = 595.0
+offset_bottom = 164.0
+placeholder_text = "confirmar contraseña"
+
+[node name="Boton_volver_login" type="Button" parent="."]
+layout_mode = 0
+offset_left = 359.0
+offset_top = 235.0
+offset_right = 647.0
+offset_bottom = 289.0
+text = "Ir a la pestaña de Login"
+
+[node name="Boton_Registro" type="Button" parent="."]
+layout_mode = 0
+offset_left = 359.0
+offset_top = 181.0
+offset_right = 640.0
+offset_bottom = 223.0
+text = "Registrarse"
