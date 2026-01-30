@@ -5,9 +5,7 @@ extends CanvasLayer
 @onready var quit_button = $CenterContainer/VBoxContainer/Quit
 @onready var content_container = $CenterContainer/VBoxContainer
 
-func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	
+func _ready():	
 	# 1. Pausar el juego para que no siga corriendo la partida detrás
 	get_tree().paused = true
 	
