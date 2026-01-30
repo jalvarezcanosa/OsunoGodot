@@ -60,7 +60,7 @@ text = "SALIR"
 [node name="Confeti" type="CPUParticles2D" parent="."]
 process_mode = 3
 z_index = 6
-position = Vector2(984, 4)
+position = Vector2(984, -39)
 scale = Vector2(57453.645, 387.65292)
 amount = 50
 lifetime = 2.75
