@@ -6,6 +6,8 @@ extends CanvasLayer
 @onready var content_container = $CenterContainer/VBoxContainer
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	# 1. Pausar el juego para que no siga corriendo la partida detrás
 	get_tree().paused = true
 	
@@ -27,7 +29,6 @@ func animate_entry():
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 # --- SEÑALES DE LOS BOTONES ---
-
 func _on_main_menu_pressed():
 	get_tree().paused = false # Despausar antes de salir
 	get_tree().change_scene_to_file("res://Escenas/menu_inicio.tscn")
