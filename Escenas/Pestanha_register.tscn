@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://ct0mwghh5h84n"]
+[gd_scene load_steps=2 format=3 uid="uid://mha2b04c70j"]
 
-[ext_resource type="Script" uid="uid://cdxlw35yhsfav" path="res://Escenas/pestanha_register.gd" id="1_jsup0"]
+[ext_resource type="Script" path="res://Escenas/pestanha_register.gd" id="1_jsup0"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -57,3 +57,5 @@ offset_top = 181.0
 offset_right = 640.0
 offset_bottom = 223.0
 text = "Registrarse"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
