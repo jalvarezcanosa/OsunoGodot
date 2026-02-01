@@ -22,12 +22,13 @@ buses/default_bus_layout="res://Scripts/default_bus_layout.tres"
 [autoload]
 
 Session="*res://Scripts/Session.gd"
+GameManager="*res://Scripts/game_manager.gd"
+CardAtlas="*res://Scripts/card_atlas.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [input]

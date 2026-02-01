@@ -29,6 +29,22 @@ var velocity: Vector2
 var arrastrando: bool = false
 var dentro: bool = false
 var puede_pickear: bool = true
+var card_code : String
+signal card_clicked(card_code: String)
+
+func set_codigo(c: String):
+	card_code = c
+	card_texture.texture = CardAtlas.get_card_texture(card_code)
+
+
+func _gui_input(event):
+	if event is InputEventMouseButton and event.pressed:
+		card_clicked.emit(card_code)
+	
+
+func _input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton and event.pressed:
+		emit_signal("card_played", card_code)
 
 @onready var card_texture: TextureRect = $CardTexture
 @onready var shadow = $Shadow
