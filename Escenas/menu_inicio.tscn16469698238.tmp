@@ -1,106 +1,21 @@
-[gd_scene load_steps=42 format=3 uid="uid://bsxmfi5pwcce3"]
+[gd_scene load_steps=28 format=3 uid="uid://bsxmfi5pwcce3"]
 
-[ext_resource type="Script" uid="uid://cnvlyanxcvdyn" path="res://Scripts/menuInicio.gd" id="1_h6l3e"]
+[ext_resource type="Script" uid="uid://cnvlyanxcvdyn" path="res://Scripts/menuPrincipal.gd" id="1_x84wf"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_ntk23"]
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_ujxjh"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_ntk23"]
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="4_0j0h0"]
-[ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Scripts/fondo.gdshader" id="5_71mgp"]
+[ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Escenas/fondo.gdshader" id="5_71mgp"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="5_prdkb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="7_0j0h0"]
-[ext_resource type="Shader" uid="uid://dmua4dy3tdqmu" path="res://Scripts/logoUno.gdshader" id="7_o32np"]
+[ext_resource type="Shader" uid="uid://dmua4dy3tdqmu" path="res://Escenas/logoUno.gdshader" id="7_o32np"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="8_0j0h0"]
-[ext_resource type="Texture2D" uid="uid://csipnlxww5n1m" path="res://Texturas/normal_mapping_normal_map.png" id="8_h6l3e"]
 [ext_resource type="AudioStream" uid="uid://bhonw60fck3kg" path="res://Audio/Música/Moonglow  Love Theme.mp3" id="9_0qp8k"]
 [ext_resource type="Texture2D" uid="uid://d376gk7bdccar" path="res://Texturas/UNO_Logo.svg.png" id="9_prdkb"]
-[ext_resource type="Script" uid="uid://p6kycuxl3u0c" path="res://Scripts/logo.gd" id="9_yuwwx"]
-
-[sub_resource type="Gradient" id="Gradient_h6l3e"]
-offsets = PackedFloat32Array(0.38666666, 0.5925926)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7t5sj"]
-gradient = SubResource("Gradient_h6l3e")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="GDScript" id="GDScript_wuswk"]
-script/source = "extends Light2D # O Sprite2D, Node2D, etc.
-
-var velocidad = 500 # Velocidad de seguimiento
-
-func _process(delta):
-	# Obtener la posición del ratón
-	var objetivo = get_global_mouse_position()
-	
-	# Moverse hacia el ratón suavemente
-	# Si quieres movimiento instantáneo, usa: global_position = objetivo
-	global_position = global_position.lerp(objetivo, velocidad * delta / 100)
-"
-
-[sub_resource type="Animation" id="Animation_qpft7"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(226, 195)]
-}
-
-[sub_resource type="Animation" id="Animation_mm4tk"]
-resource_name = "SpotLightAnimation"
-length = 3.0
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(226, 195), Vector2(938, 813), Vector2(1650, 320)]
-}
-
-[sub_resource type="Animation" id="Animation_rp7na"]
-resource_name = "SpotLightAnimation_2"
-length = 3.0
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1572, 879), Vector2(1519, 276), Vector2(382, 744)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xqp3y"]
-_data = {
-&"RESET": SubResource("Animation_qpft7"),
-&"SpotLightAnimation": SubResource("Animation_mm4tk"),
-&"SpotLightAnimation_2": SubResource("Animation_rp7na")
-}
+[ext_resource type="Script" uid="uid://p6kycuxl3u0c" path="res://Escenas/logo.gd" id="9_yuwwx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0qp8k"]
 shader = ExtResource("5_71mgp")
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_h6l3e"]
-light_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_vhwa5"]
 offsets = PackedFloat32Array(0.6814815, 1)
@@ -111,72 +26,16 @@ gradient = SubResource("Gradient_vhwa5")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6l3e"]
-shader = ExtResource("7_o32np")
-shader_parameter/amplitude = 132.2610062823975
-shader_parameter/frequency = 0.678000032205
-shader_parameter/speed = 0.0
-shader_parameter/tightness = 0.0
-shader_parameter/normal_map = ExtResource("8_h6l3e")
-shader_parameter/normal_strength = 1.0000000475
-shader_parameter/mouse_pos = Vector2(0, 0)
-shader_parameter/pull_radius = 200.0
-shader_parameter/pull_strength = 10.0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_7t5sj"]
-size = Vector2(960, 773)
-subdivide_width = 100
-subdivide_depth = 100
-orientation = 2
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yuwwx"]
 shader = ExtResource("7_o32np")
-shader_parameter/amplitude = 240.0970114046075
-shader_parameter/frequency = 4.694000222965
-shader_parameter/speed = 4.7090002236775
+shader_parameter/amplitude = 50.000002375
+shader_parameter/frequency = 1.3160000625100001
+shader_parameter/speed = 8.81600041876
 shader_parameter/tightness = 0.0
 shader_parameter/normal_strength = 1.0
 shader_parameter/mouse_pos = Vector2(0, 0)
 shader_parameter/pull_radius = 150.0
-shader_parameter/pull_strength = 1000.0
-
-[sub_resource type="Animation" id="Animation_tw0lc"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.5, 0.5)]
-}
-
-[sub_resource type="Animation" id="Animation_wuswk"]
-resource_name = "bandera "
-length = 0.7
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0.5, 0.5), Vector2(-0.5, 0.5)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_yqdmp"]
-_data = {
-&"RESET": SubResource("Animation_tw0lc"),
-&"bandera ": SubResource("Animation_wuswk")
-}
+shader_parameter/pull_strength = 20.0
 
 [sub_resource type="Shader" id="Shader_vhwa5"]
 code = "shader_type canvas_item;
@@ -208,7 +67,7 @@ fractal_octaves = 4
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ypc88"]
 noise = SubResource("FastNoiseLite_kntej")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7t5sj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o32np"]
 resource_local_to_scene = true
 shader = SubResource("Shader_vhwa5")
 shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_ypc88")
@@ -261,7 +120,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_h6l3e")
+script = ExtResource("1_x84wf")
 
 [node name="Menú Principal" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -391,32 +250,10 @@ theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = ExtResource("2_ujxjh")
 theme_override_styles/focus = ExtResource("3_ntk23")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(226, 195)
-scale = Vector2(7, 7)
-energy = 2.0
-range_item_cull_mask = 2
-texture = SubResource("GradientTexture2D_7t5sj")
-script = SubResource("GDScript_wuswk")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="PointLight2D"]
-libraries = {
-&"": SubResource("AnimationLibrary_xqp3y")
-}
-
 [node name="FondoVerde" type="Sprite2D" parent="."]
-self_modulate = Color(1.2237577, 1.2237577, 1.2237577, 1)
+self_modulate = Color(1.2219125, 1.2219125, 1.2219125, 1)
 z_index = -2
 material = SubResource("ShaderMaterial_0qp8k")
-rotation = -1.5707964
-scale = Vector2(-0.417, 0.417)
-texture = ExtResource("4_0j0h0")
-centered = false
-
-[node name="FondoVerde2" type="Sprite2D" parent="."]
-light_mask = 2
-z_index = -2
-material = SubResource("CanvasItemMaterial_h6l3e")
 rotation = -1.5707964
 scale = Vector2(-0.417, 0.417)
 texture = ExtResource("4_0j0h0")
@@ -428,39 +265,17 @@ scale = Vector2(30, 16.875)
 texture = SubResource("GradientTexture2D_mc5bs")
 centered = false
 
-[node name="Logo Mesh" type="MeshInstance2D" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_h6l3e")
-position = Vector2(1564, 341)
-scale = Vector2(0.5, 0.5)
-mesh = SubResource("PlaneMesh_7t5sj")
-texture = ExtResource("9_prdkb")
-script = ExtResource("9_yuwwx")
-
-[node name="Musgo" type="MeshInstance2D" parent="."]
-z_index = -2
-material = SubResource("ShaderMaterial_h6l3e")
-position = Vector2(957.4238, 855.18726)
-scale = Vector2(2.0021002, 2.0021005)
-mesh = SubResource("PlaneMesh_7t5sj")
-texture = ExtResource("4_0j0h0")
-script = ExtResource("9_yuwwx")
-
 [node name="Logo" type="Sprite2D" parent="."]
-visible = false
 z_index = -2
 material = SubResource("ShaderMaterial_yuwwx")
-position = Vector2(1261, 533)
+position = Vector2(1473.0001, 262.00003)
+rotation = 0.5934119
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_prdkb")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Logo"]
-libraries = {
-&"": SubResource("AnimationLibrary_yqdmp")
-}
+script = ExtResource("9_yuwwx")
 
 [node name="Card" parent="." instance=ExtResource("5_prdkb")]
-material = SubResource("ShaderMaterial_7t5sj")
+material = SubResource("ShaderMaterial_o32np")
 layout_mode = 0
 offset_left = 1444.0
 offset_top = 551.0
@@ -484,6 +299,7 @@ environment = SubResource("Environment_ypc88")
 [node name="MúsicaInicio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_0qp8k")
 volume_db = -10.637
+autoplay = true
 parameters/looping = true
 
 [node name="Click1" type="AudioStreamPlayer" parent="."]

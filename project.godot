@@ -13,7 +13,7 @@ config_version=5
 config/name="OSUNO"
 run/main_scene="uid://bsxmfi5pwcce3"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-config/icon="res://Texturas/icon.svg"
+config/icon="uid://d376gk7bdccar"
 
 [audio]
 
@@ -22,6 +22,8 @@ buses/default_bus_layout="res://Scripts/default_bus_layout.tres"
 [autoload]
 
 Session="*res://Scripts/Session.gd"
+GameManager="*res://Scripts/game_manager.gd"
+CardAtlas="*res://Scripts/card_atlas.gd"
 
 [display]
 

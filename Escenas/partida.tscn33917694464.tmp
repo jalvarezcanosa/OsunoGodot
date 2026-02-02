@@ -1,14 +1,15 @@
-[gd_scene load_steps=18 format=3 uid="uid://1437dumm2ogl"]
+[gd_scene load_steps=19 format=3 uid="uid://1437dumm2ogl"]
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
-[ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_bnojs"]
 [ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Scripts/fondo.gdshader" id="1_mo80f"]
+[ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_qpmav"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="2_mo80f"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="3_pfv7k"]
 [ext_resource type="Texture2D" uid="uid://dsv47p35qjsjm" path="res://Texturas/Tiles_A_white.png" id="4_p51p1"]
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="4_qpmav"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="5_p51p1"]
-[ext_resource type="Texture2D" uid="uid://dsu15nb43hpsh" path="res://Texturas/normal esfera.webp" id="7_dieh8"]
+[ext_resource type="Script" uid="uid://csvcgyyx6f5j6" path="res://Scripts/ui.gd" id="5_xxy2r"]
+[ext_resource type="Script" uid="uid://cs1tbfgi4hfoj" path="res://Scripts/game_manager.gd" id="10_5n3aw"]
 
 [sub_resource type="GDScript" id="GDScript_5n3aw"]
 script/source = "extends Control
@@ -77,84 +78,91 @@ glow_intensity = 1.0
 glow_bloom = 0.2
 
 [node name="Partida" type="Node2D"]
-script = ExtResource("1_bnojs")
+script = ExtResource("1_qpmav")
 
 [node name="GameManager" type="Node" parent="."]
-
-[node name="Timer" type="Timer" parent="."]
+script = ExtResource("10_5n3aw")
 
 [node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("5_xxy2r")
 
-[node name="Cartas usuario" type="Label" parent="UI"]
-custom_minimum_size = Vector2(0, 50)
+[node name="UI usuario" type="VBoxContainer" parent="UI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_left = 1531.0
-offset_top = 523.0
+offset_top = -17.0
 offset_right = 1944.0
-offset_bottom = 573.0
+offset_bottom = 212.0
+grow_vertical = 2
+
+[node name="Cartas usuario" type="Label" parent="UI/UI usuario"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 theme = ExtResource("3_pfv7k")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = ExtResource("4_qpmav")
 theme_override_styles/focus = ExtResource("5_p51p1")
 text = "nº cartas (tú)"
 
-[node name="Estado juego" type="Label" parent="UI"]
-offset_left = 1395.0
-offset_top = 664.0
-offset_right = 1808.0
-offset_bottom = 687.0
+[node name="Estado juego" type="Label" parent="UI/UI usuario"]
+layout_mode = 2
 
-[node name="Robar" type="Button" parent="UI"]
-offset_left = 1142.0
-offset_top = 508.0
-offset_right = 2174.0
-offset_bottom = 1540.0
-scale = Vector2(0.065, 0.065)
-icon = ExtResource("7_dieh8")
+[node name="StealButton" type="Button" parent="UI/UI usuario"]
+layout_mode = 2
 
-[node name="Cartas (Mazo)" type="Label" parent="UI"]
-custom_minimum_size = Vector2(0, 50)
-offset_left = 494.0
-offset_top = 532.0
-offset_right = 907.0
-offset_bottom = 582.0
-theme = ExtResource("3_pfv7k")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = ExtResource("4_qpmav")
-theme_override_styles/focus = ExtResource("5_p51p1")
-text = "Cartas (Mazo)"
-
-[node name="Cartas rival" type="Label" parent="UI"]
-custom_minimum_size = Vector2(0, 50)
+[node name="UI rival" type="VBoxContainer" parent="UI"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_left = 2.0
-offset_top = 332.0
+offset_top = -208.0
 offset_right = 415.0
-offset_bottom = 382.0
+offset_bottom = 21.0
+grow_vertical = 2
+
+[node name="Cartas rival" type="Label" parent="UI/UI rival"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 theme = ExtResource("3_pfv7k")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = ExtResource("4_qpmav")
 theme_override_styles/focus = ExtResource("5_p51p1")
 text = "nº cartas(rival)"
 
-[node name="CartaMazo" parent="UI" instance=ExtResource("2_mo80f")]
-offset_left = 745.0
-offset_top = 416.0
-offset_right = 913.0
-offset_bottom = 676.0
+[node name="UI mazo" type="VBoxContainer" parent="UI"]
+offset_left = 290.0
+offset_top = 523.0
+offset_right = 703.0
+offset_bottom = 584.0
 
-[node name="CartaMesa(temporal)" type="Label" parent="UI"]
+[node name="Cartas (Mazo)" type="Label" parent="UI/UI mazo"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme = ExtResource("3_pfv7k")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = ExtResource("4_qpmav")
+theme_override_styles/focus = ExtResource("5_p51p1")
+text = "Cartas (Mazo)"
+
+[node name="Cartas usuario2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 40.0
+script = SubResource("GDScript_5n3aw")
 
-[node name="Cartas usuario" type="GridContainer" parent="."]
+[node name="Cartas usuario" type="GridContainer" parent="Cartas usuario2"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -106.0
-offset_top = 761.0
-offset_right = 2024.0
-offset_bottom = 1311.001
+offset_left = -126.0
+offset_top = 741.0
+offset_right = 2004.0
+offset_bottom = 1291.001
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
@@ -164,26 +172,27 @@ theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 30
 columns = 10
 
-[node name="Card" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
+[node name="Card" parent="Cartas usuario2/Cartas usuario" instance=ExtResource("2_mo80f")]
 layout_mode = 2
 
-[node name="Cartas usuario2" type="Control" parent="."]
+[node name="Cartas rival2" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = SubResource("GDScript_5n3aw")
+script = SubResource("GDScript_bnojs")
 
-[node name="Cartas rival" type="GridContainer" parent="."]
+[node name="Cartas rival" type="GridContainer" parent="Cartas rival2"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -95.0
-offset_top = -99.0
-offset_right = 2035.0
-offset_bottom = 451.0
+offset_left = -115.0
+offset_top = -119.0
+offset_right = 2015.0
+offset_bottom = 431.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 3.1415927
@@ -194,15 +203,10 @@ theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 30
 columns = 10
 
-[node name="Card" parent="Cartas rival" instance=ExtResource("2_mo80f")]
+[node name="Card" parent="Cartas rival2/Cartas rival" instance=ExtResource("2_mo80f")]
 layout_mode = 2
 
-[node name="Cartas rival2" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = SubResource("GDScript_bnojs")
+[node name="Jugar Carta" type="HTTPRequest" parent="."]
 
 [node name="DropZone" type="Area2D" parent="."]
 script = SubResource("GDScript_dieh8")
@@ -219,13 +223,12 @@ position = Vector2(930, 550)
 scale = Vector2(0.7999995, 0.7999995)
 shape = SubResource("RectangleShape2D_j7pef")
 
-[node name="Jugar Carta" type="HTTPRequest" parent="."]
-
 [node name="Robar Carta" type="HTTPRequest" parent="."]
 
 [node name="Game State" type="HTTPRequest" parent="."]
+script = ExtResource("10_5n3aw")
 
-[node name="Música" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="Viñetado" type="Sprite2D" parent="."]
 z_index = 1
