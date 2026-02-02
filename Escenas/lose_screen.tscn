@@ -1,18 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1tcmu7tg42me"]
+[gd_scene load_steps=2 format=3 uid="uid://bt0gmmeywidt7"]
 
-[ext_resource type="Script" uid="uid://cspb0h7amkcjq" path="res://scripts/victory_screen.gd" id="1_i5jdm"]
+[ext_resource type="Script" uid="uid://cuxuxsg1ay0q2" path="res://scripts/lose_screen.gd" id="1_vs66d"]
 
-[node name="victory_screen" type="CanvasLayer"]
-layer = 10
-script = ExtResource("1_i5jdm")
+[node name="lose_screen" type="CanvasLayer"]
+script = ExtResource("1_vs66d")
 
 [node name="Background" type="ColorRect" parent="."]
+process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0.6431373, 0.16862746, 0.5019608)
+color = Color(1, 0, 0, 0.5019608)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchors_preset = 5
@@ -30,12 +30,11 @@ layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="YouWon" type="Label" parent="CenterContainer/VBoxContainer"]
-process_mode = 3
+[node name="YouLose" type="Label" parent="CenterContainer/VBoxContainer"]
 z_index = 5
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
-text = "¡GANASTE!"
+text = "PERDISTE"
 horizontal_alignment = 1
 
 [node name="MainMenu" type="Button" parent="CenterContainer/VBoxContainer"]

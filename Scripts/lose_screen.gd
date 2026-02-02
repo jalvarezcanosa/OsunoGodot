@@ -21,7 +21,7 @@ func animate_entry():
 
 # --- SEÑALES DE LOS BOTONES ---
 func _on_main_menu_pressed():
-	get_tree().paused = false # Despausar antes de salir
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Escenas/menu_inicio.tscn")
 
 func _on_quit_pressed():
