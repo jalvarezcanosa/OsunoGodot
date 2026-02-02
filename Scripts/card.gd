@@ -1,4 +1,5 @@
 extends Button
+
 @onready var sonido_click: AudioStreamPlayer = $"Sonido Click"
 @onready var sonido_pick: AudioStreamPlayer = $"Sonido Pick"
 @onready var sonido_release: AudioStreamPlayer = $"Sonido Release"
@@ -12,7 +13,7 @@ extends Button
 @export var damp: float = 10.0
 @export var velocity_multiplier: float = 1.5
 
-var displacement: float = 0.0 
+var displacement: float = 0.0
 var oscillator_velocity: float = 0.0
 
 var tween_rot: Tween
@@ -29,26 +30,36 @@ var velocity: Vector2
 var arrastrando: bool = false
 var dentro: bool = false
 var puede_pickear: bool = true
-var card_code : String
+var card_code: String = ""
+
 signal card_clicked(card_code: String)
-
-func set_codigo(c: String):
-	card_code = c
-	card_texture.texture = CardAtlas.get_card_texture(card_code)
-
-
-func _gui_input(event):
-	if event is InputEventMouseButton and event.pressed:
-		card_clicked.emit(card_code)
-	
-
-func _input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton and event.pressed:
-		emit_signal("card_played", card_code)
 
 @onready var card_texture: TextureRect = $CardTexture
 @onready var shadow = $Shadow
 @onready var collision_shape = $DestroyArea/CollisionShape2D
+
+# ===============================
+# 🔥 AQUÍ ESTABA EL PUTO PROBLEMA
+# ===============================
+func set_codigo(c: String) -> void:
+	card_code = c
+
+	if card_texture == null:
+		push_error("❌ CardTexture es NULL")
+		return
+
+	var tex := CardAtlas.get_card_texture(card_code)
+	if tex == null:
+		push_error("❌ Textura NULL para carta: " + card_code)
+		return
+
+	card_texture.texture = tex
+
+	# refrescar shader SIEMPRE
+	if card_texture.material != null:
+		card_texture.material.set_shader_parameter("atlas_size", tex.get_size())
+
+# ===============================
 
 func _ready() -> void:
 	shadow.self_modulate.a = 0.4
@@ -60,7 +71,7 @@ func _process(delta: float) -> void:
 	rotate_velocity(delta)
 	follow_mouse(delta)
 	handle_shadow(delta)
-	
+
 func destroy() -> void:
 	card_texture.use_parent_material = true
 	if tween_destroy and tween_destroy.is_running():
@@ -70,35 +81,35 @@ func destroy() -> void:
 	tween_destroy.parallel().tween_property(shadow, "self_modulate:a", 0.0, 1.0)
 
 func rotate_velocity(delta: float) -> void:
-	if not following_mouse: return
-	var center_pos: Vector2 = global_position - (size/2.0)
+	if not following_mouse:
+		return
+
 	velocity = (position - last_pos) / delta
 	last_pos = position
-	
+
 	oscillator_velocity += velocity.normalized().x * velocity_multiplier
-	
 	var force = -spring * displacement - damp * oscillator_velocity
 	oscillator_velocity += force * delta
 	displacement += oscillator_velocity * delta
-	
 	rotation = displacement
 
 func handle_shadow(delta: float) -> void:
 	var center: Vector2 = get_viewport_rect().size / 2.0
 	var distance: float = global_position.x - center.x
-	
-	shadow.position.x = lerp(0.0, -sign(distance) * max_offset_shadow, abs(distance/(center.x)))
+	shadow.position.x = lerp(0.0, -sign(distance) * max_offset_shadow, abs(distance / center.x))
 
 func follow_mouse(delta: float) -> void:
-	if not following_mouse: return
-	var mouse_pos: Vector2 = get_global_mouse_position()
-	global_position = mouse_pos - (size/2.0)
+	if not following_mouse:
+		return
+	global_position = get_global_mouse_position() - (size / 2.0)
 
 func handle_mouse_click(event: InputEvent) -> void:
 	shadow.self_modulate.a = 0.8
-	if not event is InputEventMouseButton: return
-	if event.button_index != MOUSE_BUTTON_LEFT: return
-	
+	if not event is InputEventMouseButton:
+		return
+	if event.button_index != MOUSE_BUTTON_LEFT:
+		return
+
 	if event.is_pressed():
 		arrastrando = true
 		puede_pickear = false
@@ -132,28 +143,27 @@ func handle_mouse_click(event: InputEvent) -> void:
 
 func _on_gui_input(event: InputEvent) -> void:
 	handle_mouse_click(event)
-	if following_mouse: return
-	if not event is InputEventMouseMotion: return
-	
-	var mouse_pos: Vector2 = get_local_mouse_position()
-	var diff: Vector2 = (position + size) - mouse_pos
+	if following_mouse:
+		return
+	if not event is InputEventMouseMotion:
+		return
 
+	var mouse_pos: Vector2 = get_local_mouse_position()
 	var lerp_val_x: float = remap(mouse_pos.x, 0.0, size.x, 0, 1)
 	var lerp_val_y: float = remap(mouse_pos.y, 0.0, size.y, 0, 1)
 
 	var rot_x: float = rad_to_deg(lerp_angle(-angle_x_max, angle_x_max, lerp_val_x))
 	var rot_y: float = rad_to_deg(lerp_angle(angle_y_max, -angle_y_max, lerp_val_y))
-	
+
 	card_texture.material.set_shader_parameter("x_rot", rot_y)
 	card_texture.material.set_shader_parameter("y_rot", rot_x)
 
 func _on_mouse_entered() -> void:
 	dentro = true
-	if arrastrando:
-		return
-	if not puede_pickear:
+	if arrastrando or not puede_pickear:
 		return
 	sonido_pick.play()
+
 	if tween_hover and tween_hover.is_running():
 		tween_hover.kill()
 	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
@@ -164,12 +174,15 @@ func _on_mouse_exited() -> void:
 	puede_pickear = true
 	if arrastrando:
 		return
+
 	shadow.self_modulate.a = 0.4
+
 	if tween_rot and tween_rot.is_running():
 		tween_rot.kill()
 	tween_rot = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_parallel(true)
 	tween_rot.tween_property(card_texture.material, "shader_parameter/x_rot", 0.0, 0.5)
 	tween_rot.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.5)
+
 	if tween_hover and tween_hover.is_running():
 		tween_hover.kill()
 	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)

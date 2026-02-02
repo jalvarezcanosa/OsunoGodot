@@ -15,12 +15,12 @@ uniform float pull_strength = 20.0;
 void vertex() {
     float t = TIME * speed;
 
-    // --- Onda de viento ---
+    // Onda viento
     float anchor = smoothstep(0, tightness, UV.x);
     float wave = sin(UV.y * frequency * 6.28318 + t) * amplitude * anchor;
     VERTEX.y += wave;
 
-    // --- Atracción al ratón estilo Mario 64 ---
+    // Atracción al ratón estilo Mario 64
     vec2 to_mouse = mouse_pos - VERTEX;
     float dist = length(to_mouse);
 

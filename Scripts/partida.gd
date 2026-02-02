@@ -20,10 +20,8 @@ func _ready() -> void:
 	# Empezar polling
 	timer.start()
 
-
 func _on_timer_timeout() -> void:
 	request_game_state()
-
 
 func request_game_state() -> void:
 	var headers = [
@@ -64,7 +62,6 @@ func _on_game_state_request_completed(
 func update_ui(data: Dictionary) -> void:
 	estado_juego.text = "Tu turno: %s | Cartas en mazo: %d" % [
 		str(data["isYourTurn"]),
-		data["cardsLeftInDeck"]
 	]
 
 	carta_mesa.text = "Carta en mesa: " + data["tableCard"]
@@ -76,5 +73,5 @@ func update_ui(data: Dictionary) -> void:
 	# Crear cartas
 	for carta in data["yourHand"]:
 		var card = card_scene.instantiate()   # Button
-		card.text = carta
+		card.set_codigo(carta)
 		mano_jugador.add_child(card)
