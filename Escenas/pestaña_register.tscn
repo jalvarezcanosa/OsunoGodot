@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkqsxwd3s648s"]
+
+[ext_resource type="Script" uid="uid://dumk07c02viqx" path="res://Escenas/pestaña_register.gd" id="1_77scr"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_77scr")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="usuario" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 739.0
+offset_top = 284.0
+offset_right = 1036.0
+offset_bottom = 315.0
+placeholder_text = "usuario"
+alignment = 1
+
+[node name="con" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 745.0
+offset_top = 340.0
+offset_right = 1039.0
+offset_bottom = 371.0
+placeholder_text = "contaseña"
+alignment = 1
+
+[node name="confir" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 732.0
+offset_top = 398.0
+offset_right = 1041.0
+offset_bottom = 429.0
+placeholder_text = "confirmar_contraseña"
+alignment = 1
+
+[node name="Reg" type="Button" parent="."]
+layout_mode = 0
+offset_left = 678.0
+offset_top = 454.0
+offset_right = 1077.0
+offset_bottom = 505.0
+text = "registrarse"
+
+[node name="volver" type="Button" parent="."]
+layout_mode = 0
+offset_left = 678.0
+offset_top = 512.0
+offset_right = 1077.0
+offset_bottom = 568.0
+text = "volver
+"

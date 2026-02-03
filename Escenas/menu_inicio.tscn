@@ -5,7 +5,7 @@
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_ujxjh"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_ntk23"]
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="4_0j0h0"]
-[ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Scripts/fondo.gdshader" id="5_71mgp"]
+[ext_resource type="Shader" path="res://Scripts/fondo.gdshader" id="5_71mgp"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="5_prdkb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="7_0j0h0"]
 [ext_resource type="Shader" uid="uid://dmua4dy3tdqmu" path="res://Scripts/logoUno.gdshader" id="7_o32np"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://csipnlxww5n1m" path="res://Texturas/normal_mapping_normal_map.png" id="8_h6l3e"]
 [ext_resource type="AudioStream" uid="uid://bhonw60fck3kg" path="res://Audio/Música/Moonglow  Love Theme.mp3" id="9_0qp8k"]
 [ext_resource type="Texture2D" uid="uid://d376gk7bdccar" path="res://Texturas/UNO_Logo.svg.png" id="9_prdkb"]
-[ext_resource type="Script" uid="uid://p6kycuxl3u0c" path="res://Scripts/logo.gd" id="9_yuwwx"]
+[ext_resource type="Script" path="res://Scripts/logo.gd" id="9_yuwwx"]
 
 [sub_resource type="Gradient" id="Gradient_h6l3e"]
 offsets = PackedFloat32Array(0.38666666, 0.5925926)
@@ -391,6 +391,10 @@ theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = ExtResource("2_ujxjh")
 theme_override_styles/focus = ExtResource("3_ntk23")
 
+[node name="Button" type="Button" parent="Inicio de sesión"]
+layout_mode = 2
+text = "registrarse"
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(226, 195)
 scale = Vector2(7, 7)
@@ -503,4 +507,5 @@ volume_db = -10.0
 [connection signal="value_changed" from="Volúmen/Musica/Slider Música" to="." method="_on_slider_música_value_changed"]
 [connection signal="value_changed" from="Volúmen/Efectos/Slider Efectos" to="." method="_on_slider_efectos_value_changed"]
 [connection signal="pressed" from="Inicio de sesión/Iniciar Sesión" to="." method="_on_iniciar_sesión_pressed"]
+[connection signal="pressed" from="Inicio de sesión/Button" to="." method="_on_button_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
