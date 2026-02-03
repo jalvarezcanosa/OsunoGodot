@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var jugar_carta_req: HTTPRequest = $"Jugar Carta"
 @onready var game_state: HTTPRequest = $"Game State"
 @onready var mano_jugador: GridContainer = $"Cartas usuario"
 @onready var estado_juego: Label = $"UI/Estado juego"
@@ -13,6 +14,7 @@ var url_game_state := "http://127.0.0.1:8000/game/" + Session.room_code
 func _ready() -> void:
 	timer.timeout.connect(_on_timer_timeout)
 	game_state.request_completed.connect(_on_game_state_request_completed)
+	jugar_carta_req.request_completed.connect(_on_play_card_completed)
 
 	# Primera llamada inmediata
 	request_game_state()
@@ -70,3 +72,34 @@ func update_ui(data: Dictionary) -> void:
 		var card = card_scene.instantiate()   # Button
 		card.set_codigo(carta)
 		mano_jugador.add_child(card)
+
+func jugar_carta(codigo_carta: String) -> void:
+	# 1. Construir la URL del endpoint
+	var url = url_game_state + "/play"
+	
+	# 2. Headers
+	var headers = [
+		"Content-Type: application/json",
+		"Session: %s" % Session.token
+	]
+	
+	# 3. Cuerpo de la petición (debe coincidir con lo que espera Django: 'cardToPlay')
+	var body = JSON.stringify({
+		"cardToPlay": codigo_carta
+	})
+	
+	#4. Enviar POST
+	var err = jugar_carta_req.request(url, headers, HTTPClient.METHOD_POST, body)
+	if err != OK:
+		print("Error al intentar enviar la carta")
+		
+func _on_play_card_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+		var json = JSON.parse_string(body.get_string_from_utf8())
+	
+		if response_code == 201:
+			print("Carta jugada")
+			request_game_state()
+		elif response_code == 403:
+			estado_juego.text = "Error: " + json.get("error", "No puedes jugar esa carta")
+		else: 
+			print("Error del servidor: ", response_code)
