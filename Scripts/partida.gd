@@ -7,6 +7,7 @@ extends Node2D
 @onready var carta_mesa: Label = $"UI/CartaMesa(temporal)"
 @onready var timer: Timer = $Timer
 
+var carta_jugandose: Node = null
 var card_scene = preload("res://Escenas/Card.tscn")
 var url_game_state := "http://127.0.0.1:8000/game/" + Session.room_code
 
@@ -98,8 +99,22 @@ func _on_play_card_completed(result: int, response_code: int, headers: PackedStr
 	
 		if response_code == 201:
 			print("Carta jugada")
+			if carta_jugandose and is_instance_valid(carta_jugandose):
+				carta_jugandose.destroy()
 			request_game_state()
 		elif response_code == 403:
 			estado_juego.text = "Error: " + json.get("error", "No puedes jugar esa carta")
+			if carta_jugandose and is_instance_valid(carta_jugandose):
+				carta_jugandose.return_to_hand()
 		else: 
 			print("Error del servidor: ", response_code)
+
+
+func _on_drop_zone_card_dropped(card: Variant) -> void:
+	print("Drop detectado: ", card.card_code)
+	
+	# 1. Guardamos referencia para saber a quién destruir o devolver
+	carta_jugandose = card
+	
+	# 2. Llamamos al backend
+	jugar_carta(card.card_code)

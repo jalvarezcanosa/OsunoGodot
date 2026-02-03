@@ -257,6 +257,7 @@ centered = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_51247")
 
+[connection signal="card_dropped" from="DropZone" to="." method="_on_drop_zone_card_dropped"]
 [connection signal="request_completed" from="Jugar Carta" to="." method="_on_jugar_carta_request_completed"]
 [connection signal="request_completed" from="Robar Carta" to="." method="_on_robar_carta_request_completed"]
 [connection signal="request_completed" from="Game State" to="." method="_on_game_state_request_completed"]

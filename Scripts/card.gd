@@ -31,6 +31,7 @@ var arrastrando: bool = false
 var dentro: bool = false
 var puede_pickear: bool = true
 var card_code: String = ""
+var original_position: Vector2
 
 signal card_clicked(card_code: String)
 
@@ -76,6 +77,7 @@ func _ready() -> void:
 	angle_x_max = deg_to_rad(angle_x_max)
 	angle_y_max = deg_to_rad(angle_y_max)
 	collision_shape.set_deferred("disabled", true)
+	original_position = position
 
 func _process(delta: float) -> void:
 	rotate_velocity(delta)
@@ -121,10 +123,12 @@ func handle_mouse_click(event: InputEvent) -> void:
 		return
 
 	if event.is_pressed():
+		original_position = position
 		arrastrando = true
 		puede_pickear = false
 		following_mouse = true
 		sonido_click.play()
+		collision_shape.set_deferred("disabled", true)
 	else:
 		arrastrando = false
 		following_mouse = false
@@ -189,11 +193,27 @@ func _on_mouse_exited() -> void:
 
 	if tween_rot and tween_rot.is_running():
 		tween_rot.kill()
-	tween_rot = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_parallel(true)
-	tween_rot.tween_property(card_texture.material, "shader_parameter/x_rot", 0.0, 0.5)
-	tween_rot.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.5)
+	#tween_rot = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_parallel(true)
+	#tween_rot.tween_property(card_texture.material, "shader_parameter/x_rot", 0.0, 0.5)
+	#tween_rot.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.5)
 
 	if tween_hover and tween_hover.is_running():
 		tween_hover.kill()
 	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween_hover.tween_property(self, "scale", Vector2.ONE, 0.55)
+	
+func _check_dropped_on_nothing():
+	# Si seguimos existiendo y no fuimos destruidos por una jugada válida
+	# Volvemos a la mano
+	if is_instance_valid(self):
+		return_to_hand()
+		
+func return_to_hand() -> void:
+	collision_shape.set_deferred("disabled", true)
+	
+	if tween_handle and tween_handle.is_running():
+		tween_handle.kill()
+
+	tween_handle = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween_handle.tween_property(self, "position", original_position, 0.5)
+	tween_handle.parallel().tween_property(self, "rotation", 0.0, 0.5)
