@@ -142,8 +142,10 @@ offset_right = 913.0
 offset_bottom = 676.0
 
 [node name="CartaMesa(temporal)" type="Label" parent="UI"]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 497.0
+offset_top = 599.0
+offset_right = 728.0
+offset_bottom = 639.0
 
 [node name="Cartas usuario" type="GridContainer" parent="."]
 anchors_preset = 8

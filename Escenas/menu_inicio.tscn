@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://csipnlxww5n1m" path="res://Texturas/normal_mapping_normal_map.png" id="8_h6l3e"]
 [ext_resource type="AudioStream" uid="uid://bhonw60fck3kg" path="res://Audio/Música/Moonglow  Love Theme.mp3" id="9_0qp8k"]
 [ext_resource type="Texture2D" uid="uid://d376gk7bdccar" path="res://Texturas/UNO_Logo.svg.png" id="9_prdkb"]
-[ext_resource type="Script" uid="uid://p6kycuxl3u0c" path="res://Scripts/logo.gd" id="9_yuwwx"]
+[ext_resource type="Script" path="res://Scripts/logo.gd" id="9_yuwwx"]
 
 [sub_resource type="Gradient" id="Gradient_h6l3e"]
 offsets = PackedFloat32Array(0.38666666, 0.5925926)

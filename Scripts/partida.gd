@@ -38,12 +38,7 @@ func request_game_state() -> void:
 		print("Error al pedir game state")
 
 
-func _on_game_state_request_completed(
-	result: int,
-	response_code: int,
-	headers: PackedStringArray,
-	body: PackedByteArray
-) -> void:
+func _on_game_state_request_completed(result: int,response_code: int,headers: PackedStringArray,body: PackedByteArray) -> void:
 
 	if response_code != 200:
 		print("Game state error:", response_code)

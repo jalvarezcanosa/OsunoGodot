@@ -38,9 +38,9 @@ signal card_clicked(card_code: String)
 @onready var shadow = $Shadow
 @onready var collision_shape = $DestroyArea/CollisionShape2D
 
-# ===============================
-# 🔥 Set codigo seguro y carta inicial
-# ===============================
+
+# Set codigo seguro y carta inicial
+
 func set_codigo(c: String) -> void:
 	card_code = c
 
@@ -71,7 +71,6 @@ func set_codigo(c: String) -> void:
 	if card_texture.material != null:
 		card_texture.material.set_shader_parameter("atlas_size", tex.get_size())
 
-# ===============================
 func _ready() -> void:
 	shadow.self_modulate.a = 0.4
 	angle_x_max = deg_to_rad(angle_x_max)
