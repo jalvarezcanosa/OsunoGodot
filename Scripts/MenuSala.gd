@@ -60,6 +60,8 @@ func _on_unirse_sala_pressed() -> void:
 		HTTPClient.METHOD_POST,
 		body_json
 	)
+
+	
 	if err != OK:
 		codigo_sala_unir.text = "No se pudo enviar la solicitud"
 		
@@ -89,23 +91,29 @@ func _on_post_unir_sala_request_completed(result: int, response_code: int, heade
 	print("STATUS:", response_code)
 	print("BODY:", body_str)
 	
-	if response_code == 200:
-		codigo_sala_unir.text = "Sesión iniciada"
-		await get_tree().create_timer(0.5).timeout
-		get_tree().change_scene_to_file("res://Escenas/partida.tscn")
-	if response_code == 404:
-		codigo_sala_unir.text = "Sala no encontrada"
-	elif response_code == 400:
-		codigo_sala_unir.text = "No te puedes unir a tu propia sala"
-	elif response_code == 409:
-		codigo_sala_unir.text = "Sala llena"
-	elif response_code == 401:
-		codigo_sala_unir.text = "Sesión inválida"
-	else:
-		codigo_sala_unir.text = "Error al unirse a la sala"
-
+	if response_code != 200:
+		if response_code == 404:
+			codigo_sala_unir.text = "Sala no encontrada"
+		elif response_code == 400:
+			codigo_sala_unir.text = "No te puedes unir a tu propia sala"
+		elif response_code == 409:
+			codigo_sala_unir.text = "Sala llena"
+		elif response_code == 401:
+			codigo_sala_unir.text = "Sesión inválida"
+		else:
+			codigo_sala_unir.text = "Error al unirse a la sala"
+		return
 	var data = JSON.parse_string(body_str)
+	
 	if data == null:
 		codigo_sala_unir.text = "Respuesta inválida del servidor"
 		return
 		
+	Session.room_code = codigo_sala_unir.text.strip_edges()
+	print("Room code guardado:", Session.room_code)
+	
+	
+
+	codigo_sala_unir.text = "Sesión iniciada"
+	await get_tree().create_timer(0.5).timeout
+	get_tree().change_scene_to_file("res://Escenas/partida.tscn")

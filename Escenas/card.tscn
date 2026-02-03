@@ -1,8 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://ccpeukrdsfbkm"]
+[gd_scene load_steps=12 format=3 uid="uid://ccpeukrdsfbkm"]
 
 [ext_resource type="Shader" uid="uid://sxknx5jqibgs" path="res://Scripts/fake_3D.gdshader" id="1_7h7yf"]
 [ext_resource type="Script" uid="uid://dfw3a08g31fpf" path="res://Scripts/card.gd" id="1_borcn"]
-[ext_resource type="Texture2D" uid="uid://dikoacdmoam83" path="res://Texturas/Atlas Uno Clásicas.png" id="3_m1y0b"]
 [ext_resource type="Texture2D" uid="uid://dsv47p35qjsjm" path="res://Texturas/Tiles_A_white.png" id="4_m1y0b"]
 [ext_resource type="Script" uid="uid://drar6ncfdqg02" path="res://Scripts/card_texture.gd" id="4_x61kk"]
 [ext_resource type="AudioStream" uid="uid://njve6c7yyer3" path="res://Audio/SFX/SFX_Card_Select.wav" id="7_ec5o8"]
@@ -27,10 +26,6 @@ shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
 shader_parameter/edge_brightness = 2.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1y0b"]
-atlas = ExtResource("3_m1y0b")
-filter_clip = true
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xsth3"]
 size = Vector2(168, 260)
 
@@ -53,7 +48,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("AtlasTexture_m1y0b")
 expand_mode = 1
 script = ExtResource("4_x61kk")
 
@@ -86,13 +80,13 @@ pitch_scale = 1.44
 bus = &"Efectos"
 
 [node name="Sonido Pick" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_ga7b0")
+stream = ExtResource("8_ec5o8")
 volume_db = -9.541
 pitch_scale = 1.5
 bus = &"Efectos"
 
 [node name="Sonido Release" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_ec5o8")
+stream = ExtResource("7_ga7b0")
 volume_db = -12.404
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
