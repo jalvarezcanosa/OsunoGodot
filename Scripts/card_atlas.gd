@@ -1,4 +1,5 @@
 extends Node
+const ATLAS_UNO_CLÁSICAS = preload("uid://dikoacdmoam83")
 
 const ATLAS_PATH := "res://Texturas/Atlas Uno Clásicas.png"
 const COORDS_PATH := "res://Texturas/card_coords.json"

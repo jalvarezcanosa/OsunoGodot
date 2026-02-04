@@ -33,6 +33,7 @@ size = Vector2(168, 260)
 custom_minimum_size = Vector2(168, 260)
 offset_right = 168.0
 offset_bottom = 255.0
+theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxEmpty_m1y0b")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_7aqjh")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_7aqjh")

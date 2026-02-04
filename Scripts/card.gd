@@ -39,10 +39,16 @@ signal card_clicked(card_code: String)
 @onready var collision_shape = $DestroyArea/CollisionShape2D
 
 
-# Set codigo seguro y carta inicial
+func set_rival() -> void:
+	puede_pickear = false
+	arrastrando = false
+	following_mouse = false
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	disabled = true
 
 func set_codigo(c: String) -> void:
 	card_code = c
+	text = card_code
 
 	if card_code == null or card_code == "":
 		# Carta inicial o sin código → sin animaciones ni follow
@@ -53,7 +59,7 @@ func set_codigo(c: String) -> void:
 		rotation = 0
 		shadow.self_modulate.a = 0.4
 		# si quieres poner textura por defecto, descomenta:
-		# card_texture.texture = CardAtlas.get_card_texture("R0")
+		card_texture.texture = CardAtlas.get_card_texture("R0")
 		return
 
 	if card_texture == null:
@@ -122,11 +128,13 @@ func handle_mouse_click(event: InputEvent) -> void:
 
 	if event.is_pressed():
 		arrastrando = true
+		Session.is_dragging_card = true
 		puede_pickear = false
 		following_mouse = true
 		sonido_click.play()
 	else:
 		arrastrando = false
+		Session.is_dragging_card = false
 		following_mouse = false
 		collision_shape.set_deferred("disabled", false)
 
