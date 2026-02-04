@@ -185,6 +185,7 @@ centered = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_51247")
 
+[connection signal="carta_soltada" from="UI/CartaMazo" to="." method="_on_carta_mazo_carta_soltada"]
 [connection signal="area_entered" from="DropZone" to="." method="_on_drop_zone_area_entered"]
 [connection signal="area_exited" from="DropZone" to="." method="_on_drop_zone_area_exited"]
 [connection signal="request_completed" from="Jugar Carta" to="." method="_on_jugar_carta_request_completed"]

@@ -74,15 +74,9 @@ func update_ui(data: Dictionary) -> void:
 	carta_mesa.text = "Carta en mesa: " + data["tableCard"]
 
 	var new_hand: Array = data["yourHand"]
-	if new_hand == last_hand:
-		return
-		
-	last_hand = new_hand.duplicate()
-	_update_hand(new_hand)
-		
-	# Limpiar mano
-	for child in mano_jugador.get_children():
-		child.queue_free()
+	if new_hand != last_hand:
+		last_hand = new_hand.duplicate()
+		_update_hand(new_hand)
 
 	# --- CARTAS RIVAL ---
 	for child in mano_rival.get_children():
@@ -99,11 +93,7 @@ func update_ui(data: Dictionary) -> void:
 		card.set_rival()
 		card.text = "??" # MVP
 		mano_rival.add_child(card)
-	# Crear cartas
-	for carta in data["yourHand"]:
-		var card = card_scene.instantiate()   # Button
-		card.set_codigo(carta)
-		mano_jugador.add_child(card)
+		
 
 func _update_hand(hand: Array) -> void:
 	for child in mano_jugador.get_children():
@@ -112,9 +102,11 @@ func _update_hand(hand: Array) -> void:
 	for carta in hand:
 		var card = card_scene.instantiate()
 		card.set_codigo(carta)
+		
+		card.carta_soltada.connect(_on_carta_mazo_carta_soltada)
 		mano_jugador.add_child(card)
-
-
+		
+		
 func _on_drop_zone_area_entered(area: Area2D) -> void:
 	var carta = area.get_parent()
 	if carta.has_method("set_codigo"):
@@ -129,14 +121,6 @@ func _on_drop_zone_area_exited(area: Area2D) -> void:
 		print("Carta salió de dropzone")
 
 
-func _on_carta_soltada(carta) -> void:
-	if carta_en_dropzone == carta:
-		print("Jugando carta: ", carta.card_code)
-		enviar_jugada_backend(carta.card_code)
-	else:
-		print("Carta soltada fuera de la zona")
-	
-		
 func enviar_jugada_backend(card_code: String) -> void:
 	var url = url_game_state + "/play"
 	var headers = [
@@ -156,3 +140,10 @@ func _on_jugar_carta_request_completed(result: int, response_code: int, headers:
 		var resp = body.get_string_from_utf8()
 		print("Error al jugar carta: ", resp)
 		
+
+func _on_carta_mazo_carta_soltada(card: Variant) -> void:
+	if carta_en_dropzone == card:
+		print("Jugando carta: ", card.card_code)
+		enviar_jugada_backend(card.card_code)
+	else:
+		print("Carta soltada fuera de la zona") 
