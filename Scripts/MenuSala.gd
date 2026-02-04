@@ -6,18 +6,17 @@ extends Node2D
 @onready var codigo_sala_unir: LineEdit = $"Botonera/BotonesMenú/Código Sala Unir"
 @onready var post_crear_sala: HTTPRequest = $PostCrearSala
 @onready var post_unir_sala: HTTPRequest = $PostUnirSala
+@onready var get_estado_sala: HTTPRequest = $GetEstadoSala
+@onready var room_status_timer: Timer = $Timer
+var polling_en_curso: bool = false
 
 var url_stats : String = "http://127.0.0.1:8000/users/me"
-
 var url_crear_room : String = "http://127.0.0.1:8000/room"
-# CON GET var url_roomstatus := url + room_code
-
-
 
 func _ready() -> void:
 	codigo_sala_crear.hide()
 	post_crear_sala.request_completed.connect(_on_post_crear_sala_request_completed)
-
+	get_estado_sala.request_completed.connect(_on_get_estado_sala_request_completed)
 
 func _on_crear_sala_pressed() -> void:
 	click_1.play()
@@ -64,7 +63,7 @@ func _on_unirse_sala_pressed() -> void:
 	
 	if err != OK:
 		codigo_sala_unir.text = "No se pudo enviar la solicitud"
-		
+
 func _on_volver_pressed() -> void:
 	click_2.play()
 	await get_tree().create_timer(0.2).timeout
@@ -85,7 +84,9 @@ func _on_post_crear_sala_request_completed(result: int, response_code: int, head
 		return
 		
 	codigo_sala_crear.text = data ["roomCode"]
-
+	Session.room_code = codigo_sala_crear.text.strip_edges()
+	room_status_timer.start()
+	
 func _on_post_unir_sala_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var body_str = body.get_string_from_utf8()
 	print("STATUS:", response_code)
@@ -112,8 +113,44 @@ func _on_post_unir_sala_request_completed(result: int, response_code: int, heade
 	Session.room_code = codigo_sala_unir.text.strip_edges()
 	print("Room code guardado:", Session.room_code)
 	
-	
-
 	codigo_sala_unir.text = "Sesión iniciada"
-	await get_tree().create_timer(0.5).timeout
-	get_tree().change_scene_to_file("res://Escenas/partida.tscn")
+	room_status_timer.start()
+
+
+func _on_get_estado_sala_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	if response_code != 200:
+		return
+	polling_en_curso = false
+	var body_str := body.get_string_from_utf8()
+	var data : Dictionary = JSON.parse_string(body_str)
+	if data == null:
+		return
+
+	if not data.has("status"):
+		return
+
+	if data["status"] == "gameStarted":
+		room_status_timer.stop()
+		get_tree().change_scene_to_file("res://Escenas/partida.tscn")
+
+func _on_timer_timeout() -> void:
+	if Session.room_code == "":
+		return
+
+	if polling_en_curso:
+		return
+
+	var url_roomstatus := url_crear_room + "/" + Session.room_code
+
+	var headers = [
+		"Content-Type: application/json",
+		"Session: %s" % Session.token
+	]
+	
+	polling_en_curso = true
+
+	get_estado_sala.request(
+		url_roomstatus,
+		headers,
+		HTTPClient.METHOD_GET
+	)

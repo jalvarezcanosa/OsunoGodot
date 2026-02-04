@@ -213,6 +213,8 @@ volume_db = -10.0
 
 [node name="PostUnirSala" type="HTTPRequest" parent="."]
 
+[node name="GetEstadoSala" type="HTTPRequest" parent="."]
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(226, 195)
 scale = Vector2(3.9062502, 3.9062502)
@@ -235,8 +237,13 @@ libraries = {
 }
 autoplay = "SpotLightAnimation_2"
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="pressed" from="Botonera/BotonesMenú/Crear Sala" to="." method="_on_crear_sala_pressed"]
 [connection signal="pressed" from="Botonera/BotonesMenú/Unirse Sala" to="." method="_on_unirse_sala_pressed"]
 [connection signal="pressed" from="Botonera/BotonesMenú/Volver" to="." method="_on_volver_pressed"]
 [connection signal="request_completed" from="PostCrearSala" to="." method="_on_post_crear_sala_request_completed"]
 [connection signal="request_completed" from="PostUnirSala" to="." method="_on_post_unir_sala_request_completed"]
+[connection signal="request_completed" from="GetEstadoSala" to="." method="_on_get_estado_sala_request_completed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

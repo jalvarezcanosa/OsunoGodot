@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://1437dumm2ogl"]
+[gd_scene load_steps=15 format=3 uid="uid://1437dumm2ogl"]
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
 [ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_bnojs"]
@@ -9,51 +9,6 @@
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="4_qpmav"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="5_p51p1"]
 [ext_resource type="Texture2D" uid="uid://dsu15nb43hpsh" path="res://Texturas/normal esfera.webp" id="7_dieh8"]
-
-[sub_resource type="GDScript" id="GDScript_5n3aw"]
-script/source = "extends Control
-
-@onready var grid := $\"Cartas usuario\"
-@export var card_scene : PackedScene
-
-func set_hand(cards : Array):
-	for c in grid.get_children():
-		c.queue_free()
-
-	for card_code in cards:
-		var card = card_scene.instantiate()
-		card.set_card(card_code)
-		card.card_clicked.connect(_on_card_clicked)
-		grid.add_child(card)
-
-func _on_card_clicked(card_code):
-	get_parent().get_node(\"GameState\").play_card(card_code)
-"
-
-[sub_resource type="GDScript" id="GDScript_bnojs"]
-script/source = "extends Control
-
-@onready var grid := $GridContainer
-@export var back_card_scene : PackedScene
-
-func set_card_count(count : int):
-	for c in grid.get_children():
-		c.queue_free()
-
-	for i in count:
-		var card = back_card_scene.instantiate()
-		grid.add_child(card)
-"
-
-[sub_resource type="GDScript" id="GDScript_dieh8"]
-script/source = "extends Area2D
-
-signal card_dropped(card)
-
-func _on_area_entered(area):
-	if area is Area2D and area.has_method(\"return_to_hand\"):
-		emit_signal(\"card_dropped\", area)
-"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j7pef"]
 size = Vector2(437.50012, 255.00024)
@@ -146,6 +101,7 @@ offset_left = 497.0
 offset_top = 599.0
 offset_right = 728.0
 offset_bottom = 639.0
+theme_override_font_sizes/font_size = 25
 
 [node name="Cartas usuario" type="GridContainer" parent="."]
 anchors_preset = 8
@@ -165,16 +121,6 @@ localize_numeral_system = false
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 30
 columns = 10
-
-[node name="Card" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Cartas usuario2" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = SubResource("GDScript_5n3aw")
 
 [node name="Cartas rival" type="GridContainer" parent="."]
 anchors_preset = 8
@@ -196,18 +142,7 @@ theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 30
 columns = 10
 
-[node name="Card" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Cartas rival2" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = SubResource("GDScript_bnojs")
-
 [node name="DropZone" type="Area2D" parent="."]
-script = SubResource("GDScript_dieh8")
 
 [node name="Sprite2D" type="Sprite2D" parent="DropZone"]
 self_modulate = Color(0, 0, 0, 0.3254902)
