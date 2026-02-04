@@ -75,8 +75,7 @@ func update_ui(data: Dictionary) -> void:
 		var card = card_scene.instantiate()
 		card.set_rival()  # Fondo gris + "??"
 		mano_rival.add_child(card)
-
-# FUNCIONES MANO JUGADOR
+		
 
 func _update_hand(hand: Array) -> void:
 	for child in mano_jugador.get_children():
@@ -93,6 +92,7 @@ func _on_drop_zone_area_entered(area: Area2D) -> void:
 	if carta.has_method("set_codigo"):
 		carta_en_dropzone = carta
 		print("Carta sobre dropzone: ", carta.card_code)
+
 
 func _on_drop_zone_area_exited(area: Area2D) -> void:
 	var carta = area.get_parent()
@@ -122,4 +122,4 @@ func _on_carta_mazo_carta_soltada(card: Variant) -> void:
 		print("Jugando carta: ", card.card_code)
 		enviar_jugada_backend(card.card_code)
 	else:
-		print("Carta soltada fuera de la zona")
+		print("Carta soltada fuera de la zona") 
