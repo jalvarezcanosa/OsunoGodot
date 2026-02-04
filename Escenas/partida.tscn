@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://1437dumm2ogl"]
+[gd_scene load_steps=15 format=3 uid="uid://1437dumm2ogl"]
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
 [ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_bnojs"]
@@ -8,42 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://dsv47p35qjsjm" path="res://Texturas/Tiles_A_white.png" id="4_p51p1"]
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="4_qpmav"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="5_p51p1"]
-[ext_resource type="Texture2D" uid="uid://dsu15nb43hpsh" path="res://Texturas/normal esfera.webp" id="7_dieh8"]
-
-[sub_resource type="GDScript" id="GDScript_5n3aw"]
-script/source = "extends Control
-
-@onready var grid := $\"Cartas usuario\"
-@export var card_scene : PackedScene
-
-func set_hand(cards : Array):
-	for c in grid.get_children():
-		c.queue_free()
-
-	for card_code in cards:
-		var card = card_scene.instantiate()
-		card.set_card(card_code)
-		card.card_clicked.connect(_on_card_clicked)
-		grid.add_child(card)
-
-func _on_card_clicked(card_code):
-	get_parent().get_node(\"GameState\").play_card(card_code)
-"
-
-[sub_resource type="GDScript" id="GDScript_bnojs"]
-script/source = "extends Control
-
-@onready var grid := $GridContainer
-@export var back_card_scene : PackedScene
-
-func set_card_count(count : int):
-	for c in grid.get_children():
-		c.queue_free()
-
-	for i in count:
-		var card = back_card_scene.instantiate()
-		grid.add_child(card)
-"
 
 [sub_resource type="GDScript" id="GDScript_dieh8"]
 script/source = "extends Area2D
@@ -98,25 +62,24 @@ theme_override_styles/focus = ExtResource("5_p51p1")
 text = "nº cartas (tú)"
 
 [node name="Estado juego" type="Label" parent="UI"]
-offset_left = 1395.0
-offset_top = 664.0
-offset_right = 1808.0
-offset_bottom = 687.0
+offset_left = 1422.0
+offset_top = 651.0
+offset_right = 1835.0
+offset_bottom = 674.0
 
 [node name="Robar" type="Button" parent="UI"]
 offset_left = 1142.0
 offset_top = 508.0
-offset_right = 2174.0
-offset_bottom = 1540.0
-scale = Vector2(0.065, 0.065)
-icon = ExtResource("7_dieh8")
+offset_right = 1279.0
+offset_bottom = 580.0
+text = "Robar carta"
 
 [node name="Cartas (Mazo)" type="Label" parent="UI"]
 custom_minimum_size = Vector2(0, 50)
-offset_left = 494.0
-offset_top = 532.0
-offset_right = 907.0
-offset_bottom = 582.0
+offset_left = 222.0
+offset_top = 677.0
+offset_right = 635.0
+offset_bottom = 727.0
 theme = ExtResource("3_pfv7k")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = ExtResource("4_qpmav")
@@ -125,10 +88,10 @@ text = "Cartas (Mazo)"
 
 [node name="Cartas rival" type="Label" parent="UI"]
 custom_minimum_size = Vector2(0, 50)
-offset_left = 2.0
-offset_top = 332.0
-offset_right = 415.0
-offset_bottom = 382.0
+offset_left = 116.0
+offset_top = 439.0
+offset_right = 529.0
+offset_bottom = 489.0
 theme = ExtResource("3_pfv7k")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = ExtResource("4_qpmav")
@@ -142,8 +105,10 @@ offset_right = 913.0
 offset_bottom = 676.0
 
 [node name="CartaMesa(temporal)" type="Label" parent="UI"]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 572.0
+offset_top = 510.0
+offset_right = 612.0
+offset_bottom = 533.0
 
 [node name="Cartas usuario" type="GridContainer" parent="."]
 anchors_preset = 8
@@ -167,13 +132,6 @@ columns = 10
 [node name="Card" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
 layout_mode = 2
 
-[node name="Cartas usuario2" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = SubResource("GDScript_5n3aw")
-
 [node name="Cartas rival" type="GridContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -196,13 +154,6 @@ columns = 10
 
 [node name="Card" parent="Cartas rival" instance=ExtResource("2_mo80f")]
 layout_mode = 2
-
-[node name="Cartas rival2" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = SubResource("GDScript_bnojs")
 
 [node name="DropZone" type="Area2D" parent="."]
 script = SubResource("GDScript_dieh8")

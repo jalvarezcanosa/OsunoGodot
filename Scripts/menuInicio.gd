@@ -13,7 +13,6 @@ var url_registro : String = "http://127.0.0.1:8000/users"
 var url_stats : String = "http://127.0.0.1:8000/users/me"
 
 func _ready() -> void:
-	http_request.request_completed.connect(_on_http_request_request_completed)
 	volúmen.hide()
 	inicio.hide()
 	print(CardAtlas)

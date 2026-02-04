@@ -10,7 +10,7 @@ extends Node2D
 var url_stats : String = "http://127.0.0.1:8000/users/me"
 
 var url_crear_room : String = "http://127.0.0.1:8000/room"
-# CON GET var url_roomstatus := url + room_code
+var url_roomstatus : String = "http://127.0.0.1:8000/room/" + Session.room_code + "status"
 
 
 

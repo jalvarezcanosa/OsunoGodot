@@ -1,8 +1,9 @@
 extends Button
-
 @onready var sonido_click: AudioStreamPlayer = $"Sonido Click"
 @onready var sonido_pick: AudioStreamPlayer = $"Sonido Pick"
 @onready var sonido_release: AudioStreamPlayer = $"Sonido Release"
+@onready var shadow = $Shadow
+@onready var collision_shape = $DestroyArea/CollisionShape2D
 
 @export var angle_x_max: float = 15.0
 @export var angle_y_max: float = 15.0
@@ -21,22 +22,19 @@ var tween_hover: Tween
 var tween_destroy: Tween
 var tween_handle: Tween
 
-var last_mouse_pos: Vector2
-var mouse_velocity: Vector2
 var following_mouse: bool = false
-var last_pos: Vector2
-var velocity: Vector2
-
 var arrastrando: bool = false
 var dentro: bool = false
 var puede_pickear: bool = true
+
+var last_pos: Vector2
+var velocity: Vector2
+
 var card_code: String = ""
 
 signal card_clicked(card_code: String)
 
 @onready var card_texture: TextureRect = $CardTexture
-@onready var shadow = $Shadow
-@onready var collision_shape = $DestroyArea/CollisionShape2D
 
 # ===============================
 # 🔥 Set codigo seguro y carta inicial
@@ -44,58 +42,35 @@ signal card_clicked(card_code: String)
 func set_codigo(c: String) -> void:
 	card_code = c
 
-	if card_code == null or card_code == "":
-		# Carta inicial o sin código → sin animaciones ni follow
-		following_mouse = false
-		arrastrando = false
-		puede_pickear = false
-		scale = Vector2.ONE
-		rotation = 0
-		shadow.self_modulate.a = 0.4
-		# si quieres poner textura por defecto, descomenta:
-		# card_texture.texture = CardAtlas.get_card_texture("R0")
+	if card_code == "":
+		disabled = true
+		text = ""
 		return
 
-	if card_texture == null:
-		push_error("CardTexture es NULL")
-		return
-
-	var tex := CardAtlas.get_card_texture(card_code)
-	if tex == null:
-		push_error("Textura NULL para carta: " + card_code)
-		return
-
-	card_texture.texture = tex
-
-	# refrescar shader si existe
-	if card_texture.material != null:
-		card_texture.material.set_shader_parameter("atlas_size", tex.get_size())
+	disabled = false
+	text = card_code
 
 # ===============================
 func _ready() -> void:
-	shadow.self_modulate.a = 0.4
 	angle_x_max = deg_to_rad(angle_x_max)
 	angle_y_max = deg_to_rad(angle_y_max)
+	shadow.self_modulate.a = 0.4
 	collision_shape.set_deferred("disabled", true)
 
+	add_theme_font_size_override("font_size", 28)
+
+	last_pos = position
+
 func _process(delta: float) -> void:
-	rotate_velocity(delta)
-	follow_mouse(delta)
-	handle_shadow(delta)
+	_rotate_velocity(delta)
+	_follow_mouse(delta)
+	_handle_shadow(delta)
 
-func destroy() -> void:
-	card_texture.use_parent_material = true
-	if tween_destroy and tween_destroy.is_running():
-		tween_destroy.kill()
-	tween_destroy = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween_destroy.tween_property(material, "shader_parameter/dissolve_value", 0.0, 2.0).from(1.0)
-	tween_destroy.parallel().tween_property(shadow, "self_modulate:a", 0.0, 1.0)
-
-func rotate_velocity(delta: float) -> void:
+func _rotate_velocity(delta: float) -> void:
 	if not following_mouse:
 		return
 
-	velocity = (position - last_pos) / delta
+	velocity = (position - last_pos) / max(delta, 0.001)
 	last_pos = position
 
 	oscillator_velocity += velocity.normalized().x * velocity_multiplier
@@ -104,17 +79,16 @@ func rotate_velocity(delta: float) -> void:
 	displacement += oscillator_velocity * delta
 	rotation = displacement
 
-func handle_shadow(delta: float) -> void:
+func _handle_shadow(delta: float) -> void:
 	var center: Vector2 = get_viewport_rect().size / 2.0
 	var distance: float = global_position.x - center.x
 	shadow.position.x = lerp(0.0, -sign(distance) * max_offset_shadow, abs(distance / center.x))
 
-func follow_mouse(delta: float) -> void:
-	if not following_mouse:
-		return
-	global_position = get_global_mouse_position() - (size / 2.0)
+func _follow_mouse(delta: float) -> void:
+	if  following_mouse:
+		global_position = get_global_mouse_position() - size / 2.0
 
-func handle_mouse_click(event: InputEvent) -> void:
+func _handle_mouse_click(event: InputEvent) -> void:
 	shadow.self_modulate.a = 0.8
 	if not event is InputEventMouseButton:
 		return
@@ -153,7 +127,7 @@ func handle_mouse_click(event: InputEvent) -> void:
 		tween_handle.tween_property(self, "rotation", 0.0, 0.3)
 
 func _on_gui_input(event: InputEvent) -> void:
-	handle_mouse_click(event)
+	_handle_mouse_click(event)
 	if following_mouse:
 		return
 	if not event is InputEventMouseMotion:

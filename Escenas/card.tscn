@@ -38,6 +38,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_7aqjh")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_7aqjh")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_7aqjh")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7aqjh")
+text = "CARTA"
 script = ExtResource("1_borcn")
 
 [node name="CardTexture" type="TextureRect" parent="."]
