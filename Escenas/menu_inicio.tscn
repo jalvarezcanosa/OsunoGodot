@@ -8,7 +8,7 @@
 [ext_resource type="Shader" path="res://Scripts/fondo.gdshader" id="5_71mgp"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="5_prdkb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="7_0j0h0"]
-[ext_resource type="Shader" uid="uid://dmua4dy3tdqmu" path="res://Scripts/logoUno.gdshader" id="7_o32np"]
+[ext_resource type="Shader" path="res://Scripts/logoUno.gdshader" id="7_o32np"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="8_0j0h0"]
 [ext_resource type="Texture2D" uid="uid://csipnlxww5n1m" path="res://Texturas/normal_mapping_normal_map.png" id="8_h6l3e"]
 [ext_resource type="AudioStream" uid="uid://bhonw60fck3kg" path="res://Audio/Música/Moonglow  Love Theme.mp3" id="9_0qp8k"]
@@ -178,12 +178,6 @@ _data = {
 &"bandera ": SubResource("Animation_wuswk")
 }
 
-[sub_resource type="Environment" id="Environment_ypc88"]
-background_mode = 3
-glow_enabled = true
-glow_intensity = 1.0
-glow_bloom = 0.2
-
 [sub_resource type="Gradient" id="Gradient_ujxjh"]
 offsets = PackedFloat32Array(0.3018018, 0.545045, 1)
 colors = PackedColorArray(18.892157, 18.892157, 18.892157, 1, 1, 1, 1, 0, 1, 1, 1, 0)
@@ -215,6 +209,12 @@ gravity = Vector3(0, 0, 0)
 scale_min = 0.099999994
 scale_max = 0.19999999
 scale_curve = SubResource("CurveTexture_ujxjh")
+
+[sub_resource type="Environment" id="Environment_ypc88"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.2
 
 [node name="Menu Inicio" type="Control"]
 layout_mode = 3
@@ -290,6 +290,7 @@ offset_right = 438.04004
 offset_bottom = 23.000008
 max_value = 1.0
 step = 0.2
+value = 1.0
 ticks_on_borders = true
 
 [node name="Efectos" type="Label" parent="Volúmen"]
@@ -309,6 +310,7 @@ offset_right = 443.0
 offset_bottom = 26.999996
 max_value = 1.0
 step = 0.2
+value = 1.0
 ticks_on_borders = true
 
 [node name="Inicio de sesión" type="VBoxContainer" parent="."]
@@ -355,7 +357,9 @@ theme_override_styles/focus = ExtResource("3_ntk23")
 
 [node name="Button" type="Button" parent="Inicio de sesión"]
 layout_mode = 2
-text = "registrarse"
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 40
+text = "Registrarse"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(226, 195)
@@ -427,7 +431,6 @@ libraries = {
 
 [node name="Card" parent="." instance=ExtResource("5_prdkb")]
 visible = false
-material = SubResource("ShaderMaterial_7t5sj")
 layout_mode = 0
 offset_left = 1444.0
 offset_top = 551.0
@@ -435,6 +438,14 @@ offset_right = 1596.0
 offset_bottom = 758.0
 
 [node name="Partículas" type="GPUParticles2D" parent="Card"]
+z_index = -1
+position = Vector2(78, 107)
+amount = 100
+texture = SubResource("GradientTexture2D_ntk23")
+visibility_rect = Rect2(-100, -100, 2000, 2000)
+process_material = SubResource("ParticleProcessMaterial_x84wf")
+
+[node name="Partículas2" type="GPUParticles2D" parent="Card"]
 z_index = -1
 position = Vector2(78, 107)
 amount = 100
@@ -463,20 +474,12 @@ volume_db = -10.0
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
-[node name="Card" parent="." instance=ExtResource("5_prdkb")]
+[node name="Card2" parent="." instance=ExtResource("5_prdkb")]
 layout_mode = 0
 offset_left = 1528.0
 offset_top = 532.0
 offset_right = 1696.0
 offset_bottom = 792.0
-
-[node name="Partículas" type="GPUParticles2D" parent="Card"]
-z_index = -1
-position = Vector2(78, 107)
-amount = 100
-texture = SubResource("GradientTexture2D_ntk23")
-visibility_rect = Rect2(-100, -100, 2000, 2000)
-process_material = SubResource("ParticleProcessMaterial_x84wf")
 
 [connection signal="toggled" from="Menú Principal/Nueva Partida" to="." method="_on_nueva_partida_toggled"]
 [connection signal="pressed" from="Menú Principal/Ajustes" to="." method="_on_ajustes_pressed"]

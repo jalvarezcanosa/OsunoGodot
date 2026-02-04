@@ -31,36 +31,36 @@ texture = ExtResource("2_2xmck")
 expand_mode = 1
 
 [node name="volver" type="Button" parent="CanvasLayer"]
-offset_left = 881.0
-offset_top = 752.0
-offset_right = 1100.0
-offset_bottom = 809.0
+offset_left = 885.0
+offset_top = 595.0
+offset_right = 1104.0
+offset_bottom = 652.0
 size_flags_horizontal = 8
 size_flags_vertical = 4
-text = "volver
+text = "Volver
 "
 
 [node name="Reg" type="Button" parent="CanvasLayer"]
-offset_left = 876.0
-offset_top = 677.0
-offset_right = 1095.0
-offset_bottom = 738.0
-text = "registrarse"
+offset_left = 884.0
+offset_top = 527.0
+offset_right = 1103.0
+offset_bottom = 588.0
+text = "Registrarse"
 
 [node name="confir" type="LineEdit" parent="CanvasLayer"]
 offset_left = 850.0
-offset_top = 498.0
+offset_top = 485.0
 offset_right = 1140.0
-offset_bottom = 529.0
-placeholder_text = "confirmar_contraseña"
+offset_bottom = 516.0
+placeholder_text = "Confirmar Contraseña"
 alignment = 1
 
 [node name="con" type="LineEdit" parent="CanvasLayer"]
-offset_left = 852.0
-offset_top = 458.0
-offset_right = 1146.0
-offset_bottom = 489.0
-placeholder_text = "contaseña"
+offset_left = 850.0
+offset_top = 449.0
+offset_right = 1141.0
+offset_bottom = 480.0
+placeholder_text = "Contraseña"
 alignment = 1
 
 [node name="usuario" type="LineEdit" parent="CanvasLayer"]
@@ -68,5 +68,5 @@ offset_left = 850.0
 offset_top = 412.0
 offset_right = 1141.0
 offset_bottom = 443.0
-placeholder_text = "usuario"
+placeholder_text = "Usuario"
 alignment = 1
