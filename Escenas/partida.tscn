@@ -177,9 +177,9 @@ centered = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_51247")
 
-[connection signal="carta_soltada" from="UI/CartaMazo" to="." method="_on_carta_mazo_carta_soltada"]
-[connection signal="area_entered" from="DropZone" to="." method="_on_drop_zone_area_entered"]
-[connection signal="area_exited" from="DropZone" to="." method="_on_drop_zone_area_exited"]
+[node name="POST robar" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="UI/Robar" to="." method="_on_robar_pressed"]
 [connection signal="request_completed" from="Jugar Carta" to="." method="_on_jugar_carta_request_completed"]
 [connection signal="request_completed" from="Robar Carta" to="." method="_on_robar_carta_request_completed"]
 [connection signal="request_completed" from="Game State" to="." method="_on_game_state_request_completed"]

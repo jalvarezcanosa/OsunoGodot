@@ -102,3 +102,7 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 	errores_login.text = "Sesión iniciada"
 	await get_tree().create_timer(0.2).timeout
 	get_tree().change_scene_to_file("res://Escenas/menú_sala.tscn")
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://Escenas/pestaña_register.tscn")

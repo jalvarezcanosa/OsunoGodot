@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkqsxwd3s648s"]
+
+[ext_resource type="Script" uid="uid://dumk07c02viqx" path="res://Escenas/pestaña_register.gd" id="1_77scr"]
+[ext_resource type="Texture2D" uid="uid://drvbmxdqw85ef" path="res://Texturas/Fondo_registro.jpg" id="2_2xmck"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 172.0
+offset_top = -12.0
+offset_right = 172.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_77scr")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+z_index = -4
+offset_left = -2.0
+offset_top = -1.0
+offset_right = 1913.0
+offset_bottom = 1074.0
+mouse_filter = 2
+texture = ExtResource("2_2xmck")
+expand_mode = 1
+
+[node name="volver" type="Button" parent="CanvasLayer"]
+offset_left = 881.0
+offset_top = 752.0
+offset_right = 1100.0
+offset_bottom = 809.0
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "volver
+"
+
+[node name="Reg" type="Button" parent="CanvasLayer"]
+offset_left = 876.0
+offset_top = 677.0
+offset_right = 1095.0
+offset_bottom = 738.0
+text = "registrarse"
+
+[node name="confir" type="LineEdit" parent="CanvasLayer"]
+offset_left = 850.0
+offset_top = 498.0
+offset_right = 1140.0
+offset_bottom = 529.0
+placeholder_text = "confirmar_contraseña"
+alignment = 1
+
+[node name="con" type="LineEdit" parent="CanvasLayer"]
+offset_left = 852.0
+offset_top = 458.0
+offset_right = 1146.0
+offset_bottom = 489.0
+placeholder_text = "contaseña"
+alignment = 1
+
+[node name="usuario" type="LineEdit" parent="CanvasLayer"]
+offset_left = 850.0
+offset_top = 412.0
+offset_right = 1141.0
+offset_bottom = 443.0
+placeholder_text = "usuario"
+alignment = 1
