@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://1437dumm2ogl"]
+[gd_scene load_steps=17 format=3 uid="uid://1437dumm2ogl"]
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
 [ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://scripts/partida.gd" id="1_bnojs"]
@@ -45,26 +45,8 @@ func set_card_count(count : int):
 		grid.add_child(card)
 "
 
-[sub_resource type="GDScript" id="GDScript_dieh8"]
-script/source = "extends Area2D
-
-signal card_dropped(card)
-
-func _on_area_entered(area):
-#	if area is Area2D and area.has_method(\"return_to_hand\"):
-#		emit_signal(\"card_dropped\", area)
-
-# Verificamos que el area tenga un padre y que sea una carta
-	var parent = area.get_parent()
-	
-	# \"return_to_hand\" es el método que usaremos para validar que es una carta válida
-	if parent and parent.has_method(\"return_to_hand\"):
-		print(\"Card detected in drop zone: \", parent.card_code if parent.has(\"card_code\") else \"unknown\")
-		emit_signal(\"card_dropped\", parent)
-"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j7pef"]
-size = Vector2(437.50012, 255.00024)
+size = Vector2(281.25018, 420.0003)
 
 [sub_resource type="Gradient" id="Gradient_ix4hy"]
 offsets = PackedFloat32Array(0.6814815, 1)
@@ -144,9 +126,9 @@ theme_override_styles/focus = ExtResource("5_p51p1")
 text = "nº cartas(rival)"
 
 [node name="CartaMazo" parent="UI" instance=ExtResource("2_mo80f")]
-offset_left = 745.0
+offset_left = 861.0
 offset_top = 416.0
-offset_right = 913.0
+offset_right = 1029.0
 offset_bottom = 676.0
 
 [node name="CartaMesa(temporal)" type="Label" parent="UI"]
@@ -215,18 +197,17 @@ offset_bottom = 40.0
 script = SubResource("GDScript_bnojs")
 
 [node name="DropZone" type="Area2D" parent="."]
-script = SubResource("GDScript_dieh8")
 
 [node name="Sprite2D" type="Sprite2D" parent="DropZone"]
 self_modulate = Color(0, 0, 0, 0.3254902)
-position = Vector2(930, 550)
+position = Vector2(946, 552.00006)
 rotation = 1.5707964
-scale = Vector2(0.30658832, 0.37982348)
+scale = Vector2(0.48011556, 0.24277632)
 texture = ExtResource("4_p51p1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropZone"]
-position = Vector2(930, 550)
-scale = Vector2(0.7999995, 0.7999995)
+position = Vector2(945, 551)
+scale = Vector2(0.70585907, 0.7063379)
 shape = SubResource("RectangleShape2D_j7pef")
 
 [node name="Jugar Carta" type="HTTPRequest" parent="."]
@@ -258,7 +239,6 @@ centered = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_51247")
 
-[connection signal="card_dropped" from="DropZone" to="." method="_on_drop_zone_card_dropped"]
 [connection signal="request_completed" from="Jugar Carta" to="." method="_on_jugar_carta_request_completed"]
 [connection signal="request_completed" from="Robar Carta" to="." method="_on_robar_carta_request_completed"]
 [connection signal="request_completed" from="Game State" to="." method="_on_game_state_request_completed"]

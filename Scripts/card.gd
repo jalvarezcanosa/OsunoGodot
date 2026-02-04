@@ -31,7 +31,7 @@ var arrastrando: bool = false
 var dentro: bool = false
 var puede_pickear: bool = true
 var card_code: String = ""
-var original_position: Vector2
+var original_global_position: Vector2
 
 signal card_clicked(card_code: String)
 
@@ -81,15 +81,16 @@ func _ready() -> void:
 	angle_x_max = deg_to_rad(angle_x_max)
 	angle_y_max = deg_to_rad(angle_y_max)
 	collision_shape.set_deferred("disabled", true)
-	original_position = position
+	pivot_offset = size / 2.0
 	
-	if has_node("DestroyArea"):
-		var destroy_area = get_node("DestroyArea")
+#	if has_node("DestroyArea"):
+#		var destroy_area = get_node("DestroyArea")
 
 func _process(delta: float) -> void:
-	rotate_velocity(delta)
-	follow_mouse(delta)
-	handle_shadow(delta)
+	if following_mouse:
+		rotate_velocity(delta)
+		follow_mouse(delta)
+		handle_shadow(delta)
 
 func destroy() -> void:
 	card_texture.use_parent_material = true
@@ -130,7 +131,7 @@ func handle_mouse_click(event: InputEvent) -> void:
 		return
 
 	if event.is_pressed():
-		original_position = position
+		original_global_position = global_position
 		arrastrando = true
 		puede_pickear = false
 		following_mouse = true
@@ -156,11 +157,29 @@ func handle_mouse_click(event: InputEvent) -> void:
 		tween_hover.tween_property(self, "scale", Vector2.ONE, 0.55)
 
 		shadow.self_modulate.a = 0.4
+		
+		_reset_visual_tweens()
+		
+		get_tree().create_timer(0.1).timeout.connect(_check_dropped_on_nothing)
 
 		if tween_handle and tween_handle.is_running():
 			tween_handle.kill()
 		tween_handle = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween_handle.tween_property(self, "rotation", 0.0, 0.3)
+		
+func _reset_visual_tweens():
+	if tween_rot and tween_rot.is_running(): tween_rot.kill()
+	tween_rot = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_parallel(true)
+	tween_rot.tween_property(card_texture.material, "shader_parameter/x_rot", 0.0, 0.5)
+	tween_rot.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.5)
+
+	if tween_hover and tween_hover.is_running(): tween_hover.kill()
+	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween_hover.tween_property(self, "scale", Vector2.ONE, 0.55)
+	
+	if tween_handle and tween_handle.is_running(): tween_handle.kill()
+	tween_handle = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween_handle.tween_property(self, "rotation", 0.0, 0.3)
 
 func _on_gui_input(event: InputEvent) -> void:
 	handle_mouse_click(event)
@@ -212,7 +231,7 @@ func _on_mouse_exited() -> void:
 func _check_dropped_on_nothing():
 	# Si seguimos existiendo y no fuimos destruidos por una jugada válida
 	# Volvemos a la mano
-	if is_instance_valid(self):
+	if is_instance_valid(self) and top_level and not tween_destroy:
 		return_to_hand()
 		
 func return_to_hand() -> void:
@@ -221,6 +240,11 @@ func return_to_hand() -> void:
 	if tween_handle and tween_handle.is_running():
 		tween_handle.kill()
 
-	tween_handle = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-	tween_handle.tween_property(self, "position", original_position, 0.5)
+	tween_handle = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
+	tween_handle.tween_property(self, "position", original_global_position, 0.5)
 	tween_handle.parallel().tween_property(self, "rotation", 0.0, 0.5)
+	
+	tween_handle.finished.connect(func():
+		top_level = false # Volvemos a obedecer al GridContainer
+		z_index = 0
+	)

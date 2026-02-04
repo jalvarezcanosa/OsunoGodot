@@ -18,7 +18,7 @@ func _ready() -> void:
 	game_state.request_completed.connect(_on_game_state_request_completed)
 	jugar_carta_req.request_completed.connect(_on_play_card_completed)
 
-	drop_zone.card_dropped.connect(_on_drop_zone_card_dropped)
+	drop_zone.connect("card_dropped", _on_drop_zone_card_dropped)
 
 	# Primera llamada inmediata
 	request_game_state()
@@ -27,6 +27,9 @@ func _ready() -> void:
 	timer.start()
 
 func _on_timer_timeout() -> void:
+	if carta_jugandose != null:
+		return
+		
 	request_game_state()
 
 func request_game_state() -> void:
@@ -61,13 +64,11 @@ func _on_game_state_request_completed(result: int,response_code: int,headers: Pa
 
 
 func update_ui(data: Dictionary) -> void:
-	var es_tu_turno = data.get("isYourTurn", false)
-	estado_juego.text = "Tu turno: %s | Cartas en mazo: %d" % [
-		str(data["isYourTurn"]),
-	]
-
-	var table_card = data.get("tableCard", "")
-	carta_mesa.text = "Carta en mesa: " + data["tableCard"]
+	if carta_jugandose != null:
+		return
+		
+	estado_juego.text = "Tu turno: %s" % str(data.get("isYourTurn", false))
+	carta_mesa.text = "Mesa: " + str(data.get("tableCard", ""))
 		
 	# Limpiar mano
 	for child in mano_jugador.get_children():
@@ -117,6 +118,15 @@ func _on_play_card_completed(result: int, response_code: int, headers: PackedStr
 			if carta_jugandose and is_instance_valid(carta_jugandose):
 				carta_jugandose.return_to_hand()
 		carta_jugandose = null
+		
+func _liberar_carta_jugada(exito: bool):
+	if is_instance_valid(carta_jugandose) and not exito:
+		carta_jugandose.return_to_hand()
+	
+	# Liberamos la variable un poco después para dar tiempo a la animación de retorno
+	# antes de permitir que el update_ui vuelva a borrar la mano
+	await get_tree().create_timer(0.5).timeout
+	carta_jugandose = null
 
 func _on_drop_zone_card_dropped(card: Variant) -> void:
 	print("Drop detectado: ", card.card_code)
