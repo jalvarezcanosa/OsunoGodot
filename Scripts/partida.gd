@@ -6,6 +6,7 @@ extends Node2D
 @onready var estado_juego: Label = $"UI/Estado juego"
 @onready var carta_mesa: Label = $"UI/CartaMesa(temporal)"
 @onready var timer: Timer = $Timer
+@onready var drop_zone: Area2D = $DropZone
 
 var carta_jugandose: Node = null
 var card_scene = preload("res://Escenas/Card.tscn")
@@ -16,6 +17,8 @@ func _ready() -> void:
 	timer.timeout.connect(_on_timer_timeout)
 	game_state.request_completed.connect(_on_game_state_request_completed)
 	jugar_carta_req.request_completed.connect(_on_play_card_completed)
+
+	drop_zone.card_dropped.connect(_on_drop_zone_card_dropped)
 
 	# Primera llamada inmediata
 	request_game_state()
@@ -58,18 +61,21 @@ func _on_game_state_request_completed(result: int,response_code: int,headers: Pa
 
 
 func update_ui(data: Dictionary) -> void:
+	var es_tu_turno = data.get("isYourTurn", false)
 	estado_juego.text = "Tu turno: %s | Cartas en mazo: %d" % [
 		str(data["isYourTurn"]),
 	]
 
+	var table_card = data.get("tableCard", "")
 	carta_mesa.text = "Carta en mesa: " + data["tableCard"]
-
+		
 	# Limpiar mano
 	for child in mano_jugador.get_children():
 		child.queue_free()
 
+	var hand = data.get("yourHand", [])
 	# Crear cartas
-	for carta in data["yourHand"]:
+	for carta in hand:
 		var card = card_scene.instantiate()   # Button
 		card.set_codigo(carta)
 		mano_jugador.add_child(card)
@@ -108,7 +114,9 @@ func _on_play_card_completed(result: int, response_code: int, headers: PackedStr
 				carta_jugandose.return_to_hand()
 		else: 
 			print("Error del servidor: ", response_code)
-
+			if carta_jugandose and is_instance_valid(carta_jugandose):
+				carta_jugandose.return_to_hand()
+		carta_jugandose = null
 
 func _on_drop_zone_card_dropped(card: Variant) -> void:
 	print("Drop detectado: ", card.card_code)

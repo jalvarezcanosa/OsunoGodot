@@ -71,6 +71,10 @@ func set_codigo(c: String) -> void:
 	# refrescar shader si existe
 	if card_texture.material != null:
 		card_texture.material.set_shader_parameter("atlas_size", tex.get_size())
+		card_texture.material.set_shader_parameter("atlas_size", tex.get_size())
+		card_texture.material.set_shader_parameter("rect_size", card_texture.size)
+		card_texture.material.set_shader_parameter("card_size", card_texture.card_size)
+		card_texture.material.set_shader_parameter("atlas_offset", card_texture.atlas_offset)
 
 func _ready() -> void:
 	shadow.self_modulate.a = 0.4
@@ -78,6 +82,9 @@ func _ready() -> void:
 	angle_y_max = deg_to_rad(angle_y_max)
 	collision_shape.set_deferred("disabled", true)
 	original_position = position
+	
+	if has_node("DestroyArea"):
+		var destroy_area = get_node("DestroyArea")
 
 func _process(delta: float) -> void:
 	rotate_velocity(delta)

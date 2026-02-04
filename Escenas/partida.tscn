@@ -58,7 +58,8 @@ func _on_area_entered(area):
 	var parent = area.get_parent()
 	
 	# \"return_to_hand\" es el método que usaremos para validar que es una carta válida
-	if parent.has_method(\"return_to_hand\"):
+	if parent and parent.has_method(\"return_to_hand\"):
+		print(\"Card detected in drop zone: \", parent.card_code if parent.has(\"card_code\") else \"unknown\")
 		emit_signal(\"card_dropped\", parent)
 "
 
