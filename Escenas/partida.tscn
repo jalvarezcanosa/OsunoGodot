@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
 [ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_bnojs"]
-[ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Scripts/fondo.gdshader" id="1_mo80f"]
+[ext_resource type="Shader" path="res://Scripts/fondo.gdshader" id="1_mo80f"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="2_mo80f"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="3_pfv7k"]
 [ext_resource type="Texture2D" uid="uid://dsv47p35qjsjm" path="res://Texturas/Tiles_A_white.png" id="4_p51p1"]
@@ -185,6 +185,9 @@ centered = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_51247")
 
+[connection signal="carta_soltada" from="UI/CartaMazo" to="." method="_on_carta_mazo_carta_soltada"]
+[connection signal="area_entered" from="DropZone" to="." method="_on_drop_zone_area_entered"]
+[connection signal="area_exited" from="DropZone" to="." method="_on_drop_zone_area_exited"]
 [connection signal="request_completed" from="Jugar Carta" to="." method="_on_jugar_carta_request_completed"]
 [connection signal="request_completed" from="Robar Carta" to="." method="_on_robar_carta_request_completed"]
 [connection signal="request_completed" from="Game State" to="." method="_on_game_state_request_completed"]
