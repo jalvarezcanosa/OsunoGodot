@@ -15,8 +15,7 @@ var url_crear_room : String = "http://127.0.0.1:8000/room"
 
 func _ready() -> void:
 	codigo_sala_crear.hide()
-	post_crear_sala.request_completed.connect(_on_post_crear_sala_request_completed)
-	get_estado_sala.request_completed.connect(_on_get_estado_sala_request_completed)
+
 
 func _on_crear_sala_pressed() -> void:
 	click_1.play()

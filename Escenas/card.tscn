@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ccpeukrdsfbkm"]
+[gd_scene load_steps=10 format=3 uid="uid://ccpeukrdsfbkm"]
 
 [ext_resource type="Shader" uid="uid://sxknx5jqibgs" path="res://Scripts/fake_3D.gdshader" id="1_7h7yf"]
 [ext_resource type="Script" uid="uid://dfw3a08g31fpf" path="res://Scripts/card.gd" id="1_borcn"]
@@ -7,10 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://njve6c7yyer3" path="res://Audio/SFX/SFX_Card_Select.wav" id="7_ec5o8"]
 [ext_resource type="AudioStream" uid="uid://bglkhpg4voe27" path="res://Audio/SFX/Select2.ogg" id="7_ga7b0"]
 [ext_resource type="AudioStream" uid="uid://dirxt858dxwio" path="res://Audio/SFX/draw 4.wav" id="8_ec5o8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m1y0b"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7aqjh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cho03"]
 resource_local_to_scene = true
@@ -34,11 +30,6 @@ custom_minimum_size = Vector2(168, 260)
 offset_right = 168.0
 offset_bottom = 255.0
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxEmpty_m1y0b")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_7aqjh")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_7aqjh")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7aqjh")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7aqjh")
 script = ExtResource("1_borcn")
 
 [node name="CardTexture" type="TextureRect" parent="."]
@@ -51,6 +42,7 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
 script = ExtResource("4_x61kk")
+atlas_offset = Vector2(0, 258)
 
 [node name="Shadow" type="TextureRect" parent="."]
 modulate = Color(0, 0, 0, 1)

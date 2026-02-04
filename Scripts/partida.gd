@@ -1,8 +1,5 @@
 extends Node2D
 
-const CARD = preload("uid://ccpeukrdsfbkm")
-
-
 @onready var jugar_carta_req: HTTPRequest = $"Jugar Carta"
 @onready var game_state: HTTPRequest = $"Game State"
 @onready var mano_jugador: GridContainer = $"Cartas usuario"
@@ -33,65 +30,50 @@ func _on_timer_timeout() -> void:
 	request_game_state()
 
 func request_game_state() -> void:
-	var headers = [
-		"Session: %s" % Session.token
-	]
-
-	var err = game_state.request(
-		url_game_state,
-		headers,
-		HTTPClient.METHOD_GET
-	)
-
+	var headers = ["Session: %s" % Session.token]
+	var err = game_state.request(url_game_state, headers, HTTPClient.METHOD_GET)
 	if err != OK:
 		print("Error al pedir game state")
 
-
 func _on_game_state_request_completed(result: int,response_code: int,headers: PackedStringArray,body: PackedByteArray) -> void:
-
 	if response_code != 200:
 		print("Game state error:", response_code)
 		return
 
 	var body_str = body.get_string_from_utf8()
 	var data = JSON.parse_string(body_str)
-
 	if data == null:
 		print("JSON inválido")
 		return
 
 	update_ui(data)
 
-
+# ----------------------
+# ACTUALIZAR INTERFAZ
+# ----------------------
 func update_ui(data: Dictionary) -> void:
 	if Session.is_dragging_card:
 		return
 
-	estado_juego.text = "Tu turno: %s" % [
-		str(data["isYourTurn"]),
-	]
-
+	estado_juego.text = "Tu turno: %s" % str(data["isYourTurn"])
 	carta_mesa.text = "Carta en mesa: " + data["tableCard"]
 
+	# ----------------------
+	# CARTAS DEL JUGADOR
+	# ----------------------
 	var new_hand: Array = data["yourHand"]
 	if new_hand != last_hand:
 		last_hand = new_hand.duplicate()
 		_update_hand(new_hand)
 
-	# --- CARTAS RIVAL ---
+	# Limpiar mano rival
 	for child in mano_rival.get_children():
 		child.queue_free()
 
-	# --- CALCULO CARTAS RIVAL ---
-	rival_cards = 7 * 2                # total inicial (2 jugadores, 7 cartas cada uno)
-	rival_cards -= data["yourHand"].size()
-	rival_cards -= data["cardsLeftInDeck"]
-	rival_cards -= 1  # carta en mesa
-	
-	for i in rival_cards:
+	var rival_count := 7
+	for i in range(rival_count):
 		var card = card_scene.instantiate()
-		card.set_rival()
-		card.text = "??" # MVP
+		card.set_rival()  # Fondo gris + "??"
 		mano_rival.add_child(card)
 		
 
@@ -102,11 +84,9 @@ func _update_hand(hand: Array) -> void:
 	for carta in hand:
 		var card = card_scene.instantiate()
 		card.set_codigo(carta)
-		
 		card.carta_soltada.connect(_on_carta_mazo_carta_soltada)
 		mano_jugador.add_child(card)
-		
-		
+
 func _on_drop_zone_area_entered(area: Area2D) -> void:
 	var carta = area.get_parent()
 	if carta.has_method("set_codigo"):
@@ -120,16 +100,13 @@ func _on_drop_zone_area_exited(area: Area2D) -> void:
 		carta_en_dropzone = null
 		print("Carta salió de dropzone")
 
-
 func enviar_jugada_backend(card_code: String) -> void:
 	var url = url_game_state + "/play"
 	var headers = [
 		"Content-Type: application/json",
 		"Session: %s" % Session.token
 	]
-	var body = JSON.stringify({
-		"cardToPlay": card_code
-	})
+	var body = JSON.stringify({"cardToPlay": card_code})
 	jugar_carta_req.request(url, headers, HTTPClient.METHOD_POST, body)
 
 func _on_jugar_carta_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -139,7 +116,6 @@ func _on_jugar_carta_request_completed(result: int, response_code: int, headers:
 	else:
 		var resp = body.get_string_from_utf8()
 		print("Error al jugar carta: ", resp)
-		
 
 func _on_carta_mazo_carta_soltada(card: Variant) -> void:
 	if carta_en_dropzone == card:
