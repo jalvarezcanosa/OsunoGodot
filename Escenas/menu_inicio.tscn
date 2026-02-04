@@ -464,6 +464,7 @@ libraries = {
 }
 
 [node name="Card" parent="." instance=ExtResource("5_prdkb")]
+visible = false
 material = SubResource("ShaderMaterial_7t5sj")
 layout_mode = 0
 offset_left = 1444.0

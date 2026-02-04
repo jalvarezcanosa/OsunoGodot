@@ -1,9 +1,9 @@
 extends Control
-@onready var usuario_input = $usuario
-@onready var contrasenha_input = $con
-@onready var confirmar_input = $confir
-@onready var boton_registrar = $Reg
-@onready var boton_volver = $volver
+@onready var usuario_input = $CanvasLayer/usuario
+@onready var contrasenha_input = $CanvasLayer/con
+@onready var confirmar_input = $CanvasLayer/confir
+@onready var boton_registrar = $CanvasLayer/Reg
+@onready var boton_volver = $CanvasLayer/volver
 @onready var http = $HTTPRequest
 
 const SERVER_URL = "http://127.0.0.1:8000"
@@ -52,7 +52,7 @@ func _validar_campos(usuario: String, contrasenha: String, confirmar_contrasenha
 		_mostrar_error("La contraseña es requerida")
 		return false
 
-	if contrasenha.length() < 6:
+	if contrasenha.length() < 1:
 		_mostrar_error("La contraseña debe tener al menos 6 caracteres")
 		return false
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://b3api0ov3kpkh"]
+[gd_scene load_steps=22 format=3 uid="uid://b3api0ov3kpkh"]
 
 [ext_resource type="Script" uid="uid://468my3mghfji" path="res://Scripts/MenuSala.gd" id="1_nse57"]
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_dqwj3"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_rp7na"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_rp7na"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="6_dqwj3"]
+[ext_resource type="PackedScene" uid="uid://bcyrihk4432p2" path="res://Escenas/pestanha_datos_usuario.tscn" id="8_jextb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="8_mm4tk"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="9_mm4tk"]
 
@@ -235,8 +236,19 @@ libraries = {
 }
 autoplay = "SpotLightAnimation_2"
 
+[node name="Node" parent="." instance=ExtResource("8_jextb")]
+
+[node name="Ver datos" type="Button" parent="."]
+offset_left = 1451.0
+offset_top = 63.0
+offset_right = 1667.0
+offset_bottom = 160.0
+text = "Ver datos
+"
+
 [connection signal="pressed" from="Botonera/BotonesMenú/Crear Sala" to="." method="_on_crear_sala_pressed"]
 [connection signal="pressed" from="Botonera/BotonesMenú/Unirse Sala" to="." method="_on_unirse_sala_pressed"]
 [connection signal="pressed" from="Botonera/BotonesMenú/Volver" to="." method="_on_volver_pressed"]
 [connection signal="request_completed" from="PostCrearSala" to="." method="_on_post_crear_sala_request_completed"]
 [connection signal="request_completed" from="PostUnirSala" to="." method="_on_post_unir_sala_request_completed"]
+[connection signal="pressed" from="Ver datos" to="Node" method="_on_ver_datos_pressed"]
