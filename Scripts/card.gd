@@ -33,6 +33,7 @@ var puede_pickear: bool = true
 var card_code: String = ""
 
 signal card_clicked(card_code: String)
+signal carta_soltada(card)
 
 @onready var card_texture: TextureRect = $CardTexture
 @onready var shadow = $Shadow
@@ -132,11 +133,14 @@ func handle_mouse_click(event: InputEvent) -> void:
 		puede_pickear = false
 		following_mouse = true
 		sonido_click.play()
+		collision_shape.set_deferred("disabled", false)
 	else:
 		arrastrando = false
 		Session.is_dragging_card = false
 		following_mouse = false
 		collision_shape.set_deferred("disabled", false)
+		
+		carta_soltada.emit(self)
 
 		if dentro:
 			sonido_release.play()
