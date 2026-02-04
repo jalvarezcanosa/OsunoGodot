@@ -168,8 +168,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = ExtResource("2_dqwj3")
 theme_override_styles/hover = ExtResource("3_rp7na")
-text = "Volver
-"
+text = "Volver"
 metadata/_edit_use_anchors_ = true
 
 [node name="Viñetado" type="Sprite2D" parent="."]
@@ -214,15 +213,15 @@ volume_db = -10.0
 
 [node name="PostUnirSala" type="HTTPRequest" parent="."]
 
+[node name="GetEstadoSala" type="HTTPRequest" parent="."]
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(226, 195)
 scale = Vector2(3.9062502, 3.9062502)
 texture = SubResource("GradientTexture2D_jextb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PointLight2D"]
-libraries = {
-&"": SubResource("AnimationLibrary_xqp3y")
-}
+libraries = { &"": SubResource("AnimationLibrary_xqp3y") }
 autoplay = "SpotLightAnimation"
 
 [node name="PointLight2D2" type="PointLight2D" parent="."]
@@ -231,9 +230,7 @@ scale = Vector2(3.9062502, 3.9062502)
 texture = SubResource("GradientTexture2D_jextb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PointLight2D2"]
-libraries = {
-&"": SubResource("AnimationLibrary_xqp3y")
-}
+libraries = { &"": SubResource("AnimationLibrary_xqp3y") }
 autoplay = "SpotLightAnimation_2"
 
 [node name="Node" parent="." instance=ExtResource("8_jextb")]
@@ -243,8 +240,10 @@ offset_left = 1451.0
 offset_top = 63.0
 offset_right = 1667.0
 offset_bottom = 160.0
-text = "Ver datos
-"
+text = "Ver datos"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
 
 [connection signal="pressed" from="Botonera/BotonesMenú/Crear Sala" to="." method="_on_crear_sala_pressed"]
 [connection signal="pressed" from="Botonera/BotonesMenú/Unirse Sala" to="." method="_on_unirse_sala_pressed"]
@@ -252,3 +251,5 @@ text = "Ver datos
 [connection signal="request_completed" from="PostCrearSala" to="." method="_on_post_crear_sala_request_completed"]
 [connection signal="request_completed" from="PostUnirSala" to="." method="_on_post_unir_sala_request_completed"]
 [connection signal="pressed" from="Ver datos" to="Node" method="_on_ver_datos_pressed"]
+[connection signal="request_completed" from="GetEstadoSala" to="." method="_on_get_estado_sala_request_completed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
