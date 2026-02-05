@@ -1,15 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://ccpeukrdsfbkm"]
+[gd_scene load_steps=10 format=3 uid="uid://ccpeukrdsfbkm"]
 
 [ext_resource type="Shader" uid="uid://sxknx5jqibgs" path="res://Scripts/fake_3D.gdshader" id="1_7h7yf"]
 [ext_resource type="Script" uid="uid://dfw3a08g31fpf" path="res://Scripts/card.gd" id="1_borcn"]
-[ext_resource type="Texture2D" uid="uid://dikoacdmoam83" path="res://Texturas/Atlas Uno Clásicas.png" id="3_m1y0b"]
-[ext_resource type="AudioStream" uid="uid://dso3ykd8p0jvk" path="res://Audio/SFX/bloop-2-186531.mp3" id="4_4t34f"]
 [ext_resource type="Texture2D" uid="uid://dsv47p35qjsjm" path="res://Texturas/Tiles_A_white.png" id="4_m1y0b"]
 [ext_resource type="Script" uid="uid://drar6ncfdqg02" path="res://Scripts/card_texture.gd" id="4_x61kk"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m1y0b"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7aqjh"]
+[ext_resource type="AudioStream" uid="uid://njve6c7yyer3" path="res://Audio/SFX/SFX_Card_Select.wav" id="7_ec5o8"]
+[ext_resource type="AudioStream" uid="uid://bglkhpg4voe27" path="res://Audio/SFX/Select2.ogg" id="7_ga7b0"]
+[ext_resource type="AudioStream" uid="uid://dirxt858dxwio" path="res://Audio/SFX/draw 4.wav" id="8_ec5o8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cho03"]
 resource_local_to_scene = true
@@ -25,10 +22,6 @@ shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
 shader_parameter/edge_brightness = 2.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1y0b"]
-atlas = ExtResource("3_m1y0b")
-filter_clip = true
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xsth3"]
 size = Vector2(168, 260)
 
@@ -36,11 +29,7 @@ size = Vector2(168, 260)
 custom_minimum_size = Vector2(168, 260)
 offset_right = 168.0
 offset_bottom = 255.0
-theme_override_styles/normal = SubResource("StyleBoxEmpty_m1y0b")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_7aqjh")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_7aqjh")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7aqjh")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7aqjh")
+theme_override_font_sizes/font_size = 30
 script = ExtResource("1_borcn")
 
 [node name="CardTexture" type="TextureRect" parent="."]
@@ -51,13 +40,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("AtlasTexture_m1y0b")
 expand_mode = 1
 script = ExtResource("4_x61kk")
+atlas_offset = Vector2(0, 258)
 
 [node name="Shadow" type="TextureRect" parent="."]
 modulate = Color(0, 0, 0, 1)
-self_modulate = Color(1, 1, 1, 0.168627)
+self_modulate = Color(1, 1, 1, 0.4392157)
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -78,13 +67,20 @@ shape = SubResource("RectangleShape2D_xsth3")
 disabled = true
 
 [node name="Sonido Click" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_4t34f")
-volume_db = -15.0
+stream = ExtResource("7_ec5o8")
+volume_db = -7.633
+pitch_scale = 1.44
 bus = &"Efectos"
 
-[node name="Sonido Arrastre" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_4t34f")
-volume_db = -10.0
+[node name="Sonido Pick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_ec5o8")
+volume_db = -9.541
+pitch_scale = 1.5
+bus = &"Efectos"
+
+[node name="Sonido Release" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_ga7b0")
+volume_db = -12.404
 bus = &"Efectos"
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

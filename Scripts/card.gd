@@ -1,6 +1,8 @@
 extends Button
+
 @onready var sonido_click: AudioStreamPlayer = $"Sonido Click"
-@onready var sonido_arrastre: AudioStreamPlayer = $"Sonido Arrastre"
+@onready var sonido_pick: AudioStreamPlayer = $"Sonido Pick"
+@onready var sonido_release: AudioStreamPlayer = $"Sonido Release"
 
 @export var angle_x_max: float = 15.0
 @export var angle_y_max: float = 15.0
@@ -11,125 +13,204 @@ extends Button
 @export var damp: float = 10.0
 @export var velocity_multiplier: float = 1.5
 
-var displacement: float = 0.0 
+var displacement: float = 0.0
 var oscillator_velocity: float = 0.0
 
 var tween_rot: Tween
 var tween_hover: Tween
-var tween_destroy: Tween
-var tween_handle: Tween
 
-var last_mouse_pos: Vector2
-var mouse_velocity: Vector2
-var following_mouse: bool = false
 var last_pos: Vector2
 var velocity: Vector2
+var following_mouse: bool = false
+var arrastrando: bool = false
+var dentro: bool = false
+var puede_pickear: bool = true
+var card_code: String = ""
 
-@onready var card_texture: TextureRect = $CardTexture
-@onready var shadow = $Shadow
-@onready var collision_shape = $DestroyArea/CollisionShape2D
+signal card_clicked(card_code: String)
+signal carta_soltada(card)
+
+@onready var shadow: TextureRect = $Shadow
+@onready var collision_shape: CollisionShape2D = $DestroyArea/CollisionShape2D
+
+# Carta del rival
+func set_rival() -> void:
+	puede_pickear = false
+	arrastrando = false
+	following_mouse = false
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	disabled = true
+
+	text = "??"
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color.DIM_GRAY
+	style.corner_radius_top_left = 10
+	style.corner_radius_top_right = 10
+	style.corner_radius_bottom_left = 10
+	style.corner_radius_bottom_right = 10
+
+	add_theme_stylebox_override("normal", style)
+	add_theme_stylebox_override("hover", style)
+	add_theme_stylebox_override("pressed", style)
+	add_theme_color_override("font_color", Color.WHITE)
+	add_theme_color_override("font_color_hover", Color.WHITE)
+	add_theme_color_override("font_color_pressed", Color.WHITE)
+
+	if shadow:
+		shadow.self_modulate.a = 0.4
+
+# Carta del jugador
+func set_codigo(c: String) -> void:
+	card_code = c
+
+	if card_code == null or card_code == "":
+		text = ""
+		following_mouse = false
+		arrastrando = false
+		puede_pickear = false
+		scale = Vector2.ONE
+		rotation = 0
+		if shadow:
+			shadow.self_modulate.a = 0.4
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color.DIM_GRAY
+		style.corner_radius_top_left = 10
+		style.corner_radius_top_right = 10
+		style.corner_radius_bottom_left = 10
+		style.corner_radius_bottom_right = 10
+		add_theme_stylebox_override("normal", style)
+		add_theme_stylebox_override("hover", style)
+		add_theme_stylebox_override("pressed", style)
+		return
+
+	var color_code := card_code.substr(0, 1).to_lower()
+	var value := card_code.substr(1)
+	text = value
+
+	var style := StyleBoxFlat.new()
+	match color_code:
+		"r":
+			style.bg_color = Color.RED
+		"g":
+			style.bg_color = Color.GREEN
+		"b":
+			style.bg_color = Color.DODGER_BLUE
+		"y":
+			style.bg_color = Color.GOLD
+		_:
+			style.bg_color = Color.DIM_GRAY
+
+	style.corner_radius_top_left = 10
+	style.corner_radius_top_right = 10
+	style.corner_radius_bottom_left = 10
+	style.corner_radius_bottom_right = 10
+
+	add_theme_stylebox_override("normal", style)
+	add_theme_stylebox_override("hover", style)
+	add_theme_stylebox_override("pressed", style)
+	add_theme_color_override("font_color", Color.WHITE)
+	add_theme_color_override("font_color_hover", Color.WHITE)
+	add_theme_color_override("font_color_pressed", Color.WHITE)
+
+	following_mouse = false
+	arrastrando = false
+	puede_pickear = true
+	scale = Vector2.ONE
+	rotation = 0
+	if shadow:
+		shadow.self_modulate.a = 0.4
 
 func _ready() -> void:
-	# radianes
+	if shadow:
+		shadow.self_modulate.a = 0.4
 	angle_x_max = deg_to_rad(angle_x_max)
 	angle_y_max = deg_to_rad(angle_y_max)
-	collision_shape.set_deferred("disabled", true)
+	if collision_shape:
+		collision_shape.set_deferred("disabled", true)
 
 func _process(delta: float) -> void:
 	rotate_velocity(delta)
 	follow_mouse(delta)
 	handle_shadow(delta)
-	
-func destroy() -> void:
-	card_texture.use_parent_material = true
-	if tween_destroy and tween_destroy.is_running():
-		tween_destroy.kill()
-	tween_destroy = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween_destroy.tween_property(material, "shader_parameter/dissolve_value", 0.0, 2.0).from(1.0)
-	tween_destroy.parallel().tween_property(shadow, "self_modulate:a", 0.0, 1.0)
 
 func rotate_velocity(delta: float) -> void:
-	if not following_mouse: return
-	var center_pos: Vector2 = global_position - (size/2.0)
-	# Velocidad
+	if not following_mouse:
+		return
 	velocity = (position - last_pos) / delta
 	last_pos = position
-	
-	oscillator_velocity += velocity.normalized().x * velocity_multiplier
-	
-	# Oscilador
+	if velocity.length() != 0:
+		oscillator_velocity += velocity.normalized().x * velocity_multiplier
 	var force = -spring * displacement - damp * oscillator_velocity
 	oscillator_velocity += force * delta
 	displacement += oscillator_velocity * delta
-	
 	rotation = displacement
 
 func handle_shadow(delta: float) -> void:
+	if not shadow:
+		return
 	var center: Vector2 = get_viewport_rect().size / 2.0
 	var distance: float = global_position.x - center.x
-	
-	shadow.position.x = lerp(0.0, -sign(distance) * max_offset_shadow, abs(distance/(center.x)))
+	shadow.position.x = lerp(0.0, -sign(distance) * max_offset_shadow, abs(distance / center.x))
 
 func follow_mouse(delta: float) -> void:
-	if not following_mouse: return
-	var mouse_pos: Vector2 = get_global_mouse_position()
-	global_position = mouse_pos - (size/2.0)
+	if not following_mouse:
+		return
+	global_position = get_global_mouse_position() - (size / 2.0)
 
 func handle_mouse_click(event: InputEvent) -> void:
-	if not event is InputEventMouseButton: return
-	if event.button_index != MOUSE_BUTTON_LEFT: return
-	
+	if not event is InputEventMouseButton or event.button_index != MOUSE_BUTTON_LEFT:
+		return
 	if event.is_pressed():
+		if not puede_pickear:
+			return
+		arrastrando = true
+		Session.is_dragging_card = true
+		puede_pickear = false
 		following_mouse = true
-		sonido_click.play()
-		sonido_arrastre.play()
+		if sonido_click:
+			sonido_click.play()
+		if collision_shape:
+			collision_shape.set_deferred("disabled", false)
 	else:
-		# drop carta
+		arrastrando = false
+		Session.is_dragging_card = false
 		following_mouse = false
-		collision_shape.set_deferred("disabled", false)
-		if tween_handle and tween_handle.is_running():
-			tween_handle.kill()
-		tween_handle = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-		tween_handle.tween_property(self, "rotation", 0.0, 0.3)
+		if collision_shape:
+			collision_shape.set_deferred("disabled", false)
+		emit_signal("carta_soltada", self)
+		if dentro and sonido_release:
+			sonido_release.play()
+		reset_rotation_scale()
+
+func reset_rotation_scale() -> void:
+	if tween_rot and tween_rot.is_running():
+		tween_rot.kill()
+	tween_rot = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_parallel(true)
+	tween_rot.tween_property(self, "rotation", 0.0, 0.3)
+	if tween_hover and tween_hover.is_running():
+		tween_hover.kill()
+	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween_hover.tween_property(self, "scale", Vector2.ONE, 0.55)
+	if shadow:
+		shadow.self_modulate.a = 0.4
 
 func _on_gui_input(event: InputEvent) -> void:
-	
 	handle_mouse_click(event)
-	
-	# Sin rotación cuando en movimiento
-	if following_mouse: return
-	if not event is InputEventMouseMotion: return
-	
-	# Get local mouse pos
-	var mouse_pos: Vector2 = get_local_mouse_position()
-
-	var diff: Vector2 = (position + size) - mouse_pos
-
-	var lerp_val_x: float = remap(mouse_pos.x, 0.0, size.x, 0, 1)
-	var lerp_val_y: float = remap(mouse_pos.y, 0.0, size.y, 0, 1)
-
-	var rot_x: float = rad_to_deg(lerp_angle(-angle_x_max, angle_x_max, lerp_val_x))
-	var rot_y: float = rad_to_deg(lerp_angle(angle_y_max, -angle_y_max, lerp_val_y))
-	
-	card_texture.material.set_shader_parameter("x_rot", rot_y)
-	card_texture.material.set_shader_parameter("y_rot", rot_x)
 
 func _on_mouse_entered() -> void:
+	dentro = true
+	if arrastrando or not puede_pickear:
+		return
+	if sonido_pick:
+		sonido_pick.play()
 	if tween_hover and tween_hover.is_running():
 		tween_hover.kill()
 	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	tween_hover.tween_property(self, "scale", Vector2(1.2, 1.2), 0.5)
 
 func _on_mouse_exited() -> void:
-	# Reinicio rotación
-	if tween_rot and tween_rot.is_running():
-		tween_rot.kill()
-	tween_rot = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_parallel(true)
-	tween_rot.tween_property(card_texture.material, "shader_parameter/x_rot", 0.0, 0.5)
-	tween_rot.tween_property(card_texture.material, "shader_parameter/y_rot", 0.0, 0.5)
-	
-	# Reinicio scala
-	if tween_hover and tween_hover.is_running():
-		tween_hover.kill()
-	tween_hover = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-	tween_hover.tween_property(self, "scale", Vector2.ONE, 0.55)
+	dentro = false
+	puede_pickear = true
+	if arrastrando:
+		return
+	reset_rotation_scale()

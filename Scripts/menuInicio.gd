@@ -8,19 +8,25 @@ extends Control
 @onready var errores_login: Label = $"Inicio de sesión/Errores login"
 @onready var usuario: LineEdit = $"Inicio de sesión/Usuario"
 @onready var contraseña: LineEdit = $"Inicio de sesión/Contraseña"
-var url : String = "http://127.0.0.1:8000/sessions"
+var url_login : String = "http://127.0.0.1:8000/sessions"
+var url_registro : String = "http://127.0.0.1:8000/users"
+var url_stats : String = "http://127.0.0.1:8000/users/me"
 
 func _ready() -> void:
 	http_request.request_completed.connect(_on_http_request_request_completed)
 	volúmen.hide()
 	inicio.hide()
+	print(CardAtlas)
+
 func _on_salir_pressed() -> void:
 	click_2.play()
 	await get_tree().create_timer(0.2).timeout
 	get_tree().quit()
+
 func _on_volver_pressed() -> void:
 	volúmen.hide()
 	click_2.play()
+
 func _on_slider_música_value_changed(value: float) -> void:
 	var bus: int = AudioServer.get_bus_index("Música")
 	AudioServer.set_bus_volume_db(bus, linear_to_db(value))
@@ -42,7 +48,7 @@ func _on_ajustes_toggled(toggled_on: bool) -> void:
 		click_1.play()
 	else:
 		volúmen.hide()
-		click_1.play()
+		click_2.play()
 
 func _on_nueva_partida_toggled(toggled_on: bool) -> void:
 	if toggled_on:
@@ -50,6 +56,7 @@ func _on_nueva_partida_toggled(toggled_on: bool) -> void:
 		click_1.play()
 	else:
 		inicio.hide()
+		click_2.play()
 
 func _on_iniciar_sesión_pressed() -> void:
 	click_2.play()
@@ -66,7 +73,7 @@ func _on_iniciar_sesión_pressed() -> void:
 
 	# Enviar request POST
 	var err = http_request.request(
-		url,
+		url_login,
 		headers,
 		HTTPClient.METHOD_POST,
 		body_json
@@ -95,3 +102,7 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 	errores_login.text = "Sesión iniciada"
 	await get_tree().create_timer(0.2).timeout
 	get_tree().change_scene_to_file("res://Escenas/menú_sala.tscn")
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://Escenas/pestaña_register.tscn")

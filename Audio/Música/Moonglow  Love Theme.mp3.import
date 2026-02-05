@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bhonw60fck3kg"
+path="res://.godot/imported/Moonglow  Love Theme.mp3-799ddbee83adc18b471c45f2fd814d6c.mp3str"
+
+[deps]
+
+source_file="res://Audio/Música/Moonglow  Love Theme.mp3"
+dest_files=["res://.godot/imported/Moonglow  Love Theme.mp3-799ddbee83adc18b471c45f2fd814d6c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

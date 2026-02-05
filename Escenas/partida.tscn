@@ -1,22 +1,34 @@
-[gd_scene load_steps=14 format=3 uid="uid://1437dumm2ogl"]
+[gd_scene load_steps=23 format=3 uid="uid://1437dumm2ogl"]
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
-[ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Escenas/fondo.gdshader" id="1_mo80f"]
-[ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_qpmav"]
-[ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="2_mo80f"]
-[ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="3_pfv7k"]
+[ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_bnojs"]
+[ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Scripts/fondo.gdshader" id="1_mo80f"]
 [ext_resource type="Texture2D" uid="uid://dsv47p35qjsjm" path="res://Texturas/Tiles_A_white.png" id="4_p51p1"]
-[ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="4_qpmav"]
-[ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="5_p51p1"]
+[ext_resource type="AudioStream" uid="uid://b4epofuw1inrl" path="res://Audio/Música/Paulinho_Nogueira__–_O_Fino_Do_Violão_Vol.ogg" id="7_j7pef"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p51p1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j7pef"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5n3aw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bnojs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dieh8"]
+
+[sub_resource type="Gradient" id="Gradient_7bcfu"]
+offsets = PackedFloat32Array(0.48913044, 0.5289855)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xxy2r"]
+gradient = SubResource("Gradient_7bcfu")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j7pef"]
 size = Vector2(437.50012, 255.00024)
-
-[sub_resource type="Environment" id="Environment_51247"]
-background_mode = 3
-glow_enabled = true
-glow_intensity = 1.0
-glow_bloom = 0.2
 
 [sub_resource type="Gradient" id="Gradient_ix4hy"]
 offsets = PackedFloat32Array(0.6814815, 1)
@@ -30,95 +42,83 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dkiol"]
 shader = ExtResource("1_mo80f")
 
+[sub_resource type="Environment" id="Environment_51247"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.2
+
+[sub_resource type="Gradient" id="Gradient_ujxjh"]
+offsets = PackedFloat32Array(0.3018018, 0.545045, 1)
+colors = PackedColorArray(18.892157, 18.892157, 18.892157, 1, 1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j7pef"]
+gradient = SubResource("Gradient_ujxjh")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_5n3aw"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.26456308, 1), 0.0, 0.0, 0, 0, Vector2(0.48786408, 1), 0.0, 0.0, 0, 0, Vector2(0.50728154, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_ujxjh"]
+curve = SubResource("Curve_5n3aw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bnojs"]
+lifetime_randomness = 0.5
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(68.125, 93.205, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 111.36
+initial_velocity_max = 187.03
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.19999999
+scale_curve = SubResource("CurveTexture_ujxjh")
+
 [node name="Partida" type="Node2D"]
-script = ExtResource("1_qpmav")
+script = ExtResource("1_bnojs")
 
-[node name="DropZone" type="Area2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="DropZone"]
-self_modulate = Color(0, 0, 0, 0.3254902)
-position = Vector2(930, 550)
-rotation = 1.5707964
-scale = Vector2(0.30658832, 0.37982348)
-texture = ExtResource("4_p51p1")
-
-[node name="Area2D" type="Area2D" parent="DropZone"]
-position = Vector2(930, 550)
-scale = Vector2(0.8, 0.8)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DropZone/Area2D"]
-scale = Vector2(0.99999934, 0.99999934)
-shape = SubResource("RectangleShape2D_j7pef")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_51247")
-
-[node name="Cartas Usuario" type="Node2D" parent="."]
-
-[node name="Cartas Rival" type="Node2D" parent="."]
+[node name="Timer" type="Timer" parent="."]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="UI usuario" type="VBoxContainer" parent="UI"]
-anchors_preset = 4
+[node name="Estado juego" type="Label" parent="UI"]
+offset_left = 1395.0
+offset_top = 664.0
+offset_right = 1808.0
+offset_bottom = 687.0
+
+[node name="Robar" type="Button" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 1531.0
-offset_top = -17.0
-offset_right = 1944.0
-offset_bottom = 212.0
+offset_left = 176.0
+offset_top = -40.0
+offset_right = 312.0
+offset_bottom = 96.0
+grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.815, 0.815)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_p51p1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_j7pef")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5n3aw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_bnojs")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dieh8")
+icon = SubResource("GradientTexture2D_xxy2r")
 
-[node name="Cartas usuario" type="Label" parent="UI/UI usuario"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-theme = ExtResource("3_pfv7k")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = ExtResource("4_qpmav")
-theme_override_styles/focus = ExtResource("5_p51p1")
-text = "nº cartas (tú)"
-
-[node name="UI rival" type="VBoxContainer" parent="UI"]
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 2.0
-offset_top = -208.0
-offset_right = 415.0
-offset_bottom = 21.0
-grow_vertical = 2
-
-[node name="Cartas rival" type="Label" parent="UI/UI rival"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-theme = ExtResource("3_pfv7k")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = ExtResource("4_qpmav")
-theme_override_styles/focus = ExtResource("5_p51p1")
-text = "nº cartas(rival)"
-
-[node name="UI mazo" type="VBoxContainer" parent="UI"]
-offset_left = 290.0
-offset_top = 523.0
-offset_right = 703.0
-offset_bottom = 584.0
-
-[node name="Cartas (Mazo)" type="Label" parent="UI/UI mazo"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-theme = ExtResource("3_pfv7k")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = ExtResource("4_qpmav")
-theme_override_styles/focus = ExtResource("5_p51p1")
-text = "Cartas (Mazo)"
-
-[node name="DeckContainer" type="Node2D" parent="."]
-position = Vector2(930, 550)
-scale = Vector2(0.8, 0.8)
-
-[node name="GameManager" type="Node" parent="."]
-
-[node name="DiscardContainer" type="Node2D" parent="."]
+[node name="CartaMesa(temporal)" type="Label" parent="UI"]
+offset_left = 497.0
+offset_top = 599.0
+offset_right = 728.0
+offset_bottom = 639.0
+theme_override_font_sizes/font_size = 25
 
 [node name="Cartas usuario" type="GridContainer" parent="."]
 anchors_preset = 8
@@ -139,66 +139,6 @@ theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 30
 columns = 10
 
-[node name="Card" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card2" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card3" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card4" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card5" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card6" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card7" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card8" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card9" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card10" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card11" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card12" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card13" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card14" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card15" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card16" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card17" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card18" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card19" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card20" parent="Cartas usuario" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
 [node name="Cartas rival" type="GridContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -206,77 +146,45 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -95.0
-offset_top = 23.0
+offset_top = -99.0
 offset_right = 2035.0
-offset_bottom = 573.0
+offset_bottom = 451.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 3.1415927
 scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(1065, 0)
+pivot_offset = Vector2(1065, 275)
 localize_numeral_system = false
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 30
 columns = 10
 
-[node name="Card" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
+[node name="DropZone" type="Area2D" parent="."]
 
-[node name="Card2" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
+[node name="Sprite2D" type="Sprite2D" parent="DropZone"]
+self_modulate = Color(0, 0, 0, 0.3254902)
+position = Vector2(930, 550)
+rotation = 1.5707964
+scale = Vector2(0.30658832, 0.37982348)
+texture = ExtResource("4_p51p1")
 
-[node name="Card3" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropZone"]
+position = Vector2(930, 550)
+scale = Vector2(0.7999995, 0.7999995)
+shape = SubResource("RectangleShape2D_j7pef")
 
-[node name="Card4" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
+[node name="Jugar Carta" type="HTTPRequest" parent="."]
 
-[node name="Card5" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
+[node name="Robar Carta" type="HTTPRequest" parent="."]
 
-[node name="Card6" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
+[node name="Game State" type="HTTPRequest" parent="."]
 
-[node name="Card7" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card8" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card9" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card10" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card11" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card12" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card13" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card14" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card15" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card16" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card17" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card18" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card19" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
-
-[node name="Card20" parent="Cartas rival" instance=ExtResource("2_mo80f")]
-layout_mode = 2
+[node name="Música" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_j7pef")
+volume_db = -20.0
+autoplay = true
+bus = &"Música"
+parameters/looping = false
 
 [node name="Viñetado" type="Sprite2D" parent="."]
 z_index = 1
@@ -296,4 +204,23 @@ scale = Vector2(-0.417, 0.417)
 texture = ExtResource("1_0t4ck")
 centered = false
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_51247")
+
+[node name="POST robar" type="HTTPRequest" parent="."]
+
+[node name="Partículas" type="GPUParticles2D" parent="."]
+visible = false
+z_index = -1
+position = Vector2(1522, 658)
+amount = 100
+texture = SubResource("GradientTexture2D_j7pef")
+visibility_rect = Rect2(-100, -100, 2000, 2000)
+process_material = SubResource("ParticleProcessMaterial_bnojs")
+
+[connection signal="pressed" from="UI/Robar" to="." method="_on_robar_pressed"]
+[connection signal="area_entered" from="DropZone" to="." method="_on_drop_zone_area_entered"]
+[connection signal="area_exited" from="DropZone" to="." method="_on_drop_zone_area_exited"]
+[connection signal="request_completed" from="Jugar Carta" to="." method="_on_jugar_carta_request_completed"]
+[connection signal="request_completed" from="Robar Carta" to="." method="_on_robar_carta_request_completed"]
+[connection signal="request_completed" from="Game State" to="." method="_on_game_state_request_completed"]
