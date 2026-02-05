@@ -81,6 +81,7 @@ bus = &"Efectos"
 [node name="Sonido Release" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_ga7b0")
 volume_db = -12.404
+bus = &"Efectos"
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

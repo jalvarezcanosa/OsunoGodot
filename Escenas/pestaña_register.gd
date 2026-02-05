@@ -129,12 +129,11 @@ func _procesar_registro_exitoso(response_body: String):
 
 	if success and username != "":
 		print("¡REGISTRO EXITOSO!")
-		print("Usuario creado:", username)
-
+		error.text = "Usuario creado: " + str(username)
 		_mostrar_exito("¡Usuario registrado exitosamente!")
 		_limpiar_campos()
 		
-		# Opcional: Volver al login después de 2 segundos
+		# Volver al login después de 2 segundos
 		await get_tree().create_timer(2.0).timeout
 		_boton_volver_login_presionado()
 	else:
@@ -144,13 +143,11 @@ func _procesar_registro_exitoso(response_body: String):
 		
 func _mostrar_error(mensaje: String):
 	print("ERROR:", mensaje)
-	# Aquí puedes agregar un Label para mostrar el error en pantalla
-	# Por ejemplo: $LabelError.text = mensaje
+
 
 func _mostrar_exito(mensaje: String):
 	print("ÉXITO:", mensaje)
-	# Aquí puedes agregar un Label para mostrar el éxito en pantalla
-	# Por ejemplo: $LabelExito.text = mensaje
+
 
 func _limpiar_campos():
 	usuario_input.text = ""

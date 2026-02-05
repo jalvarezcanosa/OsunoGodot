@@ -38,15 +38,32 @@ func request_game_state() -> void:
 	if err != OK:
 		print("Error al pedir game state")
 
-func _on_game_state_request_completed(result: int,response_code: int,headers: PackedStringArray,body: PackedByteArray) -> void:
+func _on_game_state_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	if response_code != 200:
 		print("Game state error:", response_code)
 		return
+		
 	var body_str = body.get_string_from_utf8()
 	var data = JSON.parse_string(body_str)
 	if data == null:
 		print("JSON inválido")
 		return
+	
+	# comprobar si la partida terminó
+	if data.has("gameFinished"):
+		match data["gameFinished"]:
+			"youWon":
+				print("¡Victoria!")
+				get_tree().change_scene_to_file("res://Escenas/victory_screen.tscn")
+				return
+			"youLost":
+				print("Derrota")
+				get_tree().change_scene_to_file("res://Escenas/lose_screen.tscn")
+				return
+			_:
+				pass  # otros estados si se dan
+
+	# Si seguimos aquí, la partida sigue
 	update_ui(data)
 
 # Actualizar interfaz
@@ -67,8 +84,9 @@ func update_ui(data: Dictionary) -> void:
 	# Cartas del rival
 	for child in mano_rival.get_children():
 		child.queue_free()
-	var rival_count := 7
-	for i in range(rival_count):
+		
+	var rival_hand = data.get("rivalHand", [])	
+	for carta in rival_hand:
 		var card = card_scene.instantiate()
 		card.set_rival()
 		mano_rival.add_child(card)
@@ -118,7 +136,7 @@ func _on_carta_mazo_carta_soltada(card: Variant) -> void:
 # Robar carta
 func robar_carta() -> void:
 	if not is_my_turn:
-		print("No es tu turno, no puedes robar carta")
+		estado_juego.text = ("No es tu turno, no puedes robar carta")
 		return
 	var headers = ["Content-Type: application/json", "Session: %s" % Session.token]
 	var err = http_draw_card.request(url_draw_card, headers, HTTPClient.METHOD_POST, "")
@@ -129,14 +147,30 @@ func _on_draw_card_completed(result: int, response_code: int, headers: PackedStr
 	var body_str = body.get_string_from_utf8()
 	print("ROBAR CARTA - STATUS:", response_code)
 	print("ROBAR CARTA - BODY:", body_str)
+	
 	if response_code == 200:
 		print("Carta robada correctamente")
-		request_game_state()
+		request_game_state()	
 	elif response_code == 403:
 		var data = JSON.parse_string(body_str)
 		if data and data.has("error"):
 			print("Error: ", data["error"])
 		else:
 			print("No se puede robar carta (mazo vacío o no es tu turno)")
+	elif response_code == 201:
+		request_game_state()
 	else:
 		print("Error al robar carta. Código: ", response_code)
+
+	# Revisar si la partida ha terminado al robar
+	var data = JSON.parse_string(body_str)
+	if data and data.has("gameFinished"):
+		match data["gameFinished"]:
+			"youWon":
+				print("¡Victoria!")
+				get_tree().change_scene_to_file("res://Escenas/victory_screen.tscn")
+				return
+			"youLost":
+				print("Derrota")
+				get_tree().change_scene_to_file("res://Escenas/lose_screen.tscn")
+				return

@@ -33,9 +33,7 @@ signal carta_soltada(card)
 @onready var shadow: TextureRect = $Shadow
 @onready var collision_shape: CollisionShape2D = $DestroyArea/CollisionShape2D
 
-# ----------------------
-# CARTA DEL RIVAL
-# ----------------------
+# Carta del rival
 func set_rival() -> void:
 	puede_pickear = false
 	arrastrando = false
@@ -61,9 +59,7 @@ func set_rival() -> void:
 	if shadow:
 		shadow.self_modulate.a = 0.4
 
-# ----------------------
-# CARTA DEL JUGADOR
-# ----------------------
+# Carta del jugador
 func set_codigo(c: String) -> void:
 	card_code = c
 
@@ -124,9 +120,6 @@ func set_codigo(c: String) -> void:
 	if shadow:
 		shadow.self_modulate.a = 0.4
 
-# ----------------------
-# READY / PROCESS
-# ----------------------
 func _ready() -> void:
 	if shadow:
 		shadow.self_modulate.a = 0.4

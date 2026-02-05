@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bsxmfi5pwcce3"]
+[gd_scene load_steps=32 format=3 uid="uid://bsxmfi5pwcce3"]
 
 [ext_resource type="Script" uid="uid://cnvlyanxcvdyn" path="res://Scripts/menuInicio.gd" id="1_h6l3e"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_ntk23"]
@@ -6,7 +6,6 @@
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_ntk23"]
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="4_0j0h0"]
 [ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Scripts/fondo.gdshader" id="5_71mgp"]
-[ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="5_prdkb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="7_0j0h0"]
 [ext_resource type="Shader" uid="uid://dmua4dy3tdqmu" path="res://Scripts/logoUno.gdshader" id="7_o32np"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="8_0j0h0"]
@@ -177,38 +176,6 @@ _data = {
 &"RESET": SubResource("Animation_tw0lc"),
 &"bandera ": SubResource("Animation_wuswk")
 }
-
-[sub_resource type="Gradient" id="Gradient_ujxjh"]
-offsets = PackedFloat32Array(0.3018018, 0.545045, 1)
-colors = PackedColorArray(18.892157, 18.892157, 18.892157, 1, 1, 1, 1, 0, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ntk23"]
-gradient = SubResource("Gradient_ujxjh")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="Curve" id="Curve_x84wf"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.26456308, 1), 0.0, 0.0, 0, 0, Vector2(0.48786408, 1), 0.0, 0.0, 0, 0, Vector2(0.50728154, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 5
-
-[sub_resource type="CurveTexture" id="CurveTexture_ujxjh"]
-curve = SubResource("Curve_x84wf")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x84wf"]
-lifetime_randomness = 0.5
-particle_flag_align_y = true
-particle_flag_disable_z = true
-emission_shape_scale = Vector3(68.125, 93.205, 1)
-emission_shape = 3
-emission_box_extents = Vector3(1, 1, 1)
-direction = Vector3(0, 1, 0)
-spread = 180.0
-initial_velocity_min = 111.36
-initial_velocity_max = 187.03
-gravity = Vector3(0, 0, 0)
-scale_min = 0.099999994
-scale_max = 0.19999999
-scale_curve = SubResource("CurveTexture_ujxjh")
 
 [sub_resource type="Environment" id="Environment_ypc88"]
 background_mode = 3
@@ -427,21 +394,6 @@ texture = ExtResource("9_prdkb")
 libraries = {
 &"": SubResource("AnimationLibrary_yqdmp")
 }
-
-[node name="Card" parent="." instance=ExtResource("5_prdkb")]
-layout_mode = 0
-offset_left = 1444.0
-offset_top = 551.0
-offset_right = 1596.0
-offset_bottom = 758.0
-
-[node name="Partículas" type="GPUParticles2D" parent="Card"]
-z_index = -1
-position = Vector2(78, 107)
-amount = 100
-texture = SubResource("GradientTexture2D_ntk23")
-visibility_rect = Rect2(-100, -100, 2000, 2000)
-process_material = SubResource("ParticleProcessMaterial_x84wf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

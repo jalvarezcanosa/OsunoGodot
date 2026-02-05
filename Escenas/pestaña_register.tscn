@@ -43,11 +43,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="confir" type="LineEdit" parent="CanvasLayer/VBoxContainer"]
+[node name="usuario" type="LineEdit" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_74ibs")
 theme_override_font_sizes/font_size = 24
-placeholder_text = "Confirmar Contraseña"
+placeholder_text = "Usuario"
 alignment = 1
 
 [node name="con" type="LineEdit" parent="CanvasLayer/VBoxContainer"]
@@ -57,11 +57,11 @@ theme_override_font_sizes/font_size = 24
 placeholder_text = "Contraseña"
 alignment = 1
 
-[node name="usuario" type="LineEdit" parent="CanvasLayer/VBoxContainer"]
+[node name="confir" type="LineEdit" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_74ibs")
 theme_override_font_sizes/font_size = 24
-placeholder_text = "Usuario"
+placeholder_text = "Confirmar Contraseña"
 alignment = 1
 
 [node name="Reg" type="Button" parent="CanvasLayer/VBoxContainer"]
