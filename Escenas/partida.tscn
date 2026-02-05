@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://1437dumm2ogl"]
+[gd_scene load_steps=15 format=3 uid="uid://1437dumm2ogl"]
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
 [ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_bnojs"]
@@ -87,6 +87,9 @@ theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = ExtResource("4_qpmav")
 theme_override_styles/focus = ExtResource("5_p51p1")
 text = "nº cartas(rival)"
+
+[node name="CartaMazo" parent="UI" instance=ExtResource("2_mo80f")]
+visible = false
 
 [node name="CartaMesa(temporal)" type="Label" parent="UI"]
 offset_left = 497.0
