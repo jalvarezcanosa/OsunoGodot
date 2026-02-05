@@ -5,23 +5,23 @@
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_rp7na"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_rp7na"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="6_dqwj3"]
-[ext_resource type="PackedScene" uid="uid://bcyrihk4432p2" path="res://Escenas/pestanha_datos_usuario.tscn" id="8_jextb"]
+[ext_resource type="PackedScene" uid="uid://gu4coqu31v4s" path="res://Escenas/pestanha_datos_usuario.tscn" id="8_jextb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="8_mm4tk"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="9_mm4tk"]
 
-[sub_resource type="Gradient" id="Gradient_5ld8w"]
+[sub_resource type="Gradient" id="Gradient_mm4tk"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.27450982)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2to65"]
-gradient = SubResource("Gradient_5ld8w")
+gradient = SubResource("Gradient_mm4tk")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="Gradient" id="Gradient_rp7na"]
+[sub_resource type="Gradient" id="Gradient_qpft7"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.27450982)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lwrlj"]
-gradient = SubResource("Gradient_rp7na")
+gradient = SubResource("Gradient_qpft7")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -204,10 +204,12 @@ anchor_mode = 0
 [node name="Click1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_mm4tk")
 volume_db = -10.0
+bus = &"Efectos"
 
 [node name="Click2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_mm4tk")
-volume_db = -10.0
+volume_db = -15.0
+bus = &"Efectos"
 
 [node name="PostCrearSala" type="HTTPRequest" parent="."]
 
@@ -221,7 +223,9 @@ scale = Vector2(3.9062502, 3.9062502)
 texture = SubResource("GradientTexture2D_jextb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PointLight2D"]
-libraries = { &"": SubResource("AnimationLibrary_xqp3y") }
+libraries = {
+&"": SubResource("AnimationLibrary_xqp3y")
+}
 autoplay = "SpotLightAnimation"
 
 [node name="PointLight2D2" type="PointLight2D" parent="."]
@@ -230,7 +234,9 @@ scale = Vector2(3.9062502, 3.9062502)
 texture = SubResource("GradientTexture2D_jextb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PointLight2D2"]
-libraries = { &"": SubResource("AnimationLibrary_xqp3y") }
+libraries = {
+&"": SubResource("AnimationLibrary_xqp3y")
+}
 autoplay = "SpotLightAnimation_2"
 
 [node name="Node" parent="." instance=ExtResource("8_jextb")]
@@ -250,6 +256,6 @@ wait_time = 0.5
 [connection signal="pressed" from="Botonera/BotonesMenú/Volver" to="." method="_on_volver_pressed"]
 [connection signal="request_completed" from="PostCrearSala" to="." method="_on_post_crear_sala_request_completed"]
 [connection signal="request_completed" from="PostUnirSala" to="." method="_on_post_unir_sala_request_completed"]
-[connection signal="pressed" from="Ver datos" to="Node" method="_on_ver_datos_pressed"]
 [connection signal="request_completed" from="GetEstadoSala" to="." method="_on_get_estado_sala_request_completed"]
+[connection signal="pressed" from="Ver datos" to="Node" method="_on_ver_datos_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,10 +1,11 @@
 extends Control
-@onready var usuario_input = $CanvasLayer/usuario
-@onready var contrasenha_input = $CanvasLayer/con
-@onready var confirmar_input = $CanvasLayer/confir
-@onready var boton_registrar = $CanvasLayer/Reg
-@onready var boton_volver = $CanvasLayer/volver
 @onready var http = $HTTPRequest
+@onready var confirmar_input: LineEdit = $CanvasLayer/VBoxContainer/confir
+@onready var contrasenha_input: LineEdit = $CanvasLayer/VBoxContainer/con
+@onready var usuario_input: LineEdit = $CanvasLayer/VBoxContainer/usuario
+@onready var boton_registrar: Button = $CanvasLayer/VBoxContainer/Reg
+@onready var boton_volver: Button = $CanvasLayer/VBoxContainer/volver
+@onready var error: Label = $CanvasLayer/Error
 
 const SERVER_URL = "http://127.0.0.1:8000"
 const REGISTER_URL = SERVER_URL + "/users"
@@ -37,27 +38,27 @@ func _boton_registro_presionado():
 
 func _validar_campos(usuario: String, contrasenha: String, confirmar_contrasenha: String) -> bool:
 	if usuario == "":
-		_mostrar_error("El nombre de usuario es requerido")
+		error.text = ("El nombre de usuario es requerido")
 		return false
 
 	if usuario.length() < 3:
-		_mostrar_error("El usuario debe tener al menos 3 caracteres")
+		error.text = ("El usuario debe tener al menos 3 caracteres")
 		return false
 
 	if usuario.length() > 30:
-		_mostrar_error("El usuario no puede tener más de 30 caracteres")
+		error.text = ("El usuario no puede tener más de 30 caracteres")
 		return false
 
 	if contrasenha == "":
-		_mostrar_error("La contraseña es requerida")
+		error.text = ("La contraseña es requerida")
 		return false
 
 	if contrasenha.length() < 1:
-		_mostrar_error("La contraseña debe tener al menos 6 caracteres")
+		error.text = ("La contraseña debe tener al menos 6 caracteres")
 		return false
 
 	if contrasenha != confirmar_contrasenha:
-		_mostrar_error("Las contraseñas no coinciden")
+		error.text = ("Las contraseñas no coinciden")
 		return false
 	
 	return true
@@ -91,7 +92,7 @@ func _on_registro_completado(result: int, response_code: int, headers: PackedStr
 	print("Código:", response_code)
 
 	if result != HTTPRequest.RESULT_SUCCESS:
-		_mostrar_error("Error de conexión con el servidor")
+		error.text = ("Error de conexión con el servidor")
 		print("Asegúrate de que Django esté corriendo en:", SERVER_URL)
 		return
 
@@ -102,14 +103,14 @@ func _on_registro_completado(result: int, response_code: int, headers: PackedStr
 		201:  # Registro exitoso
 			_procesar_registro_exitoso(response_body)
 		400:  # Bad Request
-			_mostrar_error("Error: Faltan parámetros o están mal formados")
+			error.text = ("Error: Faltan parámetros o están mal formados")
 			print("Respuesta:", response_body)
 		409:  # Conflict
-			_mostrar_error("El nombre de usuario ya está en uso")
+			error.text = ("El nombre de usuario ya está en uso")
 		405:  # Method Not Allowed
-			_mostrar_error("Error del servidor: Método no permitido")
+			error.text = ("Error del servidor: Método no permitido")
 		_:  # Otros códigos
-			_mostrar_error("Error del servidor: código " + str(response_code))
+			error.text = ("Error del servidor: código " + str(response_code))
 			print("Respuesta completa:", response_body)
 
 func _procesar_registro_exitoso(response_body: String):
@@ -117,7 +118,7 @@ func _procesar_registro_exitoso(response_body: String):
 	var parse_error = json.parse(response_body)
 	
 	if parse_error != OK:
-		_mostrar_error("Error al procesar respuesta del servidor")
+		error.text = ("Error al procesar respuesta del servidor")
 		return
 	
 	var respuesta = json.get_data()
