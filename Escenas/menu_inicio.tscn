@@ -5,15 +5,15 @@
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_ujxjh"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_ntk23"]
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="4_0j0h0"]
-[ext_resource type="Shader" path="res://Scripts/fondo.gdshader" id="5_71mgp"]
+[ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Scripts/fondo.gdshader" id="5_71mgp"]
 [ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="5_prdkb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="7_0j0h0"]
-[ext_resource type="Shader" path="res://Scripts/logoUno.gdshader" id="7_o32np"]
+[ext_resource type="Shader" uid="uid://dmua4dy3tdqmu" path="res://Scripts/logoUno.gdshader" id="7_o32np"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="8_0j0h0"]
 [ext_resource type="Texture2D" uid="uid://csipnlxww5n1m" path="res://Texturas/normal_mapping_normal_map.png" id="8_h6l3e"]
 [ext_resource type="AudioStream" uid="uid://bhonw60fck3kg" path="res://Audio/Música/Moonglow  Love Theme.mp3" id="9_0qp8k"]
 [ext_resource type="Texture2D" uid="uid://d376gk7bdccar" path="res://Texturas/UNO_Logo.svg.png" id="9_prdkb"]
-[ext_resource type="Script" path="res://Scripts/logo.gd" id="9_yuwwx"]
+[ext_resource type="Script" uid="uid://p6kycuxl3u0c" path="res://Scripts/logo.gd" id="9_yuwwx"]
 
 [sub_resource type="Gradient" id="Gradient_h6l3e"]
 offsets = PackedFloat32Array(0.38666666, 0.5925926)
@@ -131,9 +131,9 @@ orientation = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yuwwx"]
 shader = ExtResource("7_o32np")
-shader_parameter/amplitude = 240.0970114046075
-shader_parameter/frequency = 4.694000222965
-shader_parameter/speed = 4.7090002236775
+shader_parameter/amplitude = 110.0970052296075
+shader_parameter/frequency = 2.3690001125275
+shader_parameter/speed = 1.442000068495
 shader_parameter/tightness = 0.0
 shader_parameter/normal_strength = 1.0
 shader_parameter/mouse_pos = Vector2(0, 0)
@@ -347,6 +347,12 @@ theme_override_font_sizes/font_size = 40
 text = "Iniciar sesión
 "
 
+[node name="Registrarse" type="Button" parent="Inicio de sesión"]
+layout_mode = 2
+theme = ExtResource("2_ntk23")
+theme_override_font_sizes/font_size = 40
+text = "Registrarse"
+
 [node name="Errores login" type="Label" parent="Inicio de sesión"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -354,12 +360,6 @@ theme = ExtResource("2_ntk23")
 theme_override_font_sizes/font_size = 35
 theme_override_styles/normal = ExtResource("2_ujxjh")
 theme_override_styles/focus = ExtResource("3_ntk23")
-
-[node name="Button" type="Button" parent="Inicio de sesión"]
-layout_mode = 2
-theme = ExtResource("2_ntk23")
-theme_override_font_sizes/font_size = 40
-text = "Registrarse"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(226, 195)
@@ -417,10 +417,9 @@ texture = ExtResource("4_0j0h0")
 script = ExtResource("9_yuwwx")
 
 [node name="Logo" type="Sprite2D" parent="."]
-visible = false
 z_index = -2
 material = SubResource("ShaderMaterial_yuwwx")
-position = Vector2(1261, 533)
+position = Vector2(1551, 328)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_prdkb")
 
@@ -430,7 +429,6 @@ libraries = {
 }
 
 [node name="Card" parent="." instance=ExtResource("5_prdkb")]
-visible = false
 layout_mode = 0
 offset_left = 1444.0
 offset_top = 551.0
@@ -438,14 +436,6 @@ offset_right = 1596.0
 offset_bottom = 758.0
 
 [node name="Partículas" type="GPUParticles2D" parent="Card"]
-z_index = -1
-position = Vector2(78, 107)
-amount = 100
-texture = SubResource("GradientTexture2D_ntk23")
-visibility_rect = Rect2(-100, -100, 2000, 2000)
-process_material = SubResource("ParticleProcessMaterial_x84wf")
-
-[node name="Partículas2" type="GPUParticles2D" parent="Card"]
 z_index = -1
 position = Vector2(78, 107)
 amount = 100
@@ -462,24 +452,21 @@ environment = SubResource("Environment_ypc88")
 [node name="MúsicaInicio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_0qp8k")
 volume_db = -10.637
+autoplay = true
+bus = &"Música"
 parameters/looping = true
 
 [node name="Click1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_0j0h0")
 volume_db = -10.0
+bus = &"Efectos"
 
 [node name="Click2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_0j0h0")
-volume_db = -10.0
+volume_db = -15.0
+bus = &"Efectos"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
-
-[node name="Card2" parent="." instance=ExtResource("5_prdkb")]
-layout_mode = 0
-offset_left = 1528.0
-offset_top = 532.0
-offset_right = 1696.0
-offset_bottom = 792.0
 
 [connection signal="toggled" from="Menú Principal/Nueva Partida" to="." method="_on_nueva_partida_toggled"]
 [connection signal="pressed" from="Menú Principal/Ajustes" to="." method="_on_ajustes_pressed"]
@@ -488,5 +475,5 @@ offset_bottom = 792.0
 [connection signal="value_changed" from="Volúmen/Musica/Slider Música" to="." method="_on_slider_música_value_changed"]
 [connection signal="value_changed" from="Volúmen/Efectos/Slider Efectos" to="." method="_on_slider_efectos_value_changed"]
 [connection signal="pressed" from="Inicio de sesión/Iniciar Sesión" to="." method="_on_iniciar_sesión_pressed"]
-[connection signal="pressed" from="Inicio de sesión/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Inicio de sesión/Registrarse" to="." method="_on_button_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

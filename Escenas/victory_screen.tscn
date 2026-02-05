@@ -1,6 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1tcmu7tg42me"]
+[gd_scene load_steps=10 format=3 uid="uid://c1tcmu7tg42me"]
 
-[ext_resource type="Script" uid="uid://cspb0h7amkcjq" path="res://scripts/victory_screen.gd" id="1_i5jdm"]
+[ext_resource type="Script" uid="uid://cspb0h7amkcjq" path="res://Scripts/victory_screen.gd" id="1_i5jdm"]
+[ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_pwnej"]
+[ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="3_t2e3k"]
+[ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="4_ca51e"]
+[ext_resource type="AudioStream" uid="uid://bhonw60fck3kg" path="res://Audio/Música/Moonglow  Love Theme.mp3" id="5_eipfa"]
+
+[sub_resource type="Gradient" id="Gradient_5dst2"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.27450982)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i5jdm"]
+gradient = SubResource("Gradient_5dst2")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_quktb"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.27450982)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o5orl"]
+gradient = SubResource("Gradient_quktb")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="victory_screen" type="CanvasLayer"]
 layer = 10
@@ -18,10 +38,10 @@ color = Color(0, 0.6431373, 0.16862746, 0.5019608)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -155.0
-offset_top = 429.0
-offset_right = 155.0
-offset_bottom = 690.0
+offset_left = -376.0
+offset_top = 300.0
+offset_right = 376.0
+offset_bottom = 819.0
 grow_horizontal = 2
 size_flags_vertical = 0
 
@@ -34,7 +54,10 @@ alignment = 1
 process_mode = 3
 z_index = 5
 layout_mode = 2
+theme = ExtResource("2_pwnej")
 theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = ExtResource("3_t2e3k")
+theme_override_styles/focus = ExtResource("4_ca51e")
 text = "¡GANASTE!"
 horizontal_alignment = 1
 
@@ -52,6 +75,26 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 37
 text = "SALIR"
+
+[node name="Viñetado" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(30, 16.875)
+texture = SubResource("GradientTexture2D_i5jdm")
+centered = false
+
+[node name="Viñetado2" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(30, 16.875)
+texture = SubResource("GradientTexture2D_o5orl")
+centered = false
+
+[node name="MúsicaInicio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_eipfa")
+volume_db = -10.637
+pitch_scale = 1.5
+autoplay = true
+bus = &"Música"
+parameters/looping = true
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

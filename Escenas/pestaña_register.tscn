@@ -1,20 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkqsxwd3s648s"]
+[gd_scene load_steps=4 format=3 uid="uid://bkqsxwd3s648s"]
 
 [ext_resource type="Script" uid="uid://dumk07c02viqx" path="res://Escenas/pestaña_register.gd" id="1_77scr"]
 [ext_resource type="Texture2D" uid="uid://drvbmxdqw85ef" path="res://Texturas/Fondo_registro.jpg" id="2_2xmck"]
+[ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="3_74ibs"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 172.0
-offset_top = -12.0
-offset_right = 172.0
-offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_77scr")
+metadata/_edit_lock_ = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
@@ -29,44 +27,62 @@ offset_bottom = 1074.0
 mouse_filter = 2
 texture = ExtResource("2_2xmck")
 expand_mode = 1
+metadata/_edit_lock_ = true
 
-[node name="volver" type="Button" parent="CanvasLayer"]
-offset_left = 885.0
-offset_top = 595.0
-offset_right = 1104.0
-offset_bottom = 652.0
-size_flags_horizontal = 8
-size_flags_vertical = 4
-text = "Volver
-"
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -202.0
+offset_top = -149.0
+offset_right = 202.0
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
 
-[node name="Reg" type="Button" parent="CanvasLayer"]
-offset_left = 884.0
-offset_top = 527.0
-offset_right = 1103.0
-offset_bottom = 588.0
-text = "Registrarse"
-
-[node name="confir" type="LineEdit" parent="CanvasLayer"]
-offset_left = 850.0
-offset_top = 485.0
-offset_right = 1140.0
-offset_bottom = 516.0
+[node name="confir" type="LineEdit" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_74ibs")
+theme_override_font_sizes/font_size = 24
 placeholder_text = "Confirmar Contraseña"
 alignment = 1
 
-[node name="con" type="LineEdit" parent="CanvasLayer"]
-offset_left = 850.0
-offset_top = 449.0
-offset_right = 1141.0
-offset_bottom = 480.0
+[node name="con" type="LineEdit" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_74ibs")
+theme_override_font_sizes/font_size = 24
 placeholder_text = "Contraseña"
 alignment = 1
 
-[node name="usuario" type="LineEdit" parent="CanvasLayer"]
-offset_left = 850.0
-offset_top = 412.0
-offset_right = 1141.0
-offset_bottom = 443.0
+[node name="usuario" type="LineEdit" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_74ibs")
+theme_override_font_sizes/font_size = 24
 placeholder_text = "Usuario"
 alignment = 1
+
+[node name="Reg" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_74ibs")
+theme_override_font_sizes/font_size = 30
+text = "Registrarse"
+
+[node name="volver" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("3_74ibs")
+theme_override_font_sizes/font_size = 30
+text = "Volver
+"
+
+[node name="Error" type="Label" parent="CanvasLayer"]
+offset_left = 273.0
+offset_top = 663.0
+offset_right = 1647.0
+offset_bottom = 694.0
+theme = ExtResource("3_74ibs")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1

@@ -1,15 +1,14 @@
 extends PopupPanel
 
-@onready var username_label := $CanvasLayer/Usuario
-@onready var games_won_label := $CanvasLayer/JuegosGanados
-@onready var games_played_label := $CanvasLayer/JuegosJugados
-@onready var volver_button := $CanvasLayer/volver
+@onready var username_label: Label = $CanvasLayer/VBoxContainer/Usuario
+@onready var games_won_label: Label = $CanvasLayer/VBoxContainer/JuegosGanados
+@onready var games_played_label: Label = $CanvasLayer/VBoxContainer/JuegosJugados
+@onready var rango: Label = $CanvasLayer/VBoxContainer/Rango
 
 # Variable para guardar la posición inicial del editor
 var saved_position: Vector2i
 
 func _ready():
-	volver_button.pressed.connect(_on_volver_pressed)
 	# Guardar la posición configurada en el editor (1400, 200)
 	saved_position = position
 	hide()  # Empezar oculto
@@ -28,12 +27,22 @@ func set_user_data(data: Dictionary):
 	games_won_label.text = "Partidas ganadas: %d" % data["gamesWon"]
 	games_played_label.text = "Partidas jugadas: %d" % data["gamesPlayed"]
 	
-	print("Labels actualizados correctamente")
+	if data["gamesWon"] <= 0:
+		rango.text = "Rango: Sin clasificar"
+		return
+
+	var ratio := float(data["gamesPlayed"]) / float(data["gamesWon"])
+
+	if ratio <= 2:
+		rango.text = "Rango: Diamante"
+	elif ratio <= 5:
+		rango.text = "Rango: Dorado"
+	elif ratio <= 10:
+		rango.text = "Rango: Plata"
+	else:
+		rango.text = "Rango: Bronce"
 
 func show_popup():
 	# Restaurar la posición original (1400, 200) antes de mostrar
 	position = saved_position
 	show()
-
-func _on_volver_pressed():
-	hide()

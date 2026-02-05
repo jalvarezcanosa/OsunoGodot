@@ -1,6 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://bt0gmmeywidt7"]
+[gd_scene load_steps=10 format=3 uid="uid://bt0gmmeywidt7"]
 
-[ext_resource type="Script" uid="uid://cuxuxsg1ay0q2" path="res://scripts/lose_screen.gd" id="1_vs66d"]
+[ext_resource type="Script" uid="uid://cuxuxsg1ay0q2" path="res://Scripts/lose_screen.gd" id="1_vs66d"]
+[ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_g12co"]
+[ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="3_c3sb0"]
+[ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="4_x6pgu"]
+[ext_resource type="AudioStream" uid="uid://bhonw60fck3kg" path="res://Audio/Música/Moonglow  Love Theme.mp3" id="5_c3sb0"]
+
+[sub_resource type="Gradient" id="Gradient_5ld8w"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.27450982)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g12co"]
+gradient = SubResource("Gradient_5ld8w")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_rp7na"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.27450982)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c3sb0"]
+gradient = SubResource("Gradient_rp7na")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="lose_screen" type="CanvasLayer"]
 script = ExtResource("1_vs66d")
@@ -18,10 +38,10 @@ color = Color(1, 0, 0, 0.5019608)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -155.0
-offset_top = 429.0
-offset_right = 155.0
-offset_bottom = 690.0
+offset_left = -294.0
+offset_top = 378.0
+offset_right = 294.0
+offset_bottom = 741.0
 grow_horizontal = 2
 size_flags_vertical = 0
 
@@ -33,6 +53,7 @@ alignment = 1
 [node name="YouLose" type="Label" parent="CenterContainer/VBoxContainer"]
 z_index = 5
 layout_mode = 2
+theme = ExtResource("2_g12co")
 theme_override_font_sizes/font_size = 60
 text = "PERDISTE"
 horizontal_alignment = 1
@@ -42,15 +63,40 @@ z_index = 5
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("2_g12co")
 theme_override_font_sizes/font_size = 37
+theme_override_styles/normal = ExtResource("3_c3sb0")
+theme_override_styles/hover = ExtResource("4_x6pgu")
 text = "MENU PRINCIPAL"
 
 [node name="Quit" type="Button" parent="CenterContainer/VBoxContainer"]
 z_index = 5
 layout_mode = 2
-size_flags_horizontal = 4
+theme = ExtResource("2_g12co")
 theme_override_font_sizes/font_size = 37
+theme_override_styles/normal = ExtResource("3_c3sb0")
+theme_override_styles/hover = ExtResource("4_x6pgu")
 text = "SALIR"
+
+[node name="Viñetado" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(30, 16.875)
+texture = SubResource("GradientTexture2D_g12co")
+centered = false
+
+[node name="Viñetado2" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(30, 16.875)
+texture = SubResource("GradientTexture2D_c3sb0")
+centered = false
+
+[node name="MúsicaInicio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_c3sb0")
+volume_db = -10.637
+pitch_scale = 0.6
+autoplay = true
+bus = &"Música"
+parameters/looping = true
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
