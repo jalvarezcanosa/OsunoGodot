@@ -1,12 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://1437dumm2ogl"]
+[gd_scene load_steps=23 format=3 uid="uid://1437dumm2ogl"]
 
 [ext_resource type="Texture2D" uid="uid://tmjvqqs3rxg7" path="res://Texturas/Fondo billar.jpg" id="1_0t4ck"]
 [ext_resource type="Script" uid="uid://c6mgkfpt2800n" path="res://Scripts/partida.gd" id="1_bnojs"]
 [ext_resource type="Shader" uid="uid://dwpmp0hfn0mhn" path="res://Scripts/fondo.gdshader" id="1_mo80f"]
-[ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="3_pfv7k"]
 [ext_resource type="Texture2D" uid="uid://dsv47p35qjsjm" path="res://Texturas/Tiles_A_white.png" id="4_p51p1"]
-[ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="4_qpmav"]
-[ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="5_p51p1"]
 [ext_resource type="AudioStream" uid="uid://b4epofuw1inrl" path="res://Audio/Música/Paulinho_Nogueira__–_O_Fino_Do_Violão_Vol.ogg" id="7_j7pef"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p51p1"]
@@ -90,18 +87,6 @@ script = ExtResource("1_bnojs")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Cartas usuario" type="Label" parent="UI"]
-custom_minimum_size = Vector2(0, 50)
-offset_left = 1531.0
-offset_top = 523.0
-offset_right = 1944.0
-offset_bottom = 573.0
-theme = ExtResource("3_pfv7k")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = ExtResource("4_qpmav")
-theme_override_styles/focus = ExtResource("5_p51p1")
-text = "nº cartas (tú)"
-
 [node name="Estado juego" type="Label" parent="UI"]
 offset_left = 1395.0
 offset_top = 664.0
@@ -127,30 +112,6 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_5n3aw")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_bnojs")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_dieh8")
 icon = SubResource("GradientTexture2D_xxy2r")
-
-[node name="Cartas (Mazo)" type="Label" parent="UI"]
-custom_minimum_size = Vector2(0, 50)
-offset_left = 494.0
-offset_top = 532.0
-offset_right = 907.0
-offset_bottom = 582.0
-theme = ExtResource("3_pfv7k")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = ExtResource("4_qpmav")
-theme_override_styles/focus = ExtResource("5_p51p1")
-text = "Cartas (Mazo)"
-
-[node name="Cartas rival" type="Label" parent="UI"]
-custom_minimum_size = Vector2(0, 50)
-offset_left = 2.0
-offset_top = 332.0
-offset_right = 415.0
-offset_bottom = 382.0
-theme = ExtResource("3_pfv7k")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = ExtResource("4_qpmav")
-theme_override_styles/focus = ExtResource("5_p51p1")
-text = "nº cartas(rival)"
 
 [node name="CartaMesa(temporal)" type="Label" parent="UI"]
 offset_left = 497.0

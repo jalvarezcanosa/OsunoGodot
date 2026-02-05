@@ -1,10 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://b3api0ov3kpkh"]
+[gd_scene load_steps=21 format=3 uid="uid://b3api0ov3kpkh"]
 
 [ext_resource type="Script" uid="uid://468my3mghfji" path="res://Scripts/MenuSala.gd" id="1_nse57"]
 [ext_resource type="StyleBox" uid="uid://bfhmniw5y86v8" path="res://Texturas/MenúNormal.tres" id="2_dqwj3"]
 [ext_resource type="Theme" uid="uid://dd53sd3po5p7t" path="res://Scripts/tema_ui.tres" id="2_rp7na"]
 [ext_resource type="StyleBox" uid="uid://cf5qkrqlce6n4" path="res://Texturas/CajaMenúHover.tres" id="3_rp7na"]
-[ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://Escenas/card.tscn" id="6_dqwj3"]
 [ext_resource type="PackedScene" uid="uid://gu4coqu31v4s" path="res://Escenas/pestanha_datos_usuario.tscn" id="8_jextb"]
 [ext_resource type="AudioStream" uid="uid://de2xhoylx4lvd" path="res://Audio/SFX/minimal-pop-click-ui-4-198304.mp3" id="8_mm4tk"]
 [ext_resource type="AudioStream" uid="uid://bqvtp2i6hsjkt" path="res://Audio/SFX/minimal-pop-click-ui-3-198303.mp3" id="9_mm4tk"]
@@ -191,12 +190,6 @@ centered = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_y0up3")
-
-[node name="Card" parent="." instance=ExtResource("6_dqwj3")]
-offset_left = 1387.0
-offset_top = 603.0
-offset_right = 1539.0
-offset_bottom = 810.0
 
 [node name="CámaraCompartida" type="Camera2D" parent="."]
 anchor_mode = 0
