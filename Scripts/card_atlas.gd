@@ -13,18 +13,18 @@ var coords := {}
 func _ready():
 	atlas_texture = load(ATLAS_PATH)
 	if atlas_texture == null:
-		push_error("❌ Atlas no cargado")
+		push_error(" Atlas no cargado")
 	_load_coords()
 
 func _load_coords():
 	var file = FileAccess.open(COORDS_PATH, FileAccess.READ)
 	if file == null:
-		push_error("❌ No se pudo abrir card_coords.json")
+		push_error(" No se pudo abrir card_coords.json")
 		return
 
 	var parsed = JSON.parse_string(file.get_as_text())
 	if typeof(parsed) != TYPE_DICTIONARY:
-		push_error("❌ JSON inválido")
+		push_error(" JSON inválido")
 		return
 
 	coords = parsed
@@ -35,7 +35,7 @@ func get_card_texture(code: String) -> Texture2D:
 
 	var key := code.to_lower()
 	if not coords.has(key):
-		push_error("❌ Carta no existe en atlas: " + key)
+		push_error(" Carta no existe en atlas: " + key)
 		return null
 
 	var pos : Vector2 = coords[key]

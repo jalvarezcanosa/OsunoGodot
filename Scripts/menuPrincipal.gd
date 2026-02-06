@@ -14,6 +14,7 @@ func _ready() -> void:
 	http_request.request_completed.connect(_on_http_request_request_completed)
 	volúmen.hide()
 	inicio.hide()
+
 func _on_salir_pressed() -> void:
 	click_2.play()
 	await get_tree().create_timer(0.2).timeout

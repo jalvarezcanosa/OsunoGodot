@@ -365,15 +365,6 @@ scale = Vector2(30, 16.875)
 texture = SubResource("GradientTexture2D_mc5bs")
 centered = false
 
-[node name="Logo Mesh" type="MeshInstance2D" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_h6l3e")
-position = Vector2(1564, 341)
-scale = Vector2(0.5, 0.5)
-mesh = SubResource("PlaneMesh_7t5sj")
-texture = ExtResource("9_prdkb")
-script = ExtResource("9_yuwwx")
-
 [node name="Musgo" type="MeshInstance2D" parent="."]
 z_index = -2
 material = SubResource("ShaderMaterial_h6l3e")

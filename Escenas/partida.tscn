@@ -114,10 +114,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_dieh8")
 icon = SubResource("GradientTexture2D_xxy2r")
 
 [node name="CartaMesa(temporal)" type="Label" parent="UI"]
-offset_left = 497.0
-offset_top = 599.0
-offset_right = 728.0
-offset_bottom = 639.0
+offset_left = 495.0
+offset_top = 533.0
+offset_right = 726.0
+offset_bottom = 573.0
 theme_override_font_sizes/font_size = 25
 
 [node name="Cartas usuario" type="GridContainer" parent="."]
@@ -126,10 +126,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -106.0
+offset_left = -129.0
 offset_top = 761.0
-offset_right = 2024.0
-offset_bottom = 1311.001
+offset_right = 1998.0
+offset_bottom = 1195.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
@@ -145,10 +145,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -95.0
-offset_top = -99.0
-offset_right = 2035.0
-offset_bottom = 451.0
+offset_left = -128.0
+offset_top = -82.0
+offset_right = 2004.6936
+offset_bottom = 506.9745
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 3.1415927
